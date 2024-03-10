@@ -18,7 +18,6 @@ export const useDomainRegisterStore = defineStore('domainRegisterStore', () => {
   });
 
   const saveToLocalStorage = () => {
-    console.log('saveStorage', cartItems.value);
     localStorage.setItem('cartItems', JSON.stringify(cartItems.value));
   };
 

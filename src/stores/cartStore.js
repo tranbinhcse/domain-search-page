@@ -25,6 +25,15 @@ export const useCartStore = defineStore('cartStore', () => {
     }
   });
 
+  const saveToLocalStorage = () => {
+    localStorage.setItem('cartItems', JSON.stringify(cartItems.value));
+  };
+
+  async function clearCart(){
+    cartItems.value = [];
+    saveToLocalStorage()
+    getQuote()
+  }
   async function getQuote() {
      
     quoteLoading.value = true
@@ -59,5 +68,5 @@ export const useCartStore = defineStore('cartStore', () => {
 //     getPaymentMethods()
 //   })
 
-  return { getQuote, cartQuote, quoteLoading }
+  return { getQuote, cartQuote, quoteLoading, clearCart }
 })

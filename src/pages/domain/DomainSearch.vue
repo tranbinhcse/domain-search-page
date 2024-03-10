@@ -66,10 +66,7 @@
       
     </div>
 
-    <div>
- 
-
-    
+    <div> 
     </div>
 
 
@@ -107,8 +104,8 @@
   </div>
     <!-- Domain Page Info -->
   </div>
- 
-  <CartSummary v-if="cartItems.length > 0" />
+  <div class="h-[100px]"></div>
+  
 </template>
 <script setup>
 import { storeToRefs } from 'pinia'
@@ -120,7 +117,6 @@ import Input from '@/components/base/Input.vue';
 import Icon from '@/components/base/Icon.vue';
 import DomainSearchResult from '@/components/general/DomainSearchResult.vue' 
 import DomainPricing from '@/components/general/DomainPricing.vue' 
-import CartSummary from '@/components/general/CartSummary.vue' 
 import { EnvelopeIcon, PhoneIcon } from '@heroicons/vue/20/solid'
 import { InboxIcon, TrashIcon, UsersIcon } from '@heroicons/vue/24/outline'
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'

@@ -1,9 +1,16 @@
 <template>
     <router-view></router-view>
+
+
+    <CartSummary />
+
+
 </template>
 
 <script setup>
+import CartSummary from '@/components/general/CartSummary.vue' 
 
+ 
 </script>
 <style>
 #app,
