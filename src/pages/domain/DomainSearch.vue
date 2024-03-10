@@ -99,62 +99,11 @@
         </ul>
       </div>
     </div>
-    <div  v-if="domains.length < 1" class="max-w-7xl m-auto" >
+    <div  class="max-w-7xl m-auto" >
           <DomainPricing />  
         </div>
-    <div>
-      <div class="bg-white py-24 sm:py-32 mt-10  ">
-        <div class="mx-auto max-w-7xl px-6 lg:px-8">
-          <div class="mx-auto max-w-2xl lg:mx-0">
-            <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Vì sao nên đăng ký tên miền tại TinoHost</h2>
-            <p class="mt-6 text-lg leading-8 text-gray-600">Lorem ipsum dolor sit amet consect adipisicing elit. Possimus magnam voluptatum cupiditate veritatis in accusamus quisquam.</p>
-          </div>
-          <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
-            <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
-              <div v-for="feature in features" :key="feature.name" class="flex flex-col">
-                <dt class="text-base font-semibold leading-7 text-gray-900">
-                  <div class="mb-6 flex h-20 w-20 items-center justify-center rounded-lg bg-green-500">
-                    <component :is="feature.icon" class="h-6 w-6 text-white" aria-hidden="true" />
-                  </div>
-                  {{ feature.name }}
-                </dt>
-                <dd class="mt-1 flex flex-auto flex-col text-base leading-7 text-gray-600">
-                  <p class="flex-auto">{{ feature.description }}</p>
-                  <p class="mt-6">
-                    <a :href="feature.href" class="text-sm font-semibold leading-6 text-green-500">Learn more <span aria-hidden="true">→</span></a>
-                  </p>
-                </dd>
-              </div>
-            </dl>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <div class="bg-gray-900 py-24 sm:py-32 ">
-        <div class="mx-auto max-w-7xl">
-          <div class="mx-auto  divide-y divide-white/10">
-            <h2 class="text-2xl font-bold leading-10 tracking-tight text-white">Câu hỏi thường gặp</h2>
-            <dl class="mt-10 space-y-6 divide-y divide-white/10">
-              <Disclosure as="div" v-for="faq in faqs" :key="faq.question" class="pt-6" v-slot="{ open }">
-                <dt>
-                  <DisclosureButton class="flex w-full items-start justify-between text-left text-white">
-                    <span class="text-base font-semibold leading-7">{{ faq.question }}</span>
-                    <span class="ml-6 flex h-7 items-center">
-                      <PlusSmallIcon v-if="!open" class="h-6 w-6" aria-hidden="true" />
-                      <MinusSmallIcon v-else class="h-6 w-6" aria-hidden="true" />
-                    </span>
-                  </DisclosureButton>
-                </dt>
-                <DisclosurePanel as="dd" class="mt-2 pr-12">
-                  <p class="text-base leading-7 text-gray-300">{{ faq.answer }}</p>
-                </DisclosurePanel>
-              </Disclosure>
-            </dl>
-          </div>
-        </div>
-      </div>
-    </div>
+     
+  
   </div>
     <!-- Domain Page Info -->
   </div>
