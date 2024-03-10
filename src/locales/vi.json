@@ -1,0 +1,31 @@
+{
+  "vi": "Vietnamese",
+  "en": "English",
+  "message": "hello i18n !!",
+  "expires": "Ngày hết hạn",
+  "Pending": "Đang chờ",
+  "Active": "Hoạt động",
+  "Expired": "Hết hạn",
+  "Cancelled": "Đã huỷ",
+  "Suspended": "Tạm khoá",
+  "Terminated": "Đã xoá",
+  "Pending Registration": "Chờ đăng ký",
+  "Homepage": "Trang chủ",
+  "Order": "Đặt hàng",
+  "domain_relay_added": "Đã đặt đơn hàng.",
+  "incorrect_tld": "Tên miền không khả dụng.",
+  "unavailable": "Không thể đăng ký lúc này.",
+  "Sorry!, The service you are looking for is not available.": "Xin lỗi, chúng tôi không tìm thấy dịch vụ bạn cần.",
+
+  "cycle": {
+    "a": "năm"
+  },
+
+  
+
+  "price": "Giá",
+  "recurring_price": "Phí gia hạn"
+
+
+
+}
