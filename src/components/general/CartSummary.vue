@@ -101,8 +101,7 @@
         <div>
           <template  v-if="cartQuote">
            
-            <p>Items in Cart: {{ cartQuote.items.length }}</p>
-            <p>Subtotal: {{ $currency(cartQuote.summary.subtotal) }}</p>
+            <p>Items in Cart: {{ cartItems.length }}</p> 
           </template>
         </div>
        <div> 
