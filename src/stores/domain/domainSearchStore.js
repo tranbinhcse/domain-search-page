@@ -10,7 +10,8 @@ export const useDomainSearchStore = defineStore('domainSearchStore', () => {
   const searching = ref(false)
   const searchKey = ref('')
   const lastSearchKey = ref('')
-  const domains = ref([])
+  const domains = ref([]) 
+  const topDomains = ref([])
   const tlds = ref([])
 
   const lastTldIndex = ref(0); // Chỉ số của TLD cuối cùng đã được xử lý
@@ -87,14 +88,11 @@ async function searchDomains(loadMore = false) {
     const domain = createDomainObject(searchName, tldObject, tldObject.tld === searchTld);
 
 
-    const cartDomainsValue = domainRegisterStore.cartDomains;
+    const cartItemsValue = domainRegisterStore.cartItems;
      
-    const inCart = cartDomainsValue?.some((cartDomain) => cartDomain.name === domain.sld + domain.tld);
+    const inCart = cartItemsValue?.some((cartDomain) => cartDomain.name === domain.sld + domain.tld);
 
     domain.inCart = inCart;
-
-
-
 
     return DomainRepository.lookup({
       name: domain.sld + domain.tld
@@ -118,6 +116,14 @@ async function searchDomains(loadMore = false) {
   lastTldIndex.value = endIndex; 
 
   searching.value = false;
+
+  // Update topDomains based on the first 4 items in domains
+  if (domains.value.length > 4) {
+    topDomains.value = domains.value.slice(0, 4);
+  } else {
+    topDomains.value = domains.value;
+  }
+
 }
 
   function createDomainObject(sld, tldObject, isFeatured = false) {
@@ -161,5 +167,5 @@ async function searchDomains(loadMore = false) {
     tldsLoaded.value = true
   }
 
-  return { tldsLoaded, searching, searchKey, domains, searchDomains, getDomainTlds, lastTldIndex, getWhoisDomain, updateInCart, tlds }
+  return { tldsLoaded, searching, searchKey, domains, searchDomains, getDomainTlds, lastTldIndex, getWhoisDomain, updateInCart, tlds, topDomains }
 })

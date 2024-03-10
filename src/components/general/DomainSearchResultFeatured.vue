@@ -80,44 +80,9 @@
       
     </div>
   </div>
- 
-  <div class="domain-page-info max-w-7xl m-auto mt-5 mb-5"  v-if="topDomains.length > 0">
-      <div class="section-popular-domain">
-        <h2 class="font-bold text-3xl text-center py-10">Tên miền nổi bật được lựa chọn</h2>
-        <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          <li v-for="domain in topDomains" :key="domain.domain" class="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-left border">
-            <div class="flex flex-1 flex-col p-8">
-              <!-- <img class="h-20 w-32 flex-shrink-0 " src="@/assets/tlds/com.svg" alt="" /> -->
-              <dl class="mt-1 flex flex-grow flex-col justify-between">
-                <dt class="sr-only">description</dt>
-                <dd class="text-lg text-gray-500">{{ domain.domain }}</dd>
-                <dt class="sr-only">price</dt>
-                <dd class="mt-3">
-                  <!-- <span class="text-sm font-medium line-through text-gray-400" v-if="domain.before > 0">{{  $currency(domain.before) }}</span> -->
-                  <span class="font-bold text-3xl text-red-500">{{ $currency(domain.register) }}</span><span>đ/năm</span>
-                </dd>
-                <div class="mt-4">
-               
-                </div>
-                <div class="actions min-w-[300px] text-right flex ">
-           
-                  <div v-if="domain.status == 'inCheck'"><Button btnClass="bg-white text-gray" icon="heroicons-outline:search" isLoading textLoading="Đang kiểm tra..." ></Button></div>
-                  <div v-else-if="domain.avaliable === false"><Button btnClass="bg-gray-50 text-gray" icon="heroicons-outline:user" @click.stop="getWhoisInfo(domain)" text="Xem whois" /></div>
-                  <div v-else-if="domain.inCart"><Button @click="handlePayCart()" btnClass="bg-red-50 text-red-500" icon="heroicons-outline:credit-card"  text="Thanh toán" /></div>
-                  <div v-else><Button  @click="addToCart(domain)"  :btnClass="domain.isFeatured ? 'bg-green-500 text-white' : 'text-green-500 border-2 border-green-500'" icon="heroicons-outline:shopping-cart" text="Đăng ký"  /></div>
-                  <div v-if="domain.inCart" class="text-right">
-                    <Button @click="removeInCart(domain)" btnClass=" text-gray-500 btn-sm" icon="mdi:times" />
-                  </div>
-                </div>
-              </dl>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
 
   <Heading text="Tên miền được tìm thấy" class="text-green-500 uppercase text-lg border-b-2 border-gray-50 pb-2 mb-2 mt-10" />  
-  <div v-for="domain in domains.slice(4)" :key="domain.id" >
+  <div v-for="domain in domains" :key="domain.id" >
     <div v-if="!domain.error && !domain.isFeatured" class="rounded-md  px-6 bg-white mb-2  py-4" :class="[domain.status == 'inCheck' ? 'check-domain' : domain.status == 'ok' ? 'found-domain' : 'not-found-domain']" >
       <div  class="flex items-center flex-wrap py-2" >
         <div class="name flex-1 flex items-center">
@@ -226,7 +191,7 @@
 
   </template>
 <script setup>
-import { defineProps, onMounted, ref } from 'vue'
+import { defineProps, ref } from 'vue'
 import Badge from '@/components/base/Badge.vue'
 import Button from '@/components/base/Button.vue'
 import Heading from '@/components/base/Heading.vue'
@@ -239,22 +204,19 @@ import { useDomainRegisterStore } from "@/stores/domain/domainRegisterStore";
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 const router = useRouter()
-
-const props = defineProps(['domains', 'topDomains'])
+defineProps(['domains'])
 
 const domainSearchStore = useDomainSearchStore()
 const domainRegisterStore = useDomainRegisterStore()
 const { getWhoisDomain } = domainSearchStore
 const { addToCart, removeInCart } = domainRegisterStore
-const { loading, cartItems } = storeToRefs(domainRegisterStore)
+const { loading, cartDomains } = storeToRefs(domainRegisterStore)
 
 
 const viewWhoisDomain = ref(false)
 const whoisInfo = ref([])
 const loadingWhois = ref(false)
 
- 
- 
 const getWhoisInfo = async (domain) => {
   loadingWhois.value = true
   viewWhoisDomain.value = true
@@ -266,14 +228,14 @@ const getWhoisInfo = async (domain) => {
 const handlePayCart = () => {
   //https://my.tino.org/cart.php?domain[]=tino.vn&domain[]=nhanhoa.vn&aff=1&action=transfer
 
-  if (cartItems.value.length > 0) {
-    // Extract the 'name' property from each domain in cartItems
-    const domainNames = cartItems.value.map((domain) => domain.name);
+  if (cartDomains.value.length > 0) {
+    // Extract the 'name' property from each domain in cartDomains
+    const domainNames = cartDomains.value.map((domain) => domain.name);
     const affid = getCookie('tinoaffid');
     const url = `https://my.tino.org/cart.php?domain[]=${domainNames.join('&domain[]=')}&aff=${affid}`;
     window.location.href = url;
   } else {
-    // Handle the case when cartItems is empty
+    // Handle the case when cartDomains is empty
     console.warn('Cart is empty. Add domains to the cart before proceeding.');
   }
 

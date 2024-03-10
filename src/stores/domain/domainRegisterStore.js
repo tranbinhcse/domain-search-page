@@ -6,26 +6,31 @@ import { useDomainSearchStore } from "@/stores/domain/domainSearchStore";
 
 export const useDomainRegisterStore = defineStore('domainRegisterStore', () => {
   const loading = ref(false)
-  const cartDomains = ref([])
+  const cartItems = ref([])
 
 
-  // Load cartDomains from localStorage on component mount
+  // Load cartItems from localStorage on component mount
   onMounted(() => {
-    const storedCartDomains = localStorage.getItem('cartDomains');
-    if (storedCartDomains) {
-      cartDomains.value = JSON.parse(storedCartDomains);
+    const storedcartItems = localStorage.getItem('cartItems');
+    if (storedcartItems) {
+      cartItems.value = JSON.parse(storedcartItems);
     }
   });
 
   const saveToLocalStorage = () => {
-    localStorage.setItem('cartDomains', JSON.stringify(cartDomains.value));
+    console.log('saveStorage', cartItems.value);
+    localStorage.setItem('cartItems', JSON.stringify(cartItems.value));
   };
 
   async function removeInCart(domain) {
- 
-    // Filter out the domain from cartDomains
-  cartDomains.value = cartDomains.value.filter(
+    console.log(domain);
+    // Filter out the domain from cartItems
+  cartItems.value = cartItems.value.filter(
     (cartDomain) => !(cartDomain.name === domain.domain && cartDomain.tld === domain.tld)
+  );
+  
+  cartItems.value = cartItems.value.filter(
+    (cartDomain) => !(cartDomain.name === domain.name && cartDomain.tld === domain.tld)
   );
 
   const domainSearchStore = useDomainSearchStore()
@@ -40,7 +45,7 @@ export const useDomainRegisterStore = defineStore('domainRegisterStore', () => {
     // add data to domains
 
     // Check if the domain already exists in the domains array
-    const exists = cartDomains.value.some(existingDomain => 
+    const exists = cartItems.value.some(existingDomain => 
       existingDomain.name === domain.domain && existingDomain.tld === domain.tld
     );
 
@@ -48,12 +53,13 @@ export const useDomainRegisterStore = defineStore('domainRegisterStore', () => {
     // Modify this section to add domain data to the domains array
     if (!exists) {
       const domainData = {
+        type: 'domain',
         name: domain.domain,
         years: domain.period,
         action: domain.type,
         tld: domain.tld
       };
-      cartDomains.value.push(domainData);
+      cartItems.value.push(domainData);
 
       const domainSearchStore = useDomainSearchStore()
       domainSearchStore.updateInCart(domainData.name, true);
@@ -68,5 +74,5 @@ export const useDomainRegisterStore = defineStore('domainRegisterStore', () => {
  
   }
 
-  return { loading, cartDomains, addToCart, removeInCart }
+  return { loading, cartItems, addToCart, removeInCart }
 })

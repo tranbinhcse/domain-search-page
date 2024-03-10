@@ -55,13 +55,13 @@
         </div>
       </div> 
     </div> 
+ 
     <div class="max-w-7xl m-auto" id="searchResults" ref="searchResultsRef">
-        <DomainSearchResult v-if="domains.length > 0" :domains="domains" />       
+        <DomainSearchResult v-if="domains.length > 0" :domains="domains" :topDomains="topDomains"/>       
         <Button v-if="searching" btnClass="bg-white text-gray w-full h-20 flex  items-center justify-center" isLoading textLoading="Chúng tôi đang tìm kiếm tên miền phù hợp với bạn..." />
           <div class="mt-10 m-auto text-center" v-if="!searching & domains.length > 0" >
             <Button @click="searchDomains(true)" iconPosition="right" btnClass="bg-gray-50 text-gray" icon="heroicons-outline:arrow-down" text="Xem thêm"></Button>
         </div>
-
 
       
     </div>
@@ -107,6 +107,8 @@
   </div>
     <!-- Domain Page Info -->
   </div>
+ 
+  <CartSummary v-if="cartItems.length > 0" />
 </template>
 <script setup>
 import { storeToRefs } from 'pinia'
@@ -118,6 +120,7 @@ import Input from '@/components/base/Input.vue';
 import Icon from '@/components/base/Icon.vue';
 import DomainSearchResult from '@/components/general/DomainSearchResult.vue' 
 import DomainPricing from '@/components/general/DomainPricing.vue' 
+import CartSummary from '@/components/general/CartSummary.vue' 
 import { EnvelopeIcon, PhoneIcon } from '@heroicons/vue/20/solid'
 import { InboxIcon, TrashIcon, UsersIcon } from '@heroicons/vue/24/outline'
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
@@ -126,13 +129,13 @@ import { MinusSmallIcon, PlusSmallIcon } from '@heroicons/vue/24/outline'
 import { onMounted, ref } from 'vue';
 const domainSearchStore = useDomainSearchStore()
 const { searchDomains, getDomainTlds } = domainSearchStore
-const { domains, searchKey, tldsLoaded, searching } = storeToRefs(domainSearchStore)
+const { domains,topDomains,  searchKey, tldsLoaded, searching } = storeToRefs(domainSearchStore)
 const searchResultsRef = ref(null);
 
 const domainRegisterStore = useDomainRegisterStore()
 const { addToCart } = domainRegisterStore
-const { cartDomains } = storeToRefs(domainRegisterStore)
-
+const { cartItems } = storeToRefs(domainRegisterStore)
+  
 
 
 const scrollTosearchResults = () => {

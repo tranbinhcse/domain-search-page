@@ -21,7 +21,7 @@
             
               <tbody class="divide-y divide-gray-200 bg-white">
                 <tr v-for="tld in tlds" :key="tld.tld"  >
-                  <template v-if="tld.domain_type == 'vn'">
+                  <!-- <template v-if="tld.domain_type == 'vn'"> -->
                     
                   <td class="whitespace-nowrap py-5 pl-4 pr-3 text-sm sm:pl-0">
                     <div class="flex items-center">
@@ -60,7 +60,7 @@
                 
                   <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">{{ $currency(tld.periods[0].transfer)  }}</td>
                   
-                </template>
+                <!-- </template> -->
                 </tr>
               </tbody>
             </table>

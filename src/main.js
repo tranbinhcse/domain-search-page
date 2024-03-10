@@ -59,7 +59,7 @@ app.use(i18n);
 // 3. Set default currency format
 
 const currencyFormatter = (value) => {
-  console.log(value);
+  
   // Check if the value is 0
   if (value == 0) {
     return 'Miễn phí';
