@@ -47,11 +47,14 @@
               </div>
             </div>
           </div>
-          <div class="actions min-w-[200px] text-right">
+          <div class="actions min-w-[300px] flex justify-end">
             <div v-if="domain.status == 'inCheck'"><Button btnClass="bg-white text-gray" icon="heroicons-outline:search" isLoading textLoading="Đang kiểm tra..." ></Button></div>
             <div v-else-if="domain.avaliable === false"><Button btnClass="bg-gray-50 text-gray" icon="heroicons-outline:user" @click.stop="getWhoisInfo(domain)" text="Xem whois" /></div>
             <div v-else-if="domain.inCart"><Button @click="handlePayCart()" btnClass="bg-red-50 text-red-500" icon="heroicons-outline:credit-card" text="Thanh toán" /></div>
             <div v-else><Button  @click="addToCart(domain)" :btnClass="domain.isFeatured ? 'bg-green-500 text-white' : 'text-green-500 border-2 border-green-500'" icon="heroicons-outline:shopping-cart" text="Đăng ký"   /></div>
+            <div v-if="domain.inCart" class="text-right">
+              <Button @click="removeInCart(domain)" btnClass=" text-gray-500 btn-sm" icon="mdi:times" />
+            </div>
           </div>
       </div>
       <div class="rounded-md bg-gray-50 p-4"  v-if="!domain.avaliable">
@@ -127,17 +130,18 @@
               </div>
             </div>
           </div>
-      
-          <div class="actions min-w-[200px] text-right">
+         
+          <div class="actions min-w-[300px] text-right flex justify-end">
+           
             <div v-if="domain.status == 'inCheck'"><Button btnClass="bg-white text-gray" icon="heroicons-outline:search" isLoading textLoading="Đang kiểm tra..." ></Button></div>
             <div v-else-if="domain.avaliable === false"><Button btnClass="bg-gray-50 text-gray" icon="heroicons-outline:user" @click.stop="getWhoisInfo(domain)" text="Xem whois" /></div>
             <div v-else-if="domain.inCart"><Button @click="handlePayCart()" btnClass="bg-red-50 text-red-500" icon="heroicons-outline:credit-card"  text="Thanh toán" /></div>
             <div v-else><Button  @click="addToCart(domain)"  :btnClass="domain.isFeatured ? 'bg-green-500 text-white' : 'text-green-500 border-2 border-green-500'" icon="heroicons-outline:shopping-cart" text="Đăng ký"  /></div>
-           
-          </div>
-          <div v-if="domain.inCart">
-              <Button @click="removeInCart(domain)" btnClass="bg-gray-50 text-gray-500" icon="mdi:times" />
+            <div v-if="domain.inCart" class="text-right">
+              <Button @click="removeInCart(domain)" btnClass=" text-gray-500 btn-sm" icon="mdi:times" />
             </div>
+          </div>
+         
       </div>
     </div>
   </div>

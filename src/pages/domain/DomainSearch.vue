@@ -1,6 +1,6 @@
 <template>
   <div class="h-full">
-    <div class="bg-green-500 text-white  -mt-10 sm:-mx-6 lg:-mx-8 py-10">
+    <div class="bg-green-500 text-white     py-10">
       <div class="max-w-7xl m-auto">
         <div class="box-search-domain text-center ">
             <div class="form-search-domain">
@@ -103,7 +103,7 @@
           <DomainPricing />  
         </div>
     <div>
-      <div class="bg-white py-24 sm:py-32 mt-10 lg:-mx-8 sm:-mx-6">
+      <div class="bg-white py-24 sm:py-32 mt-10  ">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
           <div class="mx-auto max-w-2xl lg:mx-0">
             <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Vì sao nên đăng ký tên miền tại TinoHost</h2>
@@ -131,7 +131,7 @@
       </div>
     </div>
     <div>
-      <div class="bg-gray-900 py-24 sm:py-32 lg:-mx-8 sm:-mx-6">
+      <div class="bg-gray-900 py-24 sm:py-32 ">
         <div class="mx-auto max-w-7xl">
           <div class="mx-auto  divide-y divide-white/10">
             <h2 class="text-2xl font-bold leading-10 tracking-tight text-white">Câu hỏi thường gặp</h2>
