@@ -1,9 +1,10 @@
 {
     "rewrites": [
+
+      {"source": "/(.*)", "destination": "/"},
       {
         "source": "/api/",
         "destination": "https://ote.tino.org/api/"
-      },
-      {"source": "/(.*)", "destination": "/"}
+      }
     ]
   }
