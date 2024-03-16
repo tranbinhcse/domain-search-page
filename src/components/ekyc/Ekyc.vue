@@ -1,5 +1,5 @@
 <template>
-    <div>{{ errorFaceCheck }}</div>
+    <div v-if="errorFaceCheck">{{ errorFaceCheck }}</div>
     <div  v-if="step == 1 && !ocrOK" class="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
         <p>Xác thực căn cước công dân (CCCD)</p>
         <p>Lưu ý khi tải lên hình ảnh CCCD của bạn:</p>
