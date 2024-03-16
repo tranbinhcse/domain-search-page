@@ -268,10 +268,7 @@ const handlePayCart = () => {
 
   if (cartItems.value.length > 0) {
     // Extract the 'name' property from each domain in cartItems
-    const domainNames = cartItems.value.map((domain) => domain.name);
-    const affid = getCookie('tinoaffid');
-    const url = `https://my.tino.org/cart.php?domain[]=${domainNames.join('&domain[]=')}&aff=${affid}`;
-    // window.location.href = url;
+    router.push({ path: '/config-domain' });
   } else {
     // Handle the case when cartItems is empty
     console.warn('Cart is empty. Add domains to the cart before proceeding.');

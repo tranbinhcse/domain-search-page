@@ -130,12 +130,12 @@
 
                     <p class="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                     <div class="mt-6">
-                      <a href="#" class="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Checkout</a>
+                      <a  @click="nextStep()" class="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Checkout</a>
                     </div>
                     <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
                       <p>
                         or{{ ' ' }}
-                        <button type="button" class="font-medium text-indigo-600 hover:text-indigo-500" @click="open = false">
+                        <button type="button" class="font-medium text-indigo-600 hover:text-indigo-500" @click="nextStep()">
                           Continue Shopping
                           <span aria-hidden="true"> &rarr;</span>
                         </button>
@@ -162,7 +162,7 @@
     import { useDomainSearchStore } from "@/stores/domain/domainSearchStore";
     import { useCartStore } from "@/stores/cartStore";
     import { useDomainRegisterStore } from "@/stores/domain/domainRegisterStore";
-
+    import { useRouter } from 'vue-router'
     const domainRegisterStore = useDomainRegisterStore()
     const cartStore = useCartStore()
     const { getQuote, clearCart, loading } = cartStore
@@ -171,7 +171,7 @@
     const { cartQuote, quoteLoading, error } = storeToRefs(cartStore)
     const { cartItems } = storeToRefs(cartStore)
 
-
+    const router = useRouter()
     const open = ref(false)
 
   const handleRemoveInCart = async (item) => {
@@ -190,6 +190,9 @@
       getQuote();
     })
 
+    const nextStep = () => {
+      router.push({path: '/ekyc'})
+    }
     
   </script>
   
