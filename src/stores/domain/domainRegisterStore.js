@@ -63,8 +63,7 @@ export const useDomainRegisterStore = defineStore('domainRegisterStore', () => {
       const domainSearchStore = useDomainSearchStore()
       domainSearchStore.updateInCart(domainData.name, true);
       saveToLocalStorage();
-    };
-
+    } 
    
 
    
@@ -73,5 +72,23 @@ export const useDomainRegisterStore = defineStore('domainRegisterStore', () => {
  
   }
 
-  return { loading, cartItems, addToCart, removeInCart }
+  async function updateItem(domain) {
+    loading.value = true
+  
+   // Check if the domain already exists in the domains array
+    const index = cartItems.value.findIndex(existingDomain =>
+      existingDomain.name === domain.name && existingDomain.tld === domain.tld
+    );
+    console.log(domain);
+    console.log(cartItems.value);
+      console.log(index);
+    if (index !== -1) {
+      cartItems.value[index] = { ...domain };
+      saveToLocalStorage();
+    }
+   
+    loading.value = false
+  }
+
+  return { loading, cartItems, addToCart, removeInCart, updateItem }
 })

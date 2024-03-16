@@ -14,7 +14,7 @@ export const useCartStore = defineStore('cartStore', () => {
 //   const paymentMethods = ref([])
 //   const paymentMethod = ref()
 //   const product = ref()
-
+  const error = ref()
   const cartItems = ref([]) 
   const cartQuote = ref()
 
@@ -34,6 +34,12 @@ export const useCartStore = defineStore('cartStore', () => {
     saveToLocalStorage()
     getQuote()
   }
+  // async function removeInCart(product){
+  //   cartItems.value = cartItems.value.filter(
+  //     (cartProduct) => !(cartProduct.product_id === product.product_id)
+  //   );
+  //   saveToLocalStorage()
+  // }
   async function getQuote() {
      
     quoteLoading.value = true
@@ -43,30 +49,54 @@ export const useCartStore = defineStore('cartStore', () => {
     }
     cartQuote.value = await CartRepository.getQuote(cartItems.value)
     quoteLoading.value = false
+
+
+
+    const quoteItems = cartQuote.value.items
+ 
+     const invalidIndexes = quoteItems.reduce((acc, item, index) => {
+          acc.push(index);
+          return acc;
+      }, []);
+   
+      invalidIndexes.forEach(index => {
+     
+        cartItems.value[index].error = quoteItems[index].error
+        cartItems.value[index].coupon = quoteItems[index].coupon
+        cartItems.value[index].info = quoteItems[index].info
+        cartItems.value[index].valid = quoteItems[index].valid
+
+       if( cartItems.value[index].type == 'domain' && quoteItems[index].valid){
+        cartItems.value[index].years = quoteItems[index].domains[cartItems.value[index].name].period
+        cartItems.value[index].price = quoteItems[index].domains[cartItems.value[index].name].price
+        cartItems.value[index].recurring_price = quoteItems[index].domains[cartItems.value[index].name].recurring_price
+        cartItems.value[index].setup = quoteItems[index].domains[cartItems.value[index].name].setup
+        cartItems.value[index].nameservers = quoteItems[index].domains[cartItems.value[index].name].nameservers
+       }
+
+
+        saveToLocalStorage()
+    });
+
+   
+
+
   }
 
-//   async function getProductConfiguration() {
-//     if (!selectedProduct.value) return
-//     product.value = await ProductRepository.getConfiguration(selectedProduct.value)
-//   }
 
-//   async function getPaymentMethods() {
-//     const payments = await PaymentRepository.getPaymentMethods()
-//     paymentMethods.value = payments
-//     paymentMethod.value = Object.keys(payments)[0]
-//   }
-
-//   async function order(){
-//     const res = await post(`/order/${selectedProduct.value}`, product.value)
+  async function updateItem(domain) { 
+  
+   // Check if the domain already exists in the domains array
+    const index = cartItems.value.findIndex(existingDomain =>
+      existingDomain.name === domain.name && existingDomain.tld === domain.tld
+    );
+     
+    if (index !== -1) {
+      cartItems.value[index] = { ...domain };
+      saveToLocalStorage();
+    }
     
-//     // await get(`/billing/${res.invoice_id}/pay/${paymentMethod.value}`)
-//   }
+  }
 
-//   watch(category, getProducts)
-//   watch(selectedProduct, () => {
-//     getProductConfiguration()
-//     getPaymentMethods()
-//   })
-
-  return { getQuote, cartQuote, quoteLoading, clearCart }
+  return { getQuote, cartQuote,cartItems,  quoteLoading, clearCart, error , updateItem}
 })

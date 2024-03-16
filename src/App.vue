@@ -7,8 +7,7 @@
 
 </template>
 
-<script setup>
-import CartSummary from '@/components/general/CartSummary.vue' 
+<script setup> 
 
  
 </script>
@@ -23,6 +22,6 @@ body {
 }
 
 #app {
-  @apply bg-page-background;
+  @apply bg-page-background dark:bg-slate-900 dark:text-gray-400;
 }
 </style>

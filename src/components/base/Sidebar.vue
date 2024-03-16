@@ -44,7 +44,7 @@ const menus = [
   { text: 'Đăng ký tên miền', routeName: 'DomainSearch', icon: domainRegisterIcon },
   { text: 'Gia hạn tên miền', routeName: 'hello', icon: domainRenewIcon },
   { text: 'Chuyển tên miền', routeName: 'hello', icon: domainTransferIcon },
-  { text: 'Hóa đơn', routeName: 'hello', icon: invoiceIcon },
+  { text: 'Hóa đơn', routeName: 'invoiceManage', icon: invoiceIcon },
   { text: 'Báo giá', routeName: 'hello', icon: costIcon },
   { text: 'Affiliate', routeName: 'hello', icon: affliateIcon },
   { text: 'Supports Center', routeName: 'hello', icon: supportIcon },

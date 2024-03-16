@@ -1,5 +1,5 @@
 <template>
-  <span class="relative w-14 h-8 cursor-pointer select-none rounded-full" @click="$emit('update:modelValue', !modelValue)"
+  <div class="relative w-14 h-8 cursor-pointer select-none rounded-full" @click="$emit('update:modelValue', !modelValue)"
     :class="modelValue ? 'bg-green-500' : 'bg-gray-300'">
     <span class="absolute flex items-center justify-center w-6 h-6 transition bg-white rounded-full left-1 top-1"
       :class="modelValue ? 'translate-x-full' : ''">
@@ -12,11 +12,11 @@
           stroke-linejoin="round" />
       </svg>
     </span>
-  </span>
+  </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { defineEmits, defineProps } from 'vue'
 defineProps(['modelValue'])
 defineEmits(['update:modelValue'])
 </script>

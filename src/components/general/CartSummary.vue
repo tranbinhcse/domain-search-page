@@ -53,11 +53,6 @@
                                   <p class="text-gray-500"> {{ domain.period }} năm</p>
 
                                   <div class="flex">
-
- 
-
-
-
                                     <button type="button" class="font-medium text-indigo-600 hover:text-indigo-500" @click="handleRemoveInCart({  type: 'domain', years: domain.period, action: domain.type,'name': domain.name, 'tld': domain.tld})">Remove</button>
                                   </div>
                                 </div>
@@ -151,7 +146,7 @@
 
 
     onMounted(() => {
-      getQuote();
+      //getQuote();
     })
   </script>
   

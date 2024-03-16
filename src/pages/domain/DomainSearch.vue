@@ -9,8 +9,8 @@
                 <p class="p-2">Nhập từ khoá của bạn để đăng ký và bảo vệ thương hiệu của bạn trên internet!</p>
               </div>
               <form class="search-form-wrapper relative" @submit.prevent="handleSearchSubmit" action="/" method="get">
-                <Input type="text" required v-model="searchKey" name="domain" placeholder="Nhập tên thương hiệu" class="bg-white text-black border-2 border-green-500 text-xl leading-5 h-[65px]" />
-                <Button :isLoading="searching" type="submit" text="Tìm kiếm" icon="heroicons-outline:search" class="flex-auto absolute right-3 top-[50%] -translate-y-[50%]" />
+                <input type="text" required v-model="searchKey" name="domain" placeholder="Nhập tên thương hiệu" class="w-full rounded-md  text-xl text-gray-800 p-5 leading-5 h-[65px]" />
+                <Button :isLoading="searching" type="submit" text="Tìm kiếm" icon="material-symbols-light:search" class="flex-auto absolute right-3 top-[50%] -translate-y-[50%]" />
               </form>
             </div>
   

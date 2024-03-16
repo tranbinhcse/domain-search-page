@@ -12,11 +12,25 @@ export const useAuthMiddleware = (router) => {
   })
 
   axios.interceptors.response.use(
-    response => response,
+    async response => {
+      const responseData = response.data;
+      if (Array.isArray(responseData.error) && responseData.error.includes('invalid_token')) {
+        authStore.user = null
+        authStore.token = null
+        authStore.verify = null
+        authStore.refresh = null
+     
+      }
+      return response;
+
+    },
     async error => {
       if (error.response.status == 401){
         authStore.user = null
-        router.replace({name: 'login'})
+        authStore.token = null
+        authStore.verify = null
+        authStore.refresh = null
+        return error.response
       }
     }
   );

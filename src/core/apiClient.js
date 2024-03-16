@@ -2,26 +2,47 @@ import { API_ENDPOINT } from '@/config'
 import { useAuthStore } from "@/stores/auth/authStore"
 import { storeToRefs } from "pinia"
 import axios from 'axios'
-// axios.defaults.baseURL = API_ENDPOINT;
-axios.defaults.baseURL = "https://my.tino.org/api";
+axios.defaults.baseURL = API_ENDPOINT;
+// axios.defaults.baseURL = "https://api.tino.vn";
 
 const getRequestHeaders = () => {
   const authStore = useAuthStore()
-  const { user } = storeToRefs(authStore)
+  const { token } = storeToRefs(authStore)
 
-  if ( ! user.value ){
+  if ( ! token.value ){
     return {}
   }
 
   return {
-    'Authorization': `Bearer ${user.value.token}`
+    'Authorization': `Bearer ${token.value}`
   }
 }
 
 export const send = async (url, method = 'GET', data, params = {}) => {
   const headers = getRequestHeaders()
-  const response = await axios({ url, method, params, headers, data })
-  return response.data
+  // const response = await axios({ url, method, params, headers, data })
+
+  // return response.data
+  try {
+    const response = await axios({
+      url,
+      method,
+      params,
+      headers,
+      data,
+      timeout: 25000 // 5 seconds timeout
+    });
+    return response.data;
+  } catch (error) {
+    // Handle timeout or other errors
+    if (axios.isCancel(error)) {
+      console.error('Request canceled:', error.message);
+    } else {
+      console.error('Request error:', error.message);
+    }
+    throw error; // re-throw the error for the caller to handle
+  }
+  
 }
 
 export const get = async (url, params = {}) => {

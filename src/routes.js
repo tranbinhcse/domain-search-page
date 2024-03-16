@@ -1,22 +1,42 @@
-import HelloWorldVue from './components/HelloWorld.vue'
-import Dashboard from './pages/Dashboard.vue'
-import CloudHosting from './pages/CloudHosting.vue'
-import DomainManage from './pages/domain/DomainManage.vue'
 import DomainSearch from './pages/domain/DomainSearch.vue'
-import DomainRegister from './pages/domain/DomainRegister.vue'
-import ClientArea from './pages/ClientArea.vue'
+import DomainConfig from './pages/cart/DomainConfig.vue'
 import Login from './pages/auth/Login.vue'
-import AccountDetail from './pages/AccountDetail.vue'
-import DomainDetail from './pages/domain/DomainDetail.vue'
-import ServiceOrder from './pages/service/ServiceOrder.vue'
+import AddToCart from '@/components/AddToCart.vue'
+import Ekyc from '@/components/ekyc/Ekyc.vue'
 
 const routes = [
   {
+    path: '/login',
+    name: 'login',
+    component: Login,
+    meta: {
+      breadcrumb: ['Đăng nhập']
+    }
+  },
+  {
     path: '/',
-    name: 'Home',
-    component: DomainSearch,
+    name: 'home',
+    component: DomainSearch
+  },
+  {
+    path: '/config-domain',
+    name: 'DomainConfig',
+    component: DomainConfig,
    
   },
+
+  {
+    path: '/addcart',
+    name: 'AddToCart',
+    component: AddToCart
+  },
+  {
+    path: '/ekyc',
+    name: 'Ekyc',
+    component: Ekyc
+  }
+
+
 
 ]
 
