@@ -2,8 +2,8 @@
     "rewrites": [
  
       {
-        "source": "/api/",
-        "destination": "https://ote.tino.org/api/"
+        "source": "/api/:path*",
+        "destination": "https://ote.tino.org/api/:path*"
       }
     ]
   }
