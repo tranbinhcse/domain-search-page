@@ -1,0 +1,8 @@
+{
+    "rewrites": [
+      {
+        "source": "/api/:proxy(*)",
+        "destination": "https://api.tino.vn/:path*"
+      }
+    ]
+  }
