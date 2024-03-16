@@ -2,8 +2,7 @@
     "rewrites": [
       {
         "source": "/api/(.*)",
-        "destination": "https://api.tino.vn/(.*)",
-        "changeOrigin": true
+        "destination": "https://api.tino.vn/(.*)"
       },
       {"source": "/(.*)", "destination": "/"}
     ]
