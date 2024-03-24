@@ -9,7 +9,7 @@
                 <p class="p-2">Nhập từ khoá của bạn để đăng ký và bảo vệ thương hiệu của bạn trên internet!</p>
               </div>
               <form class="search-form-wrapper relative" @submit.prevent="handleSearchSubmit" action="/" method="get">
-                <input type="text" required v-model="searchKey" name="domain" placeholder="Nhập tên thương hiệu" class="w-full rounded-md  text-xl text-gray-800 p-5 leading-5 h-[65px]" />
+                <a-input type="text" required v-model="searchKey" name="domain" placeholder="Nhập tên thương hiệu" class="h-[56px]"  allow-clear/>
                 <Button :isLoading="searching" type="submit" text="Tìm kiếm" icon="material-symbols-light:search" class="flex-auto absolute right-3 top-[50%] -translate-y-[50%]" />
               </form>
             </div>
@@ -55,7 +55,9 @@
         </div>
       </div> 
     </div> 
- 
+    <div> 
+
+    </div>
     <div class="max-w-7xl m-auto" id="searchResults" ref="searchResultsRef">
         <DomainSearchResult v-if="domains.length > 0" :domains="domains" :topDomains="topDomains"/>       
         <Button v-if="searching" btnClass="bg-white text-gray w-full h-20 flex  items-center justify-center" isLoading textLoading="Chúng tôi đang tìm kiếm tên miền phù hợp với bạn..." />

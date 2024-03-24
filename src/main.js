@@ -1,6 +1,9 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import ArcoVue from '@arco-design/web-vue';
+import '@arco-design/web-vue/dist/arco.less';
+import '@arco-themes/vue-mytino/index.less'
 
 import dayjs from "dayjs";
 
@@ -17,6 +20,7 @@ export const languages = {
 import './style.css'
 
 const app = createApp(App)
+app.use(ArcoVue);
 
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'

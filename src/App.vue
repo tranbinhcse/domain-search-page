@@ -1,10 +1,5 @@
 <template>
     <router-view></router-view>
-
-
-    <CartSummary />
-
-
 </template>
 
 <script setup> 
