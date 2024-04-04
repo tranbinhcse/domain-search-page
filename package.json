@@ -11,10 +11,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-<<<<<<< HEAD
     "@arco-design/web-vue": "^2.55.0",
-=======
->>>>>>> origin/main
     "@arco-themes/vue-mytino": "^0.0.3",
     "@headlessui/vue": "^1.7.16",
     "@heroicons/vue": "^2.1.1",
