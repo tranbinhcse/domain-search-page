@@ -60,5 +60,12 @@ export const SERVICES = {
             "description": "",
             "id": "colocations"
         }
+    ],
+    "website": [
+        {
+            "name": "WordPress",
+            "description": "",
+            "id": "website"
+        }
     ]
 }

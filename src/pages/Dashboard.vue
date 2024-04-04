@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="grid grid-cols-4 gap-x-8 mb-10">
     <Summary :totalDomains="totalDomains" />
     <Box>
       <heading text="Quản lý tên miền" />

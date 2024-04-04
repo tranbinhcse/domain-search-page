@@ -28,7 +28,7 @@
                     
                       <div class="ml-4">
                         <div class="font-bold text-lg text-gray-900">{{ tld.tld }}</div>
-                        <div class="mt-1 text-gray-500">{{ tld.description }}</div>
+                        <div class="mt-1 text-gray-500" v-html="tld.description"></div>
                       </div>
                     </div>
                   </td>

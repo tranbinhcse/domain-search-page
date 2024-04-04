@@ -1,30 +1,28 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import ArcoVue from '@arco-design/web-vue';
+import ArcoVueIcon from '@arco-design/web-vue/es/icon';
 
 import dayjs from "dayjs";
 
-import { createI18n } from 'vue-i18n'
+import i18n from './locales';
 
-import en from '@/locales/en.json'
-import vi from '@/locales/vi.json'
-
-export const languages = {
-    en: en,
-    vi: vi,
-}
   
+import '@arco-design/web-vue/dist/arco.less';
+import '@arco-themes/vue-mytino/index.less';
 import './style.css'
 
 const app = createApp(App)
-
+app.use(ArcoVue);
+app.use(ArcoVueIcon);
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
 app.use(pinia)
 
-import routes from './routes'
+import routes from './routers'
 import { useAuthMiddleware } from './middlewares/authMiddleware'
 const router = createRouter({
   history: createWebHistory(),
@@ -37,21 +35,20 @@ const router = createRouter({
  
 // import vi from "dayjs/locale/vi";
   
- 
-dayjs().locale(vi).format();
+  
 
 app.config.globalProperties.$dayjs = dayjs;
 app.use(dayjs);
  
 
 
-const messages = Object.assign(languages)
-const i18n = createI18n({
-    legacy: false,
-    locale: localStorage.getItem('locale') || 'vi',
-    fallbackLocale: 'vi',
-    messages: messages
-})
+// const messages = Object.assign(languages)
+// const i18n = createI18n({
+//     legacy: false,
+//     locale: localStorage.getItem('locale') || 'vi',
+//     fallbackLocale: 'vi',
+//     messages: messages
+// })
 
 app.use(i18n);
 

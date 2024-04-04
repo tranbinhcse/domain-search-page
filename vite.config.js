@@ -6,7 +6,13 @@ import vue from '@vitejs/plugin-vue'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    vue(),
+    vue({
+      // script: {
+      //   // Kích hoạt TypeScript hoặc JSX parser
+      //   // Hoặc sử dụng "jsx" thay vì "typescript"
+      //   parser: 'typescript',
+      // },
+    }),
   ],
   resolve: {
     alias: {
