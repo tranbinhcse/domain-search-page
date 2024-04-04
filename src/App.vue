@@ -1,8 +1,12 @@
 <template>
+<<<<<<< HEAD
   <a-config-provider :locale="locale">
     <router-view />
  
   </a-config-provider>
+=======
+    <router-view></router-view>
+>>>>>>> origin/main
 </template>
 
 <script  setup>
