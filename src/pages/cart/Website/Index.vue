@@ -108,7 +108,7 @@
   const handleBeforeOk = async(done) => {
     
     if (themeSelected.value.type == 'subdomain') {
-      createWebsite();
+      createWebsite(router);
     } else if(themeSelected.value.type == 'register') {
       await getDomainTlds();
       router.push({ name: 'DomainWebsite' });

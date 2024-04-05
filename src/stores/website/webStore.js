@@ -28,7 +28,7 @@ export const useWebStore = defineStore('webStore', {
      
         this.loading = true
 
-      if(this.themeSelected.subdomain){
+      if(this.themeSelected.type == 'subdomain'){
           this.domain = this.themeSelected.subdomain + '.cloudwp.vn'
       }
       
@@ -56,9 +56,9 @@ export const useWebStore = defineStore('webStore', {
           items.push(itemDomain)
       }
 
-      const ord = await CartRepository.order(items, "1", "1" )
+      const ord = await CartRepository.order(items, "8", "1" )
 
-      if(ord.invoice_id) {
+      if(!ord.error) {
         this.themeSelected = {}
         this.domain = ''
           if(ord.total == 0){
@@ -67,7 +67,7 @@ export const useWebStore = defineStore('webStore', {
             router.push({ name: 'invoiceDetails', params: { id: ord.invoice_id } })
           }
           
-      }
+      } 
 
       this.loading = false
 

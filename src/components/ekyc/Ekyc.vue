@@ -251,21 +251,7 @@ const nextStep = (v) => {
     background:url(@/assets/ekyc/black_watermask.svg) center no-repeat,#F6F6F6;
     opacity:1;
 }
-.group_cmnd.sau .cmnd_1:before{
-    background:url(@/assets/ekyc/CCCD_Sau.svg) center no-repeat,#F6F6F6;
-    background-size:78px 45px;
-}
-.group_cmnd.sau .cmnd_2:before{
-    background:url(@/assets/ekyc/CCCD_Sau.svg) center no-repeat,#F6F6F6;
-    background-size:78px 45px;
-    background-position-x:40px;
-    opacity:1;
-}
-.group_cmnd.sau .cmnd_3:before{
-    background:url(@/assets/ekyc/CCCD_Sau.svg) center no-repeat,#F6F6F6;
-    background-size:78px 45px;
-    opacity:.5;
-}
+
 .group_cmnd.sau .cmnd_4:before{
     background:url(@/assets/ekyc/sau__watermask.svg) center no-repeat,#F6F6F6;
     opacity:1;
