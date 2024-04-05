@@ -8,12 +8,6 @@ import PaymentRepository from '@/repositories/PaymentRepository'
 export const useCartStore = defineStore('cartStore', () => {
 
   const quoteLoading = ref(false)
-//   const category = ref()
-//   const products = ref([])
-//   const selectedProduct = ref()
-//   const paymentMethods = ref([])
-//   const paymentMethod = ref()
-//   const product = ref()
   const error = ref()
   const cartItems = ref([]) 
   const cartQuote = ref()
@@ -34,12 +28,8 @@ export const useCartStore = defineStore('cartStore', () => {
     saveToLocalStorage()
     getQuote()
   }
-  // async function removeInCart(product){
-  //   cartItems.value = cartItems.value.filter(
-  //     (cartProduct) => !(cartProduct.product_id === product.product_id)
-  //   );
-  //   saveToLocalStorage()
-  // }
+  
+  
   async function getQuote() {
      
     quoteLoading.value = true
@@ -49,11 +39,7 @@ export const useCartStore = defineStore('cartStore', () => {
     }
     cartQuote.value = await CartRepository.getQuote(cartItems.value)
     quoteLoading.value = false
-
-
-
     const quoteItems = cartQuote.value.items
- 
      const invalidIndexes = quoteItems.reduce((acc, item, index) => {
           acc.push(index);
           return acc;

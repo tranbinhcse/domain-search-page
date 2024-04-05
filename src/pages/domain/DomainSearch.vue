@@ -18,11 +18,7 @@
                   </template>
                 </a-button>
               </div>
-
-              <form class="search-form-wrapper relative" @submit.prevent="handleSearchSubmit" action="/" method="get">
-                <a-input type="text" required v-model="searchKey" name="domain" placeholder="Nhập tên thương hiệu" class="h-[56px]"  allow-clear/>
-                <Button :isLoading="searching" type="submit" text="Tìm kiếm" icon="material-symbols-light:search" class="flex-auto absolute right-3 top-[50%] -translate-y-[50%]" />
-              </form>
+ 
             </div>
   
             <div class="domain-checker__tlds-list sr-only">

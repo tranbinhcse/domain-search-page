@@ -20,10 +20,11 @@
     <ul class="right-side">
       <li>
         <a-tooltip :content="$t('settings.search')">
-          <a-button class="nav-btn" type="outline" :shape="'circle'">
+          <a-button type="primary" @click="router.push({ name: 'CreateWebsite' })">
             <template #icon>
-              <icon-search />
+              <icon-plus />
             </template>
+            Tạo website
           </a-button>
         </a-tooltip>
       </li>
@@ -125,20 +126,7 @@
           </a-button>
         </a-tooltip>
       </li>
-      <li>
-        <a-tooltip :content="$t('settings.title')">
-          <a-button
-            class="nav-btn"
-            type="outline"
-            :shape="'circle'"
-            @click="setVisible"
-          >
-            <template #icon>
-              <icon-settings />
-            </template>
-          </a-button>
-        </a-tooltip>
-      </li>
+      
       <li>
         <a-dropdown trigger="click">
           <a-avatar
@@ -198,7 +186,8 @@ import useLocale from '@/hooks/locale';
 import useUser from '@/hooks/user';
 import Menu from '@/components/menu/index.vue';
 import MessageBox from '../message-box/index.vue';
-
+import { useRouter } from 'vue-router';
+const router = useRouter() 
 const appStore = useAppStore();
 const userStore = useUserStore();
 const { logout } = useUser();
@@ -259,6 +248,8 @@ const switchRoles = async () => {
 };
 
 const toggleDrawerMenu = inject('toggleDrawerMenu');
+
+ 
 
 </script>
 

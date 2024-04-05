@@ -8,6 +8,7 @@ import AuthRoutes from './auth'
 import SupportRoutes from './support'
 import ClientAreaRoutes from './clientarea' 
 import CartRoutes from './cart'
+import EkycRoutes from './ekyc'
 
 export const DEFAULT_LAYOUT = () => import('@/layouts/DefaultLayout.vue');
 
@@ -28,6 +29,7 @@ const routes = [
         ...ClientAreaRoutes,
         ...SupportRoutes,
         ...CartRoutes,
+        ...EkycRoutes,
         {
             path: '',
             name: 'home',

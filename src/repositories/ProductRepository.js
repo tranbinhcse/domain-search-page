@@ -5,11 +5,12 @@ const ProductRepository = {
     return products
   },
   getConfiguration: async productId => {
-    const { product: { config: { addons: addonFields, forms: formFields, product: productFields, subproducts: subProductFields } } } = await get(`/order/${productId}`)
+    const { product: { config: { addons: addonFields, forms: formFields, product: productFields, subproducts: subProductFields }, domain_options: domainOptionsFields } } = await get(`/order/${productId}`)
 
     const product = {
       product_id: productId,
       domain: '',
+      domainOptionsFields,
       addonFields,
       formFields,
       productFields,
@@ -57,6 +58,10 @@ const ProductRepository = {
     productFields.forEach(({ id, value}) => {
       product[id] = value
     })
+
+    product.domainOptions = domainOptionsFields;
+
+
 
     return product
   }

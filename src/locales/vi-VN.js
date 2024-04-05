@@ -1,4 +1,5 @@
 import localeSettings from './vi-VN/settings';
+import localeStatus from './vi-VN/status';
 export default {
     'menu.dashboard': 'Dashboard',
     'menu.server.dashboard': 'Dashboard-Server',
@@ -15,6 +16,7 @@ export default {
     'menu.faq': 'FAQ',
     'navbar.docs': 'Docs',
     'navbar.action.locale': 'Đã chọn Tiếng Việt',
-    ...localeSettings
+    ...localeSettings,
+    ...localeStatus
   };
   

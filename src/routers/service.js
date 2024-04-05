@@ -1,7 +1,7 @@
 
 
-import DomainSearch from '@/pages/domain/DomainSearch.vue'
-import DomainConfig from '@/pages/cart/DomainConfig.vue'
+import ServiceManage from '@/pages/service/ServiceManage.vue'
+import serviceDetails from '@/pages/service/ServiceDetails.vue'
 
 export const DEFAULT_LAYOUT = () => import('@/layouts/DefaultLayout.vue');
 
@@ -11,7 +11,7 @@ const ServiceRoutes = [
     {
         path: 'services',
         name: 'services',
-        component: DomainSearch,
+        component: ServiceManage,
         meta: {
             locale: 'menu.clientarea.domains',
             requiresAuth: true,
@@ -22,7 +22,7 @@ const ServiceRoutes = [
     {
         path: 'services/:slug',
         name: 'serviceCategory',
-        component: DomainSearch,
+        component: ServiceManage,
         meta: {
             locale: 'menu.clientarea.domains',
             requiresAuth: true,
@@ -32,9 +32,9 @@ const ServiceRoutes = [
     {
         path: 'services/:slug/:id',
         name: 'serviceDetails',
-        component: DomainConfig,
+        component: serviceDetails,
         meta: {
-            locale: 'menu.clientarea.domains',
+            locale: 'menu.clientarea.services',
             requiresAuth: true,
             roles: ['*'],
         },

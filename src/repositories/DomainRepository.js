@@ -12,7 +12,9 @@ const DomainRepository = {
     return {
       domains: res.domains,
       page: res.page.current,
-      totalPages: res.page.total
+      totalPages: res.page.total,
+      records: res.page.records,
+      perpage: res.page.perpage,
     }
   },
   getDomainContact: async domainId => {

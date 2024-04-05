@@ -12,6 +12,7 @@ export const useAuthStore = defineStore('authStore', {
       refresh: null,
       currency: null,
       verify: null,
+      isLogin: false
     }
   },
   actions: {
@@ -29,10 +30,12 @@ export const useAuthStore = defineStore('authStore', {
       this.currency = data.currency 
       this.verify = data.verify 
       this.loading = false
+      this.isLogin = true
     },
     async logout(){
       await post('logout')
       this.user = null
+      this.isLogin = false
     },
     async checkemail(email){
       const check = await post('checkemail', {email})
@@ -58,10 +61,11 @@ export const useAuthStore = defineStore('authStore', {
       this.refresh = res.refresh 
       this.currency = res.currency 
       this.verify = res.verify 
+      this.isLogin = true
       return res;
     }
   },
   persist: {
-    paths: ['user', 'token', 'refresh', 'currency']
+    paths: ['user', 'token', 'refresh', 'currency', 'isLogin']
   }
 })

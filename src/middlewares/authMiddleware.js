@@ -14,13 +14,26 @@ export const useAuthMiddleware = (router) => {
   axios.interceptors.response.use(
     async response => {
       const responseData = response.data;
+      
       if (Array.isArray(responseData.error) && responseData.error.includes('invalid_token')) {
         authStore.user = null
         authStore.token = null
         authStore.verify = null
         authStore.refresh = null
+        authStore.isLogin = false
      
       }
+
+      if (Array.isArray(responseData.error) && responseData.error.includes('token_expired')) {
+        authStore.user = null
+        authStore.token = null
+        authStore.verify = null
+        authStore.refresh = null
+        authStore.isLogin = false
+     
+      }
+
+
       return response;
 
     },
@@ -30,6 +43,7 @@ export const useAuthMiddleware = (router) => {
         authStore.token = null
         authStore.verify = null
         authStore.refresh = null
+        authStore.isLogin = false
         return error.response
       }
     }

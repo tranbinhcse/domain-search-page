@@ -1,6 +1,7 @@
 
 
-import DomainSearch from '@/pages/domain/DomainSearch.vue'
+import DomainDetail from '@/pages/domain/DomainDetail.vue'
+import DomainManage from '@/pages/domain/DomainManage.vue'
 import DomainConfig from '@/pages/cart/DomainConfig.vue'
 
 export const DEFAULT_LAYOUT = () => import('@/layouts/DefaultLayout.vue');
@@ -11,7 +12,7 @@ const DomainRoutes = [
     {
         path: 'domains',
         name: 'domains',
-        component: DomainSearch,
+        component: DomainManage,
         meta: {
             locale: 'menu.clientarea.domains',
             requiresAuth: true,
@@ -19,10 +20,13 @@ const DomainRoutes = [
         },
         
     },
+
+ 
+
     {
         path: 'domains/:id/:domain?',
         name: 'domainDetails',
-        component: DomainConfig,
+        component: DomainDetail,
         meta: {
             locale: 'menu.clientarea.domains',
             requiresAuth: true,

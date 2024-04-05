@@ -38,10 +38,27 @@ const router = createRouter({
  
 // import vi from "dayjs/locale/vi";
   
-  
-
-app.config.globalProperties.$dayjs = dayjs;
 app.use(dayjs);
+
+const dayFormat = (value, formats = "DD/MM/YYYY") => {
+ 
+  if(value == '0000-00-00') {
+    return '-'
+  }
+  if(dayjs(value).isValid()){
+    return dayjs(value).format(formats);
+  } else {
+    return '-'
+  }
+
+   
+
+
+  
+}
+app.config.globalProperties.$dayjs = dayFormat;
+
+
  
 
 

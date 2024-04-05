@@ -5,6 +5,7 @@ import Dashboard from '@/pages/Dashboard.vue'
 
 import BillingRoutes from './billing'
 import ServiceRoutes from './service'
+import WebsiteRoutes from './website'
 import DomainRoutes from './domain'
 import SecurityRoutes from './security'
 import LogsRoutes from './logs'
@@ -37,6 +38,7 @@ const ClientAreaRoutes = [
               },
             ...BillingRoutes,
             ...ServiceRoutes,
+            ...WebsiteRoutes,
             ...DomainRoutes,
             ...SecurityRoutes,
             ...LogsRoutes,

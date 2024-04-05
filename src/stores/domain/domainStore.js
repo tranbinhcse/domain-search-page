@@ -4,21 +4,27 @@ import DomainRepository from '@/repositories/DomainRepository'
 
 export const useDomainStore = defineStore('domainStore', () => {
   const loading = ref(false)
-  const page = ref(1)
+  const page = ref(0)
+  const records = ref(0)
+  const perpage = ref(10)
   const totalPages = ref(0)
   const domains = ref([])
   const filter = ref({
-    status: 'Active'
+    status: ''
   })
 
   async function getDomains() {
-    const res = await DomainRepository.get({ page: page.value, perpage: 10, filter: filter.value })
+    loading.value = true
+    const res = await DomainRepository.get({ page: page.value, perpage: perpage.value, filter: filter.value })
     domains.value = res.domains
     page.value = res.page
+    records.value = res.records
+    perpage.value = res.perpage
     totalPages.value = res.totalPages
+    loading.value = false
   }
 
-  watch([page, filter], getDomains, {deep: true})
+  watch([page, perpage, filter], getDomains, {deep: true})
   
-  return { loading, page, totalPages, domains, filter, getDomains }
+  return { loading, page, perpage, records, totalPages, domains, filter, getDomains }
 })

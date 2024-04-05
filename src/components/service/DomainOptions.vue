@@ -31,15 +31,32 @@
                   : 'text-black hover:bg-white/[0.12]  border-b-2 border-gray-50',
               ]">Sủ dụng tên miền đã có</span>
               </Tab>
+             
+              <Tab  v-slot="{ selected }" class="focus-visible:outline-none mb-4" v-if="options.subdomain">
+                  <span :class="[
+                'w-full py-2.5 text-sm font-medium leading-5 px-8 py-4 focus-visible:outline-none',
+                'ring-white/60  focus:outline-none hover:border-gray-300 hover:text-green-500',
+                selected
+                  ? ' text-green-500 border-b-2 border-green-500'
+                  : 'text-black hover:bg-white/[0.12]  border-b-2 border-gray-50',
+              ]">Tên miền phụ miễn phí</span>
+              </Tab>
             
             </TabList>
             <TabPanels>
               <TabPanel v-if="options.owndomain">
                   <div class="search-form-wrapper w-full bg-gradient-to-r from-green-500 from-10% via-green-600 to-green-300 rounded-t-md p-6">
-                    <form @submit.prevent="handleSearchSubmit" action="/" method="get" class=" relative  focus-visible:outline-none focus:outline-none focus:outline-none" >
-                      <Input type="text" append="heroicons-outline:search" v-model="searchKey" name="domain" placeholder="Nhập tên thương hiệu" size="leading-[32px]" class="bg-white rounded-md text-black w-full forcus-visible:outline-none focus:outline-none" />
-                      <Button :isLoading="searching" type="submit" text="Tìm kiếm" icon="heroicons-outline:search" class="flex-auto absolute right-0 top-[50%] h-[50px] -translate-y-[50%] rounded-tr-md rounded-br-md focus:outline-none" />
-                    </form>
+                     <div class="search-form-wrapper relative" >
+                      <a-input type="text" allow-clear required v-model="searchKey" name="domain" placeholder="Nhập tên thương hiệu" class="w-full text-3xl h-[65px]" />
+                      <a-button type="primary" :loading="searching" @click="handleSearchSubmit" class="absolute top-1/2 -translate-y-1/2 right-[10px] h-[45px]"  >
+                        Tìm kiếm
+                        <template #icon>
+                          <IconSearch />
+                        </template>
+                      </a-button>
+                    </div>
+
+                    
                     <div class="spotlight-list flex flex-[2_2_0%]">
                       <div class="spotlight-col" v-for="tld in tldsSpotlight">
                         <div class="spotlight">
@@ -55,20 +72,51 @@
               </TabPanel>
               <TabPanel  v-if="options.register == '1'">
                 <div class="search-form-wrapper w-full bg-gradient-to-r from-green-500 from-10% via-green-600 to-green-300 rounded-t-md p-6">
-                  <form @submit.prevent="handleSearchSubmit" action="/" method="get" class=" relative  focus-visible:outline-none focus:outline-none focus:outline-none" >
-                    <Input type="text" append="heroicons-outline:search" v-model="searchKey" name="domain" placeholder="Nhập tên miền của bạn" size="leading-[32px]" class="bg-white rounded-md text-black w-full forcus-visible:outline-none focus:outline-none" />
-                    <Button :isLoading="searching" type="submit" text="Kiểm tra" icon="heroicons-outline:search" class="flex-auto absolute right-0 top-[50%] h-[50px] -translate-y-[50%] rounded-tr-md rounded-br-md focus:outline-none" />
-                  </form>
+                  
+                  <div class="search-form-wrapper relative" >
+                      <a-input type="text" allow-clear required v-model="searchKey" name="domain" placeholder="Nhập tên thương hiệu" class="w-full text-3xl h-[65px]" />
+                      <a-button type="primary" :loading="searching" @click="handleSearchSubmit" class="absolute top-1/2 -translate-y-1/2 right-[10px] h-[45px]"  >
+                        Tìm kiếm
+                        <template #icon>
+                          <IconSearch />
+                        </template>
+                      </a-button>
+                    </div>
+
                 </div>
               </TabPanel>
               <TabPanel v-if="options.register == '1'">
                 <div class="search-form-wrapper w-full bg-gradient-to-r from-green-500 from-10% via-green-600 to-green-300 rounded-t-md p-6">
-                  <form @submit.prevent="handleSearchSubmit" action="/" method="get" class=" relative  focus-visible:outline-none focus:outline-none focus:outline-none" >
-                    <Input type="text" append="heroicons-outline:search" v-model="searchKey" name="domain" placeholder="Nhập tên miền của bạn" size="leading-[32px]" class="bg-white rounded-md text-black w-full forcus-visible:outline-none focus:outline-none" />
-                    <Button :isLoading="searching" type="submit" text="Kiểm tra" icon="heroicons-outline:search" class="flex-auto absolute right-0 top-[50%] h-[50px] -translate-y-[50%] rounded-tr-md rounded-br-md focus:outline-none" />
-                  </form>
+                  <div class="search-form-wrapper relative" >
+                      <a-input type="text" allow-clear required v-model="searchKey" name="domain" placeholder="Nhập tên thương hiệu" class="w-full text-3xl h-[65px]" />
+                      <a-button type="primary" :loading="searching" @click="handleSearchSubmit" class="absolute top-1/2 -translate-y-1/2 right-[10px] h-[45px]"  >
+                        Tìm kiếm
+                        <template #icon>
+                          <IconSearch />
+                        </template>
+                      </a-button>
+                    </div>
                 </div>
               </TabPanel>
+
+              <TabPanel v-if="options.subdomain">
+                <div class="search-form-wrapper w-full bg-gradient-to-r from-green-500 from-10% via-green-600 to-green-300 rounded-t-md p-6">
+
+                  <div class="search-form-wrapper relative" >
+                      <a-input type="text" allow-clear required v-model="searchKey" name="domain" placeholder="Nhập tên thương hiệu" class="w-full text-3xl h-[65px]" />
+                      <a-button type="primary" :loading="searching" @click="handleSearchSubmit" class="absolute top-1/2 -translate-y-1/2 right-[10px] h-[45px]"  >
+                        Tìm kiếm
+                        <template #icon>
+                          <IconSearch />
+                        </template>
+                        {{options.subdomain}}
+                      </a-button>
+                    </div>
+ 
+                </div>
+              </TabPanel>
+
+
             </TabPanels>
         </TabGroup>
 
@@ -132,12 +180,33 @@
                     </div>
                   </div>
                 </div>
-                <div class="actions min-w-[200px] text-right">
-                  <div v-if="domain.status == 'inCheck'"><Button btnClass="bg-white text-gray" icon="heroicons-outline:search" isLoading textLoading="Đang kiểm tra..." ></Button></div>
-                  <div v-else-if="domain.avaliable === false"><Button btnClass="bg-gray-50 text-gray" icon="heroicons-outline:user" :link="`/whois/${ domain.domain }`" text="Xem whois" /></div>
-                  <div v-else-if="domain.inCart"><Button  btnClass="bg-red-50 text-red-500" icon="heroicons-outline:credit-card" link="/cart" text="Thanh toán" /></div>
-                  <div v-else><Button btnClass="text-green-500 border border-green-500 px-3 py-2" icon="heroicons-outline:shopping-cart" text="Chọn"   /></div>
-                </div>
+                <div class="actions min-w-[300px] flex justify-end">
+            <div v-if="domain.status == 'inCheck'"><a-button type="primary" icon="heroicons-outline:search" loading textLoading="Đang kiểm tra..." ></a-button></div>
+            <div v-else-if="domain.avaliable === false"><a-button type="secondary" icon="heroicons-outline:user" @click.stop="getWhoisInfo(domain)" text="Xem whois">Xem whois</a-button>  </div>
+            <div v-else-if="domain.inCart">
+              <a-button type="outline" status="danger" @click="handlePayCart()">
+                Thanh toán
+                <template #icon>
+                  <Icon icon="heroicons-outline:credit-card" />
+                </template>
+              </a-button>
+            </div>
+            <div v-else>
+              <a-button @click="addToCart(domain)" type="primary">
+                Đăng ký
+                <template #icon>
+                    <Icon icon="heroicons-outline:shopping-cart" />
+                </template>
+              </a-button>
+            </div>
+            <div v-if="domain.inCart" class="text-right">
+              <a-button @click="removeInCart(domain)" type="text" >
+                  <template #icon>
+                      <Icon icon="mdi:times" />
+                  </template>
+              </a-button>
+            </div>
+          </div>
             </div>
           </div>
         </div>

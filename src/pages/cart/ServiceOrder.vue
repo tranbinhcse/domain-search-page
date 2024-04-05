@@ -54,7 +54,7 @@
             </RadioGroup>
           </div>
 
-
+ 
 
           <div v-if="type == 'checkbox'">
             <div class="relative flex items-start py-1"  v-for="item in items" :key="item.id" :value="item.id">
@@ -72,7 +72,6 @@
           </div>
 
           <div v-if="type == 'input' || type == 'sliderinput' || type == 'slidersequenced' || type == 'qty'"> 
-        
             <Input  v-for="item in items" :key="item.id" :value="item.id" type="text" aria-describedby="email-description" />
           </div>
 
@@ -85,6 +84,13 @@
               :max="maxvalue"
               :step="step"
             />
+ 
+            <a-select  v-if="type == 'select'" :style="{width:'320px'}" v-model="product.custom[id]" placeholder="Please select ..." allow-clear>
+                <a-option  v-for="item in items" :key="item.id" :value="item.id" v-slot="{ checked, active }">{{item.title}} - {{$currency(item.price)}}</a-option>
+             
+              </a-select>
+
+              
   
 
 

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
-import { get, post } from '@/core/apiClient'
-import { reactive, ref, watch, onMounted } from 'vue'
+import {  post } from '@/core/apiClient'
+import { ref, watch,  } from 'vue'
 import ProductRepository from '@/repositories/ProductRepository'
 import PaymentRepository from '@/repositories/PaymentRepository'
 
@@ -25,6 +25,11 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
     if (!selectedProduct.value) return
     product.value = await ProductRepository.getConfiguration(selectedProduct.value)
   }
+
+//  async function getProductDomainOptions() {
+//     if (!selectedProduct.value) return
+//     // product.value = await ProductRepository.getDomainOptions(selectedProduct.value)
+//   }
 
   async function getPaymentMethods() {
     const payments = await PaymentRepository.getPaymentMethods()

@@ -2,6 +2,8 @@
 import DomainSearch from '@/pages/domain/DomainSearch.vue'
 import DomainConfig from '@/pages/cart/DomainConfig.vue'
 import ServiceOrder from '@/pages/cart/ServiceOrder.vue'
+import Website from '@/pages/cart/Website/Index.vue'
+import WebsiteDomain from '@/pages/cart/Website/Domain.vue'
 
 export const DEFAULT_LAYOUT = () => import('@/layouts/DefaultLayout.vue');
 
@@ -18,6 +20,30 @@ const CartRoutes = [
           order: 0,
         },
         children: [
+
+            {
+                path: 'website',
+                name: 'CreateWebsite',
+                component: Website,
+                meta: {
+                    locale: 'menu.cart.website',
+                    requiresAuth: true,
+                    roles: ['*'],
+                },
+            },
+
+            {
+                path: 'website/domain',
+                name: 'DomainWebsite',
+                component: WebsiteDomain,
+                meta: {
+                    locale: 'menu.cart.website',
+                    requiresAuth: true,
+                    roles: ['*'],
+                },
+            },
+
+
             {
                 path: 'domain-search',
                 name: 'DomainSearch',

@@ -26,4 +26,10 @@
   });
 </script>
 
+
+<style>
+body{
+  width: 100% !important;
+}
+</style>
  
