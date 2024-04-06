@@ -1,24 +1,17 @@
 <template>
     <div class="h-full">
-      
        
-{{domain}}
 
       <div class="max-w-7xl m-auto mt-5" id="searchResults" ref="searchResultsRef">
-
+ 
         <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             <li v-for="theme in themes" :key="theme.id" class="col-span-1 flex flex-col rounded-lg bg-white text-center shadow">
-            <div class="theme-view" :style="`background-image: url(${theme.imageUrl})`">
-
-                <h3 class="mt-6 text-sm font-medium text-gray-900">{{ theme.name }}</h3>
-                <dl class="mt-1 flex flex-grow flex-col justify-between">
-                  <dt class="sr-only">Title</dt>
-                </dl>
-            </div>
+            <div class="theme-view" :style="`background-image: url(${theme.image})`"></div>
             <div class="p-2 ">
+                <h3 class="mb-6 font-bold text-gray-900">{{ theme.name }}</h3>
                 <div class="-mt-px flex justify-between ">
                 <div class="">
-                   <a-button type="link"  size="small">Xem thực tế</a-button>
+                   <a class="text-sm font-medium text-gray-900 p-2" :href="theme.url_demo" target="_blank">Xem thực tế</a>
                 </div>
                 <div class="flex-auto">
                   <a-button type="outline" size="small" class="w-full" @click="handleChoiesDomain(theme)">
@@ -87,14 +80,13 @@
   import { useDomainSearchStore } from "@/stores/domain/domainSearchStore";
   import { storeToRefs } from 'pinia'
 
-
   const domainSearchStore = useDomainSearchStore()
   const { getDomainTlds } = domainSearchStore
 
 
   const webStore = useWebStore()
-  const { createWebsite } = webStore 
-  const {   themeSelected, domain } = storeToRefs(webStore)
+  const { createWebsite, getThemes } = webStore 
+  const {   themeSelected, domain, themes } = storeToRefs(webStore)
   
   const router = useRouter()
 
@@ -131,7 +123,7 @@
     visible.value = true;
   }
   onMounted(() => {
-    
+    getThemes()
   })
 
   const handleTabClick = (key) => {
@@ -139,59 +131,7 @@
   }
   
 
-
-const themes = [
-    {
-        id: 1,
-        name: 'Jane Cooper',
-        title: 'Paradigm Representative',
-        imageUrl:
-        'https://vina.page/files/builder/images/template/spa2.jpg',
-    },
-     {
-      id: 2,
-        name: 'Jane Cooper',
-        title: 'Paradigm Representative',
-        imageUrl:
-        'https://vina.page/files/builder/images/template/spa2.jpg',
-    },
-     {
-      id: 3,
-        name: 'Jane Cooper',
-        title: 'Paradigm Representative',
-        imageUrl:
-        'https://vina.page/files/builder/images/template/spa2.jpg',
-    },
-     {
-      id: 4,
-        name: 'Jane Cooper',
-        title: 'Paradigm Representative',
-        imageUrl:
-        'https://vina.page/files/builder/images/template/spa2.jpg',
-    },
-     {
-        name: 'Jane Cooper',
-        title: 'Paradigm Representative',
-        imageUrl:
-        'https://vina.page/files/builder/images/template/spa2.jpg',
-    },
-     {
-        name: 'Jane Cooper',
-        title: 'Paradigm Representative',
-        imageUrl:
-        'https://vina.page/files/builder/images/template/spa2.jpg',
-    },
-     {
-        name: 'Jane Cooper',
-        title: 'Paradigm Representative',
-        imageUrl:
-        'https://vina.page/files/builder/images/template/spa2.jpg',
-    },
-    
-    
-]
-  
-  
+ 
    
   </script>
    <style lang="less">

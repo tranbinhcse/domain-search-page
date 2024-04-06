@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { reactive, ref, watch, onMounted } from 'vue'
 import CartRepository from '@/repositories/CartRepository'
+import WebsiteRepository from '@/repositories/WebsiteRepository'
  
 
 export const useWebStore = defineStore('webStore', {
@@ -11,6 +12,7 @@ export const useWebStore = defineStore('webStore', {
       loading: false,
       error: false,
       domain: '',
+      themes: [],
       themeSelected: {
         "type": "subdomain"
       },
@@ -23,13 +25,17 @@ export const useWebStore = defineStore('webStore', {
       this.user = null
       this.isLogin = false
     },
+
+    async getThemes(){
+      this.themes = await WebsiteRepository.themes();
+    },
     
     async createWebsite(router) {
      
         this.loading = true
 
       if(this.themeSelected.type == 'subdomain'){
-          this.domain = this.themeSelected.subdomain + '.cloudwp.vn'
+          this.domain = this.domain + '.cloudwp.vn'
       }
       
 
