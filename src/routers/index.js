@@ -1,6 +1,7 @@
 
  
 import NotFound from '@/pages/NotFound.vue'
+import Website from '@/pages/cart/Website/Index.vue'
 
 
 
@@ -26,15 +27,16 @@ const routes = [
       hideInMenu: true
     },
     children: [ 
+      {
+          path: '',
+          name: 'home',
+          component: Website,
+      },
         ...ClientAreaRoutes,
         ...SupportRoutes,
         ...CartRoutes,
         ...EkycRoutes,
-        {
-            path: '',
-            name: 'home',
-            component: NotFound,
-        },
+       
         
         {
             path: '/:pathMatch(.*)*',
