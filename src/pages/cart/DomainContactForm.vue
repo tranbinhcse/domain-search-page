@@ -12,7 +12,7 @@
                    :rules="[{required:true,message:'name is required'},{minLength:5,message:'must be greater than 5 characters'}]"
                    :validate-trigger="['change','input']"
       >
-        <a-input v-model="forms.registrant.name" placeholder="please enter your username..." />
+        <a-input v-model="forms.registrant.companyname" placeholder="please enter your username..." />
       </a-form-item>
       <a-form-item  v-if="forms.registrant.type === 'org'" field="registrant.taxid" label="Mã số thuế "
                    :rules="[{required:true,message:'taxid is required'},{minLength:5,message:'must be greater than 5 characters'}]"
