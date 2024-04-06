@@ -202,8 +202,8 @@
      import { useRouter } from 'vue-router'
      const domainRegisterStore = useDomainRegisterStore()
      const cartStore = useCartStore() 
-     const { updateItem, getQuote, order } = cartStore
-     const { removeInCart, } = domainRegisterStore
+     const { updateItem, getQuote, order, removeInCart } = cartStore
+
      const { cartQuote, cartItems, quoteLoading, error, hasDomain, requestEkyc, loading } = storeToRefs(cartStore)
 
      const { contacts } = storeToRefs(domainRegisterStore)

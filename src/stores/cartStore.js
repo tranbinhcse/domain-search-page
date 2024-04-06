@@ -223,6 +223,7 @@ export const useCartStore = defineStore('cartStore', () => {
     if(!order.error){
       if(order.invoice_id != "0"){
         router.push({ name: 'invoiceDetails', params: { id: order.invoice_id } });
+        clearCart();
       }
     } 
     
