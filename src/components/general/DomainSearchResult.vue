@@ -288,6 +288,7 @@ import Tooltip from '@/components/base/Tooltip.vue';
 import Modal from '@/components/base/Modal.vue'
 import { useDomainSearchStore } from "@/stores/domain/domainSearchStore";
 import { useDomainRegisterStore } from "@/stores/domain/domainRegisterStore";
+import { useCartStore } from "@/stores/cartStore";
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 const router = useRouter()
@@ -296,9 +297,10 @@ const props = defineProps(['domains', 'topDomains'])
 
 const domainSearchStore = useDomainSearchStore()
 const domainRegisterStore = useDomainRegisterStore()
+const cartStore = useCartStore()
 const { getWhoisDomain } = domainSearchStore
-const { addToCart, removeInCart } = domainRegisterStore
-const { loading, cartItems } = storeToRefs(domainRegisterStore)
+const { addToCart, removeInCart } = cartStore
+const { loading, cartItems } = storeToRefs(cartStore)
 
 
 const viewWhoisDomain = ref(false)
@@ -320,7 +322,7 @@ const handlePayCart = () => {
 
   if (cartItems.value.length > 0) {
     // Extract the 'name' property from each domain in cartItems
-    router.push({ path: '/config-domain' });
+    router.push({ path: '/cart/shopping-cart' });
   } else {
     // Handle the case when cartItems is empty
     console.warn('Cart is empty. Add domains to the cart before proceeding.');

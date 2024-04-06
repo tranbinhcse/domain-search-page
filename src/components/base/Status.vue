@@ -24,6 +24,7 @@ const status = ref({
       "Terminated" : "black",
       "Cancelled" : "gray",
       "Unpaid" : "red",
+      "Paid" : "green",
     })
 
 </script>

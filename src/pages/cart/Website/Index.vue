@@ -85,7 +85,7 @@
 
 
   const webStore = useWebStore()
-  const { createWebsite, getThemes } = webStore 
+  const { createWebsite, getThemes, addCart } = webStore 
   const {   themeSelected, domain, themes } = storeToRefs(webStore)
   
   const router = useRouter()

@@ -273,20 +273,7 @@
     whoisInfo.value = whois
     loadingWhois.value = false
   }
-   
-  const handlePayCart = () => {
-    //https://my.tino.org/cart.php?domain[]=tino.vn&domain[]=nhanhoa.vn&aff=1&action=transfer
-  
-    if (cartItems.value.length > 0) {
-      // Extract the 'name' property from each domain in cartItems
-      router.push({ path: '/config-domain' });
-    } else {
-      // Handle the case when cartItems is empty
-      console.warn('Cart is empty. Add domains to the cart before proceeding.');
-    }
-  
-  
-  }
+    
 
 
   const handleChoiesDomain = (choise) => {

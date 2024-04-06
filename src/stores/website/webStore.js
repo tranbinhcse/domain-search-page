@@ -2,7 +2,8 @@ import { defineStore } from 'pinia'
 import { reactive, ref, watch, onMounted } from 'vue'
 import CartRepository from '@/repositories/CartRepository'
 import WebsiteRepository from '@/repositories/WebsiteRepository'
- 
+import { useCartStore } from "@/stores/cartStore";
+
 
 export const useWebStore = defineStore('webStore', {
 
@@ -16,6 +17,7 @@ export const useWebStore = defineStore('webStore', {
       themeSelected: {
         "type": "subdomain"
       },
+      cartItems: [],
     }
   },
   actions: {
@@ -29,57 +31,51 @@ export const useWebStore = defineStore('webStore', {
     async getThemes(){
       this.themes = await WebsiteRepository.themes();
     },
+
+ 
     
     async createWebsite(router) {
-     
-        this.loading = true
-
-      if(this.themeSelected.type == 'subdomain'){
-          this.domain = this.domain + '.cloudwp.vn'
-      }
-      
-
-      const items = [
-        {
-            "type": "product",
-            "product_id": 4015,
-            "domain": this.domain,
-            "cycle": "a",
-            "custom": {
-                21975: this.themeSelected.id
-            }
+      const cartStore = useCartStore()
+          this.loading = true
+        if(this.themeSelected.type == 'subdomain'){
+            this.domain = this.domain + '.cloudwp.vn'
         }
-      ]
+        
 
-      if(this.themeSelected.type == 'register'){
-          const itemDomain = {
-              "type": "domain",
-              "name": this.domain,
-              "action": "register",
-              "years": 1,
-              
+        const itemWeb = 
+          {
+              "itemType": "product",
+              "type": "product",
+              "product_id": 4015,
+              "domain": this.domain,
+              "cycle": "a",
+              "custom": {
+                  21975: this.themeSelected.id
+              }
           }
-          items.push(itemDomain)
-      }
+        
+          cartStore.addToCart(itemWeb)
 
-      const ord = await CartRepository.order(items, "8", "1" )
+        if(this.themeSelected.type == 'register'){
+            const itemDomain = {
+                "itemType": "domain",
+                "type": "domain",
+                "name": this.domain,
+                "domain": this.domain,
+                "action": "register",
+                "years": 1,
+                
+            }
+            cartStore.addToCart(itemDomain)
+        }
 
-      if(!ord.error) {
-        this.themeSelected = {}
-        this.domain = ''
-          if(ord.total == 0){
-            router.push({ name: 'WebsiteDetails', params: { id: ord.items[0].id } })
-          } else {
-            router.push({ name: 'invoiceDetails', params: { id: ord.invoice_id } })
-          }
-          
-      } 
+        router.push({ name: 'DomainConfig' })
 
-      this.loading = false
+        this.loading = false
 
-  }
+    }
   },
   persist: {
-    paths: ['themeSelected', 'domain']
+    paths: ['themeSelected', 'domain', 'cartItems']
   }
 })  

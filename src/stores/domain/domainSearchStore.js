@@ -140,7 +140,7 @@ async function searchDomains(loadMore = false) {
       type: 'register',
       epp: tldObject.epp,
       options: tldObject.options,
-      
+      itemType: 'domain'
       // Các trường khác từ tldObject nếu cần
     };
   }

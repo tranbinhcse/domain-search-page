@@ -2,7 +2,7 @@
 
 import invoiceDetails from '@/pages/billing/InvoiceDetails.vue'
 // import DomainSearch from '@/pages/domain/DomainSearch.vue'
-import DomainConfig from '@/pages/cart/DomainConfig.vue'
+import Invoices from '@/pages/billing/Invoices.vue'
 
 export const DEFAULT_LAYOUT = () => import('@/layouts/DefaultLayout.vue');
 
@@ -12,7 +12,7 @@ const BillingRoutes = [
     {
         path: 'invoices',
         name: 'invoices',
-        component: DomainConfig,
+        component: Invoices,
         meta: {
             locale: 'menu.clientarea.invoices',
             requiresAuth: true,

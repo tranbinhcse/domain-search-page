@@ -1,6 +1,7 @@
 
 import DomainSearch from '@/pages/domain/DomainSearch.vue'
 import DomainConfig from '@/pages/cart/DomainConfig.vue'
+import Checkout from '@/pages/cart/Checkout.vue'
 import ServiceOrder from '@/pages/cart/ServiceOrder.vue'
 import Website from '@/pages/cart/Website/Index.vue'
 import WebsiteDomain from '@/pages/cart/Website/Domain.vue'
@@ -64,6 +65,16 @@ const CartRoutes = [
                     requiresAuth: false,
                     roles: ['*'],
                 },
+            },  
+            {
+                path: 'shopping-cart',
+                name: 'shopping-cart',
+                component: DomainConfig,
+                meta: {
+                    locale: 'menu.domains',
+                    requiresAuth: false,
+                    roles: ['*'],
+                },
             }, 
 
             {
@@ -75,7 +86,7 @@ const CartRoutes = [
             {
                 path: 'checkout',
                 name: 'checkout',
-                component: DomainConfig,
+                component: Checkout,
             },
         ],
       },

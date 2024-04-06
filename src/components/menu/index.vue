@@ -4,7 +4,7 @@
       <a-menu-item key="1" >Trang chủ</a-menu-item>
       <a-menu-item key="2" @click="handleMenuClick('domains')">Tên miền</a-menu-item>
       <a-menu-item key="website" @click="handleMenuClick('website')">Website</a-menu-item>
-      <a-menu-item key="invoice" @click="handleMenuClick('invoice')">Hoá đơn</a-menu-item>
+      <a-menu-item key="invoice" @click="handleMenuClick('invoices')">Hoá đơn</a-menu-item>
       <a-menu-item key="support" @click="handleMenuClick('support')">Hỗ trợ</a-menu-item>
     </a-menu>
   </div>
