@@ -247,15 +247,15 @@ const nextStep = (v) => {
     background-size:78px 45px;
     opacity:.5;
 }
-.group_cmnd .cmnd_4:before{
+/* .group_cmnd .cmnd_4:before{
     background:url(@/assets/ekyc/black_watermask.svg) center no-repeat,#F6F6F6;
     opacity:1;
-}
+} */
 
-.group_cmnd.sau .cmnd_4:before{
+/* .group_cmnd.sau .cmnd_4:before{
     background:url(@/assets/ekyc/sau__watermask.svg) center no-repeat,#F6F6F6;
     opacity:1;
-}
+} */
 .group_cmnd .cmnd:after{
     width:20px;
     height:20px;
