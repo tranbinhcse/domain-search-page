@@ -1,7 +1,7 @@
 <template>
   <div class="menu-demo">
     <a-menu mode="horizontal" :default-selected-keys="['1']">
-      <a-menu-item key="1" >Trang chủ</a-menu-item>
+      <a-menu-item key="1" @click="handleMenuClick('home')">Trang chủ</a-menu-item>
       <a-menu-item key="2" @click="handleMenuClick('domains')">Tên miền</a-menu-item>
       <a-menu-item key="website" @click="handleMenuClick('website')">Website</a-menu-item>
       <a-menu-item key="invoice" @click="handleMenuClick('invoices')">Hoá đơn</a-menu-item>

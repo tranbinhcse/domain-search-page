@@ -60,7 +60,7 @@
               </a-button>
             </div>
             <div v-else>
-              <a-button @click="addToCart(domain)" type="primary">
+              <a-button @click="handleChoiesDomain(domain)" type="primary">
                 Đăng ký
                 <template #icon>
                     <Icon icon="heroicons-outline:shopping-cart" />
