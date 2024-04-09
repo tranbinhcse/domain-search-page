@@ -1,7 +1,7 @@
 <template>
     <div class="max-w-7xl mx-auto mt-5">
 
-<div class="flex pb-4 gap-x-3">
+<div class="grid grid-cols-2 pb-4 gap-4" :column="2">
     <div class="main-service bg-white flex-1 p-6">
         
         <h3 class="text-xl font-bold">Thông tin website</h3>
@@ -10,9 +10,28 @@
         <p>Trạng thái: {{service.status}} </p>
         <p>Ngày tạo: {{service.date_created}} </p>
         <p>Ngày hết hạn: {{service.expires}} </p>
-    
+        <a-button type="primary" @click="handleOpenWebsite()">Truy cập website</a-button>
     </div>
-    <div class="sidebar-service bg-white max-w-2xl flex-1 p-6">fsdfs</div>
+    <div class="sidebar-service bg-white max-w-2xl flex-1 p-6">
+        <h3 class="text-xl font-bold mb-4">Danh sách tài khoản</h3>
+        <a-table :loading="loading" :columns="columns" :data="users" size="large" :pagination="false">
+            <template #actions="{ record, rowIndex }">
+                <a-button type="outline" size="small" @click="handleLoginWP(id, record.user_email)">
+                    <template #icon>
+                        <icon-user />
+                    </template>
+                    Login</a-button>
+            </template>
+        </a-table>
+    </div>
+    <div class="sidebar-service bg-white max-w-2xl flex-1 p-6">
+        <h3 class="text-xl font-bold mb-4">Danh sách Plugins</h3>
+        <a-table :loading="loading" :columns="PluginColumns" :data="plugins" size="large" :pagination="false"></a-table>
+    </div>
+    <div class="sidebar-service bg-white max-w-2xl flex-1 p-6">
+        <h3 class="text-xl font-bold mb-4">Danh sách Themes</h3>
+        <a-table :loading="loading" :columns="ThemeColumns" :data="themes" size="large" :pagination="false"></a-table>
+    </div>
 </div>
 
 </div>
@@ -26,20 +45,109 @@ import { onMounted, ref } from 'vue'
 
 
 import { useServiceDetailStore } from '@/stores/service/serviceDetailStore'
+import { useWebsiteDetailStore } from '@/stores/website/websiteDetailStore'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 const serviceDetailStore = useServiceDetailStore()
+const websiteDetailStore = useWebsiteDetailStore()
+const { getUsers, getUrlLogin, getWPPlugins, getWPThemes } = websiteDetailStore
 const { getService } = serviceDetailStore
-const { loading, service } = storeToRefs(serviceDetailStore)
+const { service } = storeToRefs(serviceDetailStore)
+const { loading, users, plugins, themes } = storeToRefs(websiteDetailStore)
 
 const route = useRoute()
+const id = ref(route.params.id);
 const currentModule = ref(null)
 
 onMounted(async () => {
-    await getService(route.params.id) 
+    await getService(route.params.id) ;
     // Dynamic import based on moduleName
+    await getUsers(route.params.id);
+    await getWPPlugins(route.params.id);
+    await getWPThemes(route.params.id);
+
     
 })
+
+const handleOpenWebsite = () => {
+    const url = 'https://' + service.value.domain
+    window.open(url, '_blank');
+}
+const handleLoginWP = async (id, user_email) => {
+    const url = await getUrlLogin(id, {email: user_email})
+    window.open(url, '_blank');
+}
+
+const columns = [
+      {
+        title: 'Name',
+        dataIndex: 'display_name',
+        slotName: 'display_name'
+      },
+       
+      {
+        title: 'Email',
+        dataIndex: 'user_email',
+        slotName: 'user_email',
+      },
+      {
+        title: 'Roles',
+        dataIndex: 'roles',
+        slotName: 'roles',
+      },
+      {
+        title: 'Tuỳ chọn',
+        dataIndex: 'actions',
+        slotName: 'actions',
+      }
+    ];
+
+const PluginColumns = [
+      {
+        title: 'Name',
+        dataIndex: 'name',
+        slotName: 'name'
+      },
+       
+      {
+        title: 'status',
+        dataIndex: 'status',
+        slotName: 'status',
+      },
+      {
+        title: 'version',
+        dataIndex: 'version',
+        slotName: 'version',
+      },
+      {
+        title: 'Tuỳ chọn',
+        dataIndex: 'actions',
+        slotName: 'actions',
+      }
+    ];
+const ThemeColumns = [
+      {
+        title: 'Name',
+        dataIndex: 'name',
+        slotName: 'name'
+      },
+       
+      {
+        title: 'status',
+        dataIndex: 'status',
+        slotName: 'status',
+      },
+      {
+        title: 'version',
+        dataIndex: 'version',
+        slotName: 'version',
+      },
+      {
+        title: 'Tuỳ chọn',
+        dataIndex: 'actions',
+        slotName: 'actions',
+      }
+    ];
 
 </script>
 

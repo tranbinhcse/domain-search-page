@@ -13,7 +13,7 @@ export const useWebStore = defineStore('webStore', {
       loading: false,
       error: false,
       domain: '',
-      themes: [],
+      themes: [], 
       themeSelected: {
         "type": "subdomain"
       },
@@ -32,6 +32,7 @@ export const useWebStore = defineStore('webStore', {
       this.themes = await WebsiteRepository.themes();
     },
 
+ 
  
     
     async createWebsite(router) {

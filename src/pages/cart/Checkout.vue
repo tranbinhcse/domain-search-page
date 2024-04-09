@@ -93,7 +93,6 @@
              </li>
              <li v-if="freeVN.data?.promotionCode">
               <p>Tên miền <b>{{ freeVN.data?.domainName }}</b> sẽ tự động giảm giá khi bạn hoàn tất đơn hàng.</p>
-              
              </li>
            </ul>
            <div>
@@ -110,7 +109,7 @@
                 </a-form>
               
             </Box>
-            <Box> 
+            <Box v-if="errorPromo"> 
               <p> {{ errorPromo }}</p>
             </Box>
             <Box v-if="hasDomain">
