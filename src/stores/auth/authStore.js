@@ -24,6 +24,12 @@ export const useAuthStore = defineStore('authStore', {
         this.loading = false
         return
       }
+      if(data.client.company){
+        data.client.type = 'org'
+      } else {
+        data.client.type = 'ind'
+      }
+
       this.user = data.client 
       this.token = data.token 
       this.refresh = data.refresh 

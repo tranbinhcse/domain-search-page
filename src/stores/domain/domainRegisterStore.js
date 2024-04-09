@@ -1,5 +1,6 @@
 import { defineStore, storeToRefs } from 'pinia'
 import { useUserStore } from "@/stores/auth/userStore.js";
+import { useAuthStore } from "@/stores/auth/authStore.js";
 import CartRepository from '@/repositories/CartRepository';
 import { useCartStore  } from '@/stores/cartStore';
 export const useDomainRegisterStore = defineStore({
@@ -40,13 +41,14 @@ export const useDomainRegisterStore = defineStore({
     },
 
     updateRegistrantFromUser() {
-      const userStore = useUserStore();
-      const { user } = storeToRefs(userStore);
-      // console.log(user.value.client);
-      this.contacts.registrant = { ...user.value.client }; // Assuming user structure matches registrant
-      if(user.value.client.company){
-        this.contacts.registrant.type == 'org'
-      }
+      const authStore = useAuthStore();
+      const { user } = storeToRefs(authStore);
+      
+    
+    
+
+      this.contacts.registrant = { ...user.value }; // Assuming user structure matches registrant
+
     },
     async getFreePromoVN(options) {
       const res = await CartRepository.getFreePromocode(options);

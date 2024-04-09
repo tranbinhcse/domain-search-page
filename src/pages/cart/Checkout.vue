@@ -250,7 +250,7 @@
       listDomainFree();
        getQuote();
 
-       if(!confirmContact.value){
+       if(!confirmContact.value && hasDomain){
         router.push({path: '/cart/shopping-cart'})
        }
 

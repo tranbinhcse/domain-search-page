@@ -19,6 +19,11 @@ export const useUserStore = defineStore('userStore', {
         this.loading = false
         return
       }
+      if(data.company){
+        data.type = 'org'
+      } else {
+        data.type = 'ind'
+      }
       this.user = data
       return data;
     }
