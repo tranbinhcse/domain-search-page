@@ -245,12 +245,12 @@
         getFreePromocode()
    };
      
-  
+   
      onMounted(() => {
       listDomainFree();
        getQuote();
-
-       if(!confirmContact.value && hasDomain){
+      console.log(hasDomain);
+       if(!confirmContact.value && hasDomain.value){
         router.push({path: '/cart/shopping-cart'})
        }
 
