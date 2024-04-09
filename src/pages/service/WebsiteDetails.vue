@@ -14,9 +14,9 @@
     </div>
     <div class="sidebar-service bg-white max-w-2xl flex-1 p-6">
         <h3 class="text-xl font-bold mb-4">Danh sách tài khoản</h3>
-        <a-table :loading="loading" :columns="columns" :data="users" size="large" :pagination="false">
+        <a-table :loading="loadingUser" :columns="columns" :data="users" size="large" :pagination="false">
             <template #actions="{ record, rowIndex }">
-                <a-button type="outline" size="small" @click="handleLoginWP(id, record.user_email)">
+                <a-button :loading="loadingLogin" type="outline" size="small" @click="handleLoginWP(id, record.user_email)">
                     <template #icon>
                         <icon-user />
                     </template>
@@ -26,11 +26,11 @@
     </div>
     <div class="sidebar-service bg-white max-w-2xl flex-1 p-6">
         <h3 class="text-xl font-bold mb-4">Danh sách Plugins</h3>
-        <a-table :loading="loading" :columns="PluginColumns" :data="plugins" size="large" :pagination="false"></a-table>
+        <a-table :loading="loadingPlugin" :columns="PluginColumns" :data="plugins" size="large" :pagination="false"></a-table>
     </div>
     <div class="sidebar-service bg-white max-w-2xl flex-1 p-6">
         <h3 class="text-xl font-bold mb-4">Danh sách Themes</h3>
-        <a-table :loading="loading" :columns="ThemeColumns" :data="themes" size="large" :pagination="false"></a-table>
+        <a-table :loading="loadingTheme" :columns="ThemeColumns" :data="themes" size="large" :pagination="false"></a-table>
     </div>
 </div>
 
@@ -53,7 +53,7 @@ const websiteDetailStore = useWebsiteDetailStore()
 const { getUsers, getUrlLogin, getWPPlugins, getWPThemes } = websiteDetailStore
 const { getService } = serviceDetailStore
 const { service } = storeToRefs(serviceDetailStore)
-const { loading, users, plugins, themes } = storeToRefs(websiteDetailStore)
+const { loading, users, plugins, themes, loadingTheme, loadingPlugin, loadingUser, loadingLogin } = storeToRefs(websiteDetailStore)
 
 const route = useRoute()
 const id = ref(route.params.id);
@@ -62,9 +62,9 @@ const currentModule = ref(null)
 onMounted(async () => {
     await getService(route.params.id) ;
     // Dynamic import based on moduleName
-    await getUsers(route.params.id);
-    await getWPPlugins(route.params.id);
-    await getWPThemes(route.params.id);
+     getUsers(route.params.id);
+     getWPPlugins(route.params.id);
+     getWPThemes(route.params.id);
 
     
 })

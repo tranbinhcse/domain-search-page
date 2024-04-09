@@ -11,6 +11,10 @@ export const useWebsiteDetailStore = defineStore('websiteDetailStore', {
   state: () => {
     return {
       loading: false,
+      loadingPlugin: false,
+      loadingTheme: false,
+      loadingUser: false,
+      loadingLogin: false,
       error: false,
       users: [],
       plugins: [],
@@ -22,27 +26,27 @@ export const useWebsiteDetailStore = defineStore('websiteDetailStore', {
     
 
     async getWPPlugins(id){
-        this.loading = true
+        this.loadingPlugin = true
         this.plugins = await WebsiteRepository.wp_plugins(id);
-        this.loading = false
+        this.loadingPlugin = false
     },
 
     async getWPThemes(id){
-        this.loading = true
+        this.loadingTheme = true
         this.themes = await WebsiteRepository.wp_themes(id);
-        this.loading = false
+        this.loadingTheme = false
     },
 
     async getUsers(id){
-        this.loading = true
+        this.loadingUser = true
         this.users = await WebsiteRepository.users(id);
-        this.loading = false
+        this.loadingUser = false
     },
 
     async getUrlLogin(id, options){
-        this.loading = true
+        this.loadingLogin = true
         const url = await WebsiteRepository.getUrlLogin(id, options);
-        this.loading = false
+        this.loadingLogin = false
         return url;
     }
  
