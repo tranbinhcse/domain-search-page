@@ -5,13 +5,14 @@ import ArcoVue from '@arco-design/web-vue';
 import ArcoVueIcon from '@arco-design/web-vue/es/icon';
 import '@arco-design/web-vue/dist/arco.less';
 import '@arco-themes/vue-mytino/index.less'
+import { Notification } from '@arco-design/web-vue';
 
 import dayjs from "dayjs";
 
 import i18n from './locales';
 
   
-import '@arco-design/web-vue/dist/arco.less';
+// import '@arco-design/web-vue/dist/arco.less';
 import '@arco-themes/vue-mytino/index.less';
 import './style.css'
 
@@ -57,7 +58,7 @@ const dayFormat = (value, formats = "DD/MM/YYYY") => {
   
 }
 app.config.globalProperties.$dayjs = dayFormat;
-
+Notification._context = app._context;
 
  
 

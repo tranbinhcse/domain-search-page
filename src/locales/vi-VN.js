@@ -16,6 +16,8 @@ export default {
     'menu.faq': 'FAQ',
     'navbar.docs': 'Docs',
     'navbar.action.locale': 'Đã chọn Tiếng Việt',
+    'Male': 'Nam',
+    'Female': 'Nữ',
     ...localeSettings,
     ...localeStatus
   };

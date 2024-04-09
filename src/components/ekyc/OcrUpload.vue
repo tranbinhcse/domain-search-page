@@ -42,20 +42,23 @@
 import { ref, defineProps, defineEmits } from 'vue';
 import { storeToRefs } from 'pinia'
 import { useEkycStore } from "@/stores/ekycStore.js";
+import { useDomainRegisterStore } from "@/stores/domain/domainRegisterStore.js";
 import { resizeImage } from "@/utility/ekyc/image-util.js";
 import { ocrFrontCardChecking, ocrBackCardChecking } from "@/utility/ekyc.js";
 import Alert from '@/components/base/Alert.vue'
 
+const domainRegisterStore = useDomainRegisterStore()
 const ekycStore = useEkycStore()
 const { recognition } = ekycStore
 const { loading, ocrData , ocrOK } = storeToRefs(ekycStore)
+const { contacts } = storeToRefs(domainRegisterStore)
 
 
 const props = defineProps({
     type: String
 })
 
-const emits = defineEmits(['update:modelValue']);
+const emits = defineEmits(['update:modelValue', 'dataImageCard']);
 const file = ref(null);
 const error = ref(null);
 const info = ref(null);
@@ -69,8 +72,7 @@ const handleFileChange = (event) => {
         const reader = new FileReader();
         reader.onloadend = (async(e) => {
             file.value = e.target.result;
-            // Gửi giá trị file đã chọn lên component cha
-            emits('update:modelValue', reader.result);
+            
             let resizedImageData = await resizeImage(reader.result);
            await recognition(props.type, resizedImageData)
            if(props.type == 'cardFront'){
@@ -98,8 +100,12 @@ const handleFrontData = (event) => {
         event.target.value = null;
         
     } else {
-     
         info.value = data.message;
+
+        // Gửi giá trị file đã chọn lên component cha
+        emits('dataImageCard', ocrData.value.cardFront);
+
+      
     }
 }
 const handleBackData = (event) => {

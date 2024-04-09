@@ -10,7 +10,8 @@ export default defineConfig({
       less: {
         modifyVars:{
           'size-8': '42px',
-          'arcoblue-6': '#f85959',          
+          'arcoblue-6': '#f85959',  
+          "menu-dark-bg": '#000',        
         },
         javascriptEnabled: true,        
       }

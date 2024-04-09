@@ -36,18 +36,13 @@ export const useWebStore = defineStore('webStore', {
     
     async createWebsite(router) {
       const cartStore = useCartStore()
-          this.loading = true
-        if(this.themeSelected.type == 'subdomain'){
-            this.domain = this.domain + '.cloudwp.vn'
-        }
-        
-
+        this.loading = true
         const itemWeb = 
           {
               "itemType": "product",
               "type": "product",
               "product_id": 4015,
-              "domain": this.domain,
+              "domain": this.themeSelected.type == 'subdomain' ? this.domain + '.cloudwp.vn' : this.domain,
               "cycle": "a",
               "custom": {
                   21975: this.themeSelected.id

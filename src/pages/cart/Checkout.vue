@@ -25,17 +25,22 @@
                              </div>
                              <p class="mt-1 mb-2 text-sm text-gray-500"><span class="uppercase">{{ product.tld }} </span>   Domain {{ product.action }}</p>
                              <p>Chu kỳ thanh toán: {{ product.years }}</p>
+                            
                          </div>
                          <div class="mt-4 sm:mt-0 sm:pr-9">
                              <div class="absolute right-0 top-0 text-right leading-10">
                                  <p class="text-md font-medium text-gray-900">{{ $currency(product.price) }}</p>
                                  <p class="text-gray-500 text-sm line-through"  v-if="product.before">{{ $currency(product.before) }}</p>
+                                 <p class="text-gray-500 text-sm"  v-if="product.data?.promocode">Miễn phí *</p>
                              </div>
                          </div>
                          </div>
+                         <p class="text-gray-500" v-if="product.data?.promocode">Đơn hàng sẽ tự động điều chỉnh giá 0đ khi phát hành hoá đơn.</p>
                      </div>
                    
                    </template>
+
+
                    <template v-if="product.type == 'product'">
                   
                      <div class="flex-shrink-0">
@@ -86,21 +91,38 @@
                
                   
              </li>
+             <li v-if="freeVN.data?.promotionCode">
+              <p>Tên miền <b>{{ freeVN.data?.domainName }}</b> sẽ tự động giảm giá khi bạn hoàn tất đơn hàng.</p>
+              
+             </li>
            </ul>
            <div>
+          
+            <Box v-if="!isPromocode && isFree && !errorPromo">
+             
+                <a-form ref="formRef" layout="vertical" @submit="getFreePromoVN({domain:domainRequestPromo, idnumber: contacts.registrant.nationalid})" >
+                    <a-form-item field="free_domain" no-style>
+                        <a-select v-model="domainRequestPromo" default-active-first-option >
+                            <a-option v-for="domain in domainFree" :key="domain.name" :value="domain.name">{{ domain.name }}</a-option>
+                        </a-select>
+                    </a-form-item>
+                    <a-button type="primary" htmlType="submit">Lấy mã miễn phí</a-button>
+                </a-form>
+              
+            </Box>
+            <Box> 
+              <p> {{ errorPromo }}</p>
+            </Box>
             <Box v-if="hasDomain">
+
+ 
                 <Heading text="Thông tin chủ thể tên miền" />
 
                 <a-descriptions column="1" bordered>
-                    <descriptions-item span="2" label="Tên chủ thể" v-if="contacts.registrant.type == 'org'"> {{ contacts.registrant.companyname }}</descriptions-item>
-                    <descriptions-item span="2" label="Mã số thuế" v-if="contacts.registrant.type == 'org'"> {{ contacts.registrant.taxid }}</descriptions-item>
-                    <descriptions-item span="2">
-                        <template #label v-if="contacts.registrant.type == 'ind'">
-                            Tên chủ thể
-                        </template>
-                        <template #label v-else>
-                            Người địa diện
-                        </template>
+                    <descriptions-item span="2" label="Tên chủ thể" v-if="contacts.registrant.type == 'org' || contacts.registrant.company"> {{ contacts.registrant.companyname }}</descriptions-item>
+                    <descriptions-item span="2" label="Mã số thuế" v-if="contacts.registrant.type == 'org' || contacts.registrant.company"> {{ contacts.registrant.taxid }}</descriptions-item>
+                    <descriptions-item span="2" label="Họ và tên">
+                       
                         {{ contacts.registrant.lastname }} {{ contacts.registrant.firstname }}
                     </descriptions-item>
 
@@ -198,16 +220,19 @@
      import { storeToRefs } from 'pinia'
    
      import { useCartStore } from "@/stores/cartStore";
+     import { useEkycStore } from "@/stores/ekycStore";
      import { useDomainRegisterStore } from "@/stores/domain/domainRegisterStore";
      import { useRouter } from 'vue-router'
      const domainRegisterStore = useDomainRegisterStore()
      const cartStore = useCartStore() 
-     const { updateItem, getQuote, order, removeInCart } = cartStore
+     const ekycStore = useEkycStore() 
+     const { updateItem, getQuote, order, removeInCart, getFreePromocode } = cartStore
 
      const { cartQuote, cartItems, quoteLoading, error, hasDomain, requestEkyc, loading } = storeToRefs(cartStore)
+    const { listDomainFree, getFreePromoVN } = domainRegisterStore
+     const { contacts, domainFree, isPromocode, freeVN, confirmContact, errorPromo } = storeToRefs(domainRegisterStore)
+     const { isFree } = storeToRefs(ekycStore)
 
-     const { contacts } = storeToRefs(domainRegisterStore)
- 
      const router = useRouter()
      const open = ref(false)
  
@@ -215,10 +240,20 @@
      await removeInCart(item)
      await getQuote();
    }
+
+   const getPromocodeVN = () => {
+        getFreePromocode()
+   };
      
   
      onMounted(() => {
+      listDomainFree();
        getQuote();
+
+       if(!confirmContact.value){
+        router.push({path: '/cart/shopping-cart'})
+       }
+
      })
      const createOrder = async() => {
        await order(router)
@@ -228,8 +263,15 @@
      }
 
      watch(() => error.value, (newErrors) => {
-         console.log(newErrors);
-        if (newErrors && newErrors.length > 0) {
+         
+        if (Array.isArray(newErrors) && newErrors.length === 1 && typeof newErrors[0] === 'string') {
+            // Nếu `newErrors` là một mảng chứa một chuỗi lỗi
+            Notification.error({
+                title: 'Đã có lỗi xảy ra',
+                content: newErrors[0]
+            });
+        } else if (Array.isArray(newErrors) && newErrors.length > 0) {
+            // Nếu `newErrors` là một mảng chứa các cặp key-value
             newErrors.forEach((errorArray) => {
                 const [key, errorItem] = errorArray;
                 Notification.error({
@@ -238,6 +280,7 @@
                 });
             });
         }
+        
      })
      
    </script>

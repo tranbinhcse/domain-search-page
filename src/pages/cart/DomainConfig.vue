@@ -4,8 +4,20 @@
       <h2 id="cart-heading">Gần xong rồi, chỉ còn một bức nữa thôi.</h2>
       <form class="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
         <section aria-labelledby="cart-heading" class="lg:col-span-7">
-     
-          <ul role="list" class="bg-white p-4 rounded">
+          <ul role="list" class="bg-white p-4 rounded" v-if="quoteLoading">
+            <a-skeleton :animation="true">
+                  <a-space direction="vertical" :style="{width:'100%'}" size="large">
+                    
+                    
+                    <a-row gutter="8">
+                      <a-col :span="4"> <a-skeleton-shape shape="circle" size="large" /></a-col>
+                      <a-col :span="16"><a-skeleton-line :rows="3" /></a-col>
+                      <a-col :span="4"><a-skeleton-line :rows="1" /></a-col>
+                    </a-row>
+                  </a-space>
+                </a-skeleton>
+          </ul>
+          <ul role="list" class="bg-white p-4 rounded" v-else>
             <li v-for="(product, productIdx) in cartItems" :key="product.tld" class="p-2  mb-2 border-b">
                 <div class="flex pb-3 sm:pb-6" v-if="product.error ==  false">
                   <template v-if="product.type == 'domain'">
@@ -104,10 +116,17 @@
           </ul>
           <div class="mt-8 bg-white p-4 rounded"  v-if="hasDomain">
             <Heading text="Thông tin chủ thể" class="text-green-500 uppercase text-lg border-b-2 border-gray-50 pb-2 mb-2" />
-            <DomainContactForm />
+            <template v-if="requestEkyc">
+              <DomainContactEkyc />
+            </template>
+            <template v-else>
+              <DomainContactForm  />
+            </template>
+           
+           
           </div>
           <div v-else class="mt-8">
-            <a-button type="primary" @click="goCheckout()" class="w-full">Tiếp tục</a-button>
+            <a-button v-if="!quoteLoading" type="primary" @click="goCheckout()" class="w-full">Tiếp tục</a-button>
           </div>
         </section>
 
@@ -181,6 +200,7 @@
     import Heading from '@/components/base/Heading.vue'
     import Switch from '@/components/base/Switch.vue';
     import DomainContactForm from '@/pages/cart/DomainContactForm.vue';
+    import DomainContactEkyc from '@/pages/cart/DomainContactEkyc.vue';
     import { storeToRefs } from 'pinia'
 
     import { useCartStore } from "@/stores/cartStore";
@@ -222,6 +242,8 @@
     const nextStep = () => {
       router.push({path: '/ekyc'})
     }
+
+
     
   </script>
   

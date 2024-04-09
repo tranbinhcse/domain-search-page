@@ -10,7 +10,7 @@ const WebsiteRoutes = [
 
     {
         path: 'website',
-        name: 'website',
+        name: 'WebsiteManage',
         component: WebsiteManage,
         meta: {
             locale: 'menu.clientarea.website',

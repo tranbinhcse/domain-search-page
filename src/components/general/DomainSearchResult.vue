@@ -213,6 +213,7 @@
               </a-button>
             </div>
             <div v-else>
+             
               <a-button @click="addToCart(domain)" type="primary">
                 Đăng ký
                 <template #icon>

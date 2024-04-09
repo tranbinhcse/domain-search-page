@@ -30,9 +30,14 @@ export const useCartStore = defineStore('cartStore', () => {
   };
 
   async function clearCart(){
+    const domainRegisterStore = useDomainRegisterStore()
+    const { freeVN, confirmContact } = storeToRefs(domainRegisterStore)
     cartItems.value = [];
     saveToLocalStorage()
-    getQuote()
+
+    freeVN.value = []
+    confirmContact.value = false
+    
   }
   
   
@@ -68,6 +73,7 @@ export const useCartStore = defineStore('cartStore', () => {
         cartItems.value[index].recurring_price = quoteItems[index].domains[cartItems.value[index].name].recurring_price
         cartItems.value[index].setup = quoteItems[index].domains[cartItems.value[index].name].setup
         cartItems.value[index].nameservers = quoteItems[index].domains[cartItems.value[index].name].nameservers
+        cartItems.value[index].tld = quoteItems[index].domains[cartItems.value[index].name].tld
 
         hasDomain.value = true
         if(quoteItems[index].domains[cartItems.value[index].name].tld == '.id.vn'){
@@ -132,29 +138,30 @@ export const useCartStore = defineStore('cartStore', () => {
   async function addToCart(newItem) {
     loading.value = true
     
-    // Check if the domain already exists in the domains array
-    const exists = cartItems.value.some(existingDomain => 
-      existingDomain.name === newItem.domain && existingDomain.tld === newItem.tld
-    );
-    
-    // Modify this section to add domain data to the domains array
-    if (!exists) {
-      
-      if(newItem.itemType == 'domain'){
+    if(newItem.itemType == 'domain'){
+      const exists = cartItems.value.some(existingDomain => 
+        existingDomain.name === newItem.domain && existingDomain.tld === newItem.tld
+      );
+      if (!exists) {
         const domainData = {
           type: 'domain',
           name: newItem.domain,
           years: newItem.period ? newItem.period : '1',
-          action: newItem.action,
+          action: newItem.action ?? newItem.type,
           tld: newItem.tld,
           // ...newItem
         };
         cartItems.value.push(domainData);
         const domainSearchStore = useDomainSearchStore()
         domainSearchStore.updateInCart(domainData.name, true);
-      } 
+      }
+    }
+    if(newItem.itemType == 'product'){
 
-      if(newItem.itemType == 'product'){
+      const exists = cartItems.value.some(existingProduct => 
+        existingProduct.product_id === newItem.product_id && existingProduct.domain === newItem.domain
+      );
+      if (!exists) {
         const productItem = {
           type: 'product',
           product_id: newItem.product_id,
@@ -164,7 +171,36 @@ export const useCartStore = defineStore('cartStore', () => {
         };
         cartItems.value.push(productItem);
       }
-    } 
+    }
+    
+    // Modify this section to add domain data to the domains array
+    // if (!exists) {
+      
+    //   if(newItem.itemType == 'domain'){
+    //     const domainData = {
+    //       type: 'domain',
+    //       name: newItem.domain,
+    //       years: newItem.period ? newItem.period : '1',
+    //       action: newItem.action,
+    //       tld: newItem.tld,
+    //       // ...newItem
+    //     };
+    //     cartItems.value.push(domainData);
+    //     const domainSearchStore = useDomainSearchStore()
+    //     domainSearchStore.updateInCart(domainData.name, true);
+    //   } 
+
+    //   if(newItem.itemType == 'product'){
+    //     const productItem = {
+    //       type: 'product',
+    //       product_id: newItem.product_id,
+    //       domain: newItem.domain,
+    //       cycle: newItem.cycle,
+    //       ...newItem
+    //     };
+    //     cartItems.value.push(productItem);
+    //   }
+    // } 
    
     loading.value = false
     saveToLocalStorage();
@@ -188,11 +224,22 @@ export const useCartStore = defineStore('cartStore', () => {
     loading.value = false
   }
 
+  async function getFreePromocode() {
+
+    const domainRegisterStore = useDomainRegisterStore();
+    const { contacts } = storeToRefs(domainRegisterStore)
+    const options = {
+      idnumber: contacts.value.registrant.nationalid,
+      domain: 'example.com'
+    }
+    const order = await CartRepository.getFreePromocode(options);
+  }
+
   async function order(router){
     loading.value = true
 
     const domainRegisterStore = useDomainRegisterStore();
-    const { contacts } = storeToRefs(domainRegisterStore)
+    const { contacts, freeVN } = storeToRefs(domainRegisterStore)
 
     
 
@@ -203,14 +250,43 @@ export const useCartStore = defineStore('cartStore', () => {
     for (const item of cartItems.value) {
         // Kiểm tra nếu item là loại 'domain'
         if (item.type === 'domain') {
+
+          if(freeVN.value.data?.promotionCode && freeVN.value.data?.domainName == item.name){
+
+
+            if (!item.data) {
+              item.data = {}; // Tạo một đối tượng data mới nếu không tồn tại
+            }
+
+            // updatedCartItems.push({
+            //   ...item,
+            //   data.promocode: freeVN.value.data.promotionCode
+            // });
+            item.data.promocode = freeVN.value.data.promotionCode
+          }
+
+          if(item.error){
+            delete item.error
+            delete item.info
+            delete item.setup
+            delete item.recurring_price
+          }
             // Thêm thông tin liên hệ vào đơn hàng
             updatedCartItems.push({
                 ...item,
+                nameservers: [
+                  'ns1.tino.vn',
+                  'ns2.tino.vn'
+                ],
                 registrant: contacts.value.registrant,
                 // admin: contacts.value.registrant,
                 // tech: contacts.value.registrant,
                 // billing: contacts.value.billing
             });
+
+            
+
+
         } else {
             // Nếu loại sản phẩm không phải là 'domain', thì thêm item vào đơn hàng mà không thêm thông tin liên hệ
             updatedCartItems.push(item);
@@ -223,8 +299,12 @@ export const useCartStore = defineStore('cartStore', () => {
     if(!order.error){
       if(order.invoice_id != "0"){
         router.push({ name: 'invoiceDetails', params: { id: order.invoice_id } });
-        clearCart();
+       
+      } else {
+        router.push({ name: 'home'});
+       
       }
+      clearCart();
     } 
     
     error.value = order.error    
@@ -232,5 +312,5 @@ export const useCartStore = defineStore('cartStore', () => {
   }
 
 
-  return { getQuote, order, cartQuote,cartItems,  quoteLoading, clearCart, error , updateItem, removeInCart, addToCart, loading, hasDomain, requestEkyc }
+  return { getQuote, order, cartQuote,cartItems,  quoteLoading, clearCart, error , updateItem, removeInCart, addToCart, loading, hasDomain, requestEkyc, getFreePromocode, saveToLocalStorage }
 })

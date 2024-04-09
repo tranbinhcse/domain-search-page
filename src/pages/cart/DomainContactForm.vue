@@ -1,6 +1,6 @@
 <template>
+     
     <a-form ref="formRef" :model="forms" layout="vertical" @submit="handleSubmit">
-        
       <a-form-item field="registrant.type" label="Loại chủ thể"  :rules="[{required:true,message:'type is required'}]">
         <a-radio-group v-model="forms.registrant.type" type="button">
           <a-radio value="ind">Cá nhân</a-radio>
@@ -46,7 +46,7 @@
                 <a-form-item field="registrant.nationalid" label="Số căn cước "
                    :rules="[
                     {required:true,message:'nationalid is required'},
-                    {minLength:13,message:'must be greater than 13 characters'},
+                    {minLength:12,message:'must be greater than 12 characters'},
                     {maxLength:15,message:'must be greater than 15 characters'},
                     {type:'number',message:'Please enter number'}
                     ]"
@@ -164,9 +164,8 @@
 
      
       <a-form-item>
-       
-          <a-button type="primary" html-type="submit"  class="w-full">Xác nhận thông tin & tiếp tục</a-button>
-      
+        
+          <a-button type="primary" html-type="submit" class="w-full">Xác nhận thông tin & tiếp tục</a-button>
       </a-form-item>
     </a-form>
     
@@ -179,14 +178,19 @@
   import { useLocationStore } from "@/stores/locationStore";
   import { storeToRefs } from 'pinia'
   import { useRouter } from 'vue-router';
+  
   const router = useRouter()
   const domainRegisterStore = useDomainRegisterStore()
   const { saveContacts } = domainRegisterStore
   const { contacts, errorContact } = storeToRefs(domainRegisterStore)
-  
+
   const locationStore = useLocationStore()
   const { states, cities, wards } = storeToRefs(locationStore)
     const { getStates, getCities, getWards } = locationStore
+
+    defineProps([
+        'requestEkyc'
+    ]);
 
   const handleSubmit = ({ values, errors }) => {
     errorContact.value = false;

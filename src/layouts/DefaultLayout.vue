@@ -16,11 +16,14 @@
             :style="{ paddingTop: navbar ? '60px' : '' }"
             :hide-trigger="true"
             @collapse="setCollapsed"
+            theme="dark"
           >
             <div class="menu-wrapper">
               <Menu />
             </div>
           </a-layout-sider>
+          
+         
           <a-drawer
             v-if="hideMenu"
             :visible="drawerVisible"
@@ -33,7 +36,6 @@
             <Menu />
           </a-drawer>
           <a-layout class="layout-content" :style="paddingStyle">
-        
             <a-layout-content>
               <PageLayout />
             </a-layout-content>

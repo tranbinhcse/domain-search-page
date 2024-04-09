@@ -8,6 +8,10 @@ const CartRepository = {
   order: async (items, pay_method, aff_id) => {
     const carts = await post(`/order`, {'items': items, 'pay_method': pay_method, 'aff_id': aff_id})
     return carts
+  },
+  getFreePromocode: async options => {
+    const promo = await post(`/domain/vnnic/promocode`, options)
+    return promo
   }
 
 }
