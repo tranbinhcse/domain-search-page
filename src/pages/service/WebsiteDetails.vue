@@ -7,8 +7,8 @@
                 <a-divider></a-divider>
                 <p>Tên miền: {{service.domain}}</p>
                 <p>Trạng thái: {{service.status}} </p>
-                <p>Ngày tạo: {{service.date_created}} </p>
-                <p>Ngày hết hạn: {{service.expires}} </p>
+                <p>Ngày tạo: {{service.date_created}} </p> 
+                <p class="mb-5"></p>
                 <a-button type="primary" @click="handleOpenWebsite()">Truy cập website</a-button>
             </div>
             <div class="sidebar-service bg-white max-w-2xl flex-1 p-6">
@@ -39,6 +39,10 @@
                 <p>Tên miền: {{service.domain}}</p>
                 <p>Trạng thái: {{service.status}} </p>
                 <p>Ngày tạo: {{service.date_created}} </p>
+                <p class="text-center pt-10">
+                    <a-spin dot />
+                    <p> Website của bạn đang được khởi tạo, vui lòng đợi, nếu đợi quá lâu hãy liên hệ với hỗ trợ qua kênh chat bên dưới</p>
+                </p>
             </div>
             <div class="sidebar-service bg-white max-w-2xl flex-1 p-6" v-if="service.unpaid_invoice">
                 <h3 class="text-xl font-bold mb-4">Hoá đơn</h3>
@@ -80,8 +84,19 @@ onMounted(async () => {
      getWPPlugins(route.params.id);
      getWPThemes(route.params.id);
 
-    
+     setInterval(refreshService, 10000);
 })
+
+
+const refreshService = async () => {
+      // Check if service.status is 'pending', then refresh
+      console.log('ok');
+    if (service.value.status === 'Pending') {
+        await getService(route.params.id);
+    }
+};
+
+
 
 const handleOpenWebsite = () => {
     const url = 'https://' + service.value.domain
