@@ -243,7 +243,7 @@
             step.value = 1
             contacts.value.registrant.ekyc = true;
             confirmContact.value = false
-        
+            contacts.value.registrant.type = 'ind'
         } else {
             step.value = 4
             
@@ -262,8 +262,10 @@
             visibleFaceCheck.value = true
             step.value = 3
             confirmContact.value = true
+            contacts.value.registrant.type = 'ind'
        } else {
             confirmContact.value = true
+            contacts.value.registrant.type = 'ind'
            router.push({ path: '/cart/checkout' })
        }
       }
