@@ -1,40 +1,53 @@
 <template>
     <div class="max-w-7xl mx-auto mt-5">
-
-<div class="grid grid-cols-2 pb-4 gap-4" :column="2">
-    <div class="main-service bg-white flex-1 p-6">
-        
-        <h3 class="text-xl font-bold">Thông tin website</h3>
-        <a-divider></a-divider>
-        <p>Tên miền: {{service.domain}}</p>
-        <p>Trạng thái: {{service.status}} </p>
-        <p>Ngày tạo: {{service.date_created}} </p>
-        <p>Ngày hết hạn: {{service.expires}} </p>
-        <a-button type="primary" @click="handleOpenWebsite()">Truy cập website</a-button>
-    </div>
-    <div class="sidebar-service bg-white max-w-2xl flex-1 p-6">
-        <h3 class="text-xl font-bold mb-4">Danh sách tài khoản</h3>
-        <a-table :loading="loadingUser" :columns="columns" :data="users" size="large" :pagination="false">
-            <template #actions="{ record, rowIndex }">
-                <a-button :loading="loadingLogin" type="outline" size="small" @click="handleLoginWP(id, record.user_email)">
-                    <template #icon>
-                        <icon-user />
+        <div class="grid grid-cols-2 pb-4 gap-4" :column="2" v-if="service.status == 'Active'">
+            <div class="main-service bg-white flex-1 p-6">
+                
+                <h3 class="text-xl font-bold">Thông tin website</h3>
+                <a-divider></a-divider>
+                <p>Tên miền: {{service.domain}}</p>
+                <p>Trạng thái: {{service.status}} </p>
+                <p>Ngày tạo: {{service.date_created}} </p>
+                <p>Ngày hết hạn: {{service.expires}} </p>
+                <a-button type="primary" @click="handleOpenWebsite()">Truy cập website</a-button>
+            </div>
+            <div class="sidebar-service bg-white max-w-2xl flex-1 p-6">
+                <h3 class="text-xl font-bold mb-4">Danh sách tài khoản</h3>
+                <a-table :loading="loadingUser" :columns="columns" :data="users" size="large" :pagination="false">
+                    <template #actions="{ record, rowIndex }">
+                        <a-button :loading="loadingLogin" type="outline" size="small" @click="handleLoginWP(id, record.user_email)">
+                            <template #icon>
+                                <icon-user />
+                            </template>
+                            Login</a-button>
                     </template>
-                    Login</a-button>
-            </template>
-        </a-table>
+                </a-table>
+            </div>
+            <div class="sidebar-service bg-white max-w-2xl flex-1 p-6">
+                <h3 class="text-xl font-bold mb-4">Danh sách Plugins</h3>
+                <a-table :loading="loadingPlugin" :columns="PluginColumns" :data="plugins" size="large" :pagination="false"></a-table>
+            </div>
+            <div class="sidebar-service bg-white max-w-2xl flex-1 p-6">
+                <h3 class="text-xl font-bold mb-4">Danh sách Themes</h3>
+                <a-table :loading="loadingTheme" :columns="ThemeColumns" :data="themes" size="large" :pagination="false"></a-table>
+            </div>
+        </div>
+        <div class="grid grid-cols-2 pb-4 gap-4" :column="2" v-if="service.status != 'Active'">
+            <div class="main-service bg-white flex-1 p-6">
+                <h3 class="text-xl font-bold">Thông tin website</h3>
+                <a-divider></a-divider>
+                <p>Tên miền: {{service.domain}}</p>
+                <p>Trạng thái: {{service.status}} </p>
+                <p>Ngày tạo: {{service.date_created}} </p>
+            </div>
+            <div class="sidebar-service bg-white max-w-2xl flex-1 p-6" v-if="service.unpaid_invoice">
+                <h3 class="text-xl font-bold mb-4">Hoá đơn</h3>
+                
+                Bạn có hoá đơn  {{service.unpaid_invoice.proforma_id}}  chưa thanh toán
+                <a-button size="small" @click="router.push({name: 'invoiceDetails', params: { id: service.unpaid_invoice.id }})">Thanh toán</a-button>
+            </div>
+        </div>
     </div>
-    <div class="sidebar-service bg-white max-w-2xl flex-1 p-6">
-        <h3 class="text-xl font-bold mb-4">Danh sách Plugins</h3>
-        <a-table :loading="loadingPlugin" :columns="PluginColumns" :data="plugins" size="large" :pagination="false"></a-table>
-    </div>
-    <div class="sidebar-service bg-white max-w-2xl flex-1 p-6">
-        <h3 class="text-xl font-bold mb-4">Danh sách Themes</h3>
-        <a-table :loading="loadingTheme" :columns="ThemeColumns" :data="themes" size="large" :pagination="false"></a-table>
-    </div>
-</div>
-
-</div>
 </template>
 
 
@@ -46,7 +59,7 @@ import { onMounted, ref } from 'vue'
 
 import { useServiceDetailStore } from '@/stores/service/serviceDetailStore'
 import { useWebsiteDetailStore } from '@/stores/website/websiteDetailStore'
-import { useRoute } from 'vue-router'
+import { useRoute,useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 const serviceDetailStore = useServiceDetailStore()
 const websiteDetailStore = useWebsiteDetailStore()
@@ -56,6 +69,7 @@ const { service } = storeToRefs(serviceDetailStore)
 const { loading, users, plugins, themes, loadingTheme, loadingPlugin, loadingUser, loadingLogin } = storeToRefs(websiteDetailStore)
 
 const route = useRoute()
+const router = useRouter()
 const id = ref(route.params.id);
 const currentModule = ref(null)
 

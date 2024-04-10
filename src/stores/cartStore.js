@@ -297,14 +297,14 @@ export const useCartStore = defineStore('cartStore', () => {
    const order = await CartRepository.order(updatedCartItems, 8, 3);
   
     if(!order.error){
+      clearCart();
       if(order.invoice_id != "0"){
         router.push({ name: 'invoiceDetails', params: { id: order.invoice_id } });
        
       } else {
-        router.push({ name: 'home'});
-       
+        router.push({ name: 'WebsiteManage'});
       }
-      clearCart();
+     
     } 
     
     error.value = order.error    
