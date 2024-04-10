@@ -1,5 +1,5 @@
 <template>
-     <a-form :model="contacts" ref="formRef" :style="{width:'600px'}" scrollToField="registrant.nationalid">    
+     <a-form :model="contacts" ref="formRef" scrollToField="registrant.nationalid">    
         <a-form-item field="registrant.nationalid" label="Số căn cước">
             <a-input v-model="contacts.registrant.nationalid" placeholder="please enter your post..." />
             <a-button type="primary"  @click="CheckNationalId(contacts.registrant.nationalid)" :style="{marginLeft:'10px'}">Kiểm tra</a-button>
