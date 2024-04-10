@@ -186,8 +186,8 @@
   </template>
   
   <script setup>
-    import { reactive, watch, onMounted, ref } from 'vue';
-    import { useCartStore } from '@/stores/cartStore';
+    import {   onMounted, ref } from 'vue';
+    // import { useCartStore } from '@/stores/cartStore';
     import { useDomainRegisterStore } from '@/stores/domain/domainRegisterStore';
     import { useLocationStore } from "@/stores/locationStore";
     import { storeToRefs } from 'pinia'
@@ -209,15 +209,15 @@
     const locationStore = useLocationStore()
     const formRef = ref(null)
     const { FaceDetection, handleDataFront, handleDataBack, resetState, errorFaceCheck, handleCheckNationalId} = ekycStore
-    const { ocrOK, isFree, ekyc }   = storeToRefs(ekycStore)
+    const { ocrOK,  ekyc }   = storeToRefs(ekycStore)
 
     const { updateRegistrantFromUser,  listDomainFree,resetDomainRegisterState } = domainRegisterStore
-    const { contacts, errorContact, domainFree, confirmContact } = storeToRefs(domainRegisterStore)
+    const { contacts, errorContact,  confirmContact } = storeToRefs(domainRegisterStore)
 
     const { states, cities, wards } = storeToRefs(locationStore)
     const { getStates, getCities, getWards } = locationStore
 
-    const domainRequestPromo = ref('')
+    // const domainRequestPromo = ref('')
 
     defineProps([
         'requestEkyc'

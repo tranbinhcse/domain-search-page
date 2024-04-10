@@ -65,10 +65,12 @@ const camera = ref(null);
 
 const handleGetUserMedia = async () => {
     randomActionSequenceRef.value = getActionsSequence();
-
+    
     faceMesh = new FaceMesh({
         locateFile: (file) => {
-            return "/component/face_mesh/" + file;
+            console.log('file', file);
+            // return "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3/wasm";
+            return "https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/" + file;
         },
     });
     faceMesh.setOptions({
