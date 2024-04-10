@@ -42,6 +42,10 @@ export const useAuthStore = defineStore('authStore', {
       await post('logout')
       this.user = null
       this.isLogin = false
+      this.token = null 
+      this.refresh = null 
+      this.currency = null 
+      this.verify = null 
     },
     async checkemail(email){
       const check = await post('checkemail', {email})

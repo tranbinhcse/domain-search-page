@@ -43,12 +43,7 @@ export const useDomainRegisterStore = defineStore({
     updateRegistrantFromUser() {
       const authStore = useAuthStore();
       const { user } = storeToRefs(authStore);
-      
-    
-    
-
       this.contacts.registrant = { ...user.value }; // Assuming user structure matches registrant
-
     },
     async getFreePromoVN(options) {
       const res = await CartRepository.getFreePromocode(options);
@@ -90,5 +85,5 @@ export const useDomainRegisterStore = defineStore({
   persist: {
     paths: [ 'contacts', 'freeVN', 'confirmContact']
   },
-  
+
 })

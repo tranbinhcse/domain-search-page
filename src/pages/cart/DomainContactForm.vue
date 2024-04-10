@@ -252,6 +252,13 @@
            confirmContact.value = true
       } else {
            confirmContact.value = true
+
+           if(contacts.value.registrant.type === 'ind'){
+            contacts.value.registrant.companyname = null
+            contacts.value.registrant.company = false
+           }
+
+
           router.push({ path: '/cart/checkout' })
       }
      }
@@ -274,6 +281,8 @@
        
 
    });  
+
+ 
 
   
  </script>
