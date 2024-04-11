@@ -115,7 +115,10 @@
             <Box v-if="hasDomain">
 
  
-                <Heading text="Thông tin chủ thể tên miền" />
+             <div class="flex justify-between items-center mb-5">
+              <Heading text="Thông tin chủ thể tên miền" />
+                <a-button @click="router.push({name:'DomainConfig'})">Chỉnh sửa</a-button>
+             </div>
 
                 <a-descriptions column="1" bordered>
                     <descriptions-item span="2" label="Tên chủ thể" v-if="contacts.registrant.type == 'org' || contacts.registrant.company"> {{ contacts.registrant.companyname }}</descriptions-item>
@@ -142,10 +145,17 @@
 
             </Box>
            </div>
+
+          <Heading text="Phương thức thanh toán" class="text-green-500 uppercase text-3xl font-bold border-b-2 border-gray-50 pb-2 mb-2" />
+          <PaymentMethod  v-model="paymentMethod" :methods="paymentMethods" />
+         
          </section>
  
          <!-- Order summary -->
          <section v-show="quoteLoading === false" aria-labelledby="summary-heading" class="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8" v-if="cartQuote">
+  
+
+
            <h2 id="summary-heading" class="text-lg font-medium text-gray-900">Order summary</h2>
  
                       <div class="flex justify-between text-base font-medium text-gray-900">
@@ -213,6 +223,7 @@
     import Box from '@/components/base/Box.vue'
     import Heading from '@/components/base/Heading.vue'
     import { Notification } from '@arco-design/web-vue';
+    import PaymentMethod from '@/components/general/PaymentMethod.vue'
 
      import Icon from '@/components/base/Icon.vue'
     
@@ -225,9 +236,9 @@
      const domainRegisterStore = useDomainRegisterStore()
      const cartStore = useCartStore() 
      const ekycStore = useEkycStore() 
-     const { updateItem, getQuote, order, removeInCart, getFreePromocode } = cartStore
+     const { updateItem, getQuote, order, removeInCart, getFreePromocode, getPaymentMethods } = cartStore
 
-     const { cartQuote, cartItems, quoteLoading, error, hasDomain, requestEkyc, loading } = storeToRefs(cartStore)
+     const { cartQuote, cartItems, quoteLoading, error, hasDomain, requestEkyc, loading, paymentMethods, paymentMethod } = storeToRefs(cartStore)
     const { listDomainFree, getFreePromoVN } = domainRegisterStore
      const { contacts, domainFree, isPromocode, freeVN, confirmContact, errorPromo } = storeToRefs(domainRegisterStore)
      const { isFree } = storeToRefs(ekycStore)
@@ -245,14 +256,13 @@
    };
      
    
-     onMounted(() => {
-      listDomainFree();
-       getQuote();
-      console.log(hasDomain);
+     onMounted(async() => {
+      await listDomainFree();
+      await getQuote(); 
        if(!confirmContact.value && hasDomain.value){
         router.push({path: '/cart/shopping-cart'})
        }
-
+       await getPaymentMethods()
      })
      const createOrder = async() => {
        await order(router)

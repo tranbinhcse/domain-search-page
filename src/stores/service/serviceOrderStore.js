@@ -3,15 +3,17 @@ import {  post } from '@/core/apiClient'
 import { ref, watch,  } from 'vue'
 import ProductRepository from '@/repositories/ProductRepository'
 import PaymentRepository from '@/repositories/PaymentRepository'
+import { useCartStore } from "@/stores/cartStore";
 
 export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
   const loading = ref(false)
+  const error = ref()
   const category = ref()
   const products = ref([])
   const selectedProduct = ref()
-  const paymentMethods = ref([])
-  const paymentMethod = ref()
+
   const product = ref()
+  const domainSelected = ref()
 
   async function getProducts() {
     if (!category.value) return
@@ -31,16 +33,21 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
 //     // product.value = await ProductRepository.getDomainOptions(selectedProduct.value)
 //   }
 
-  async function getPaymentMethods() {
-    const payments = await PaymentRepository.getPaymentMethods()
-    paymentMethods.value = payments
-    paymentMethod.value = Object.keys(payments)[0]
+  
+  async function order(router){
+    
+    // const res = await post(`/order/${selectedProduct.value}`, product.value)
+    const cartStore = useCartStore()
+    product.value.itemType = 'product'
+    cartStore.addToCart(product.value)
+    router.push({ path: '/cart/checkout' })
   }
 
-  async function order(){
-    const res = await post(`/order/${selectedProduct.value}`, product.value)
-    
-    // await get(`/billing/${res.invoice_id}/pay/${paymentMethod.value}`)
+  async function removeDomainSelected(domain) {
+    product.value.domain = null
+    domainSelected.value = []
+    const cartStore = useCartStore()
+    cartStore.removeInCart(domain)
   }
 
   watch(category, getProducts)
@@ -49,5 +56,5 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
     getPaymentMethods()
   })
 
-  return { loading, category, products, selectedProduct, product, paymentMethods, paymentMethod, getProducts, order }
+  return { loading, error, category, products, selectedProduct, product, getProducts, order, removeDomainSelected, domainSelected }
 })

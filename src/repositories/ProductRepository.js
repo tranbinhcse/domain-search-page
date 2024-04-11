@@ -5,16 +5,21 @@ const ProductRepository = {
     return products
   },
   getConfiguration: async productId => {
-    const { product: { config: { addons: addonFields, forms: formFields, product: productFields, subproducts: subProductFields }, domain_options: domainOptionsFields } } = await get(`/order/${productId}`)
+    const { product: { config: { 
+      // addons: addonFields, 
+      forms: formFields, 
+      product: productFields, 
+      // subproducts: subProductFields 
+    }, domain_options: domainOptionsFields } } = await get(`/order/${productId}`)
 
     const product = {
       product_id: productId,
-      domain: '',
+      // domain: '',
       domainOptionsFields,
-      addonFields,
+      // addonFields,
       formFields,
       productFields,
-      subProductFields
+      // subProductFields
     }
 
     const custom = {}
@@ -36,10 +41,10 @@ const ProductRepository = {
     const addon = {}
     const addon_cycles = {}
 
-    addonFields.forEach(({ id, config: [checkbox, { items }] }) => {
-      addon[id] = false;
-      addon_cycles[id] = items.find(item => item.selected).value;
-    })
+    // addonFields.forEach(({ id, config: [checkbox, { items }] }) => {
+    //   addon[id] = false;
+    //   addon_cycles[id] = items.find(item => item.selected).value;
+    // })
 
     product.addon = addon
     product.addon_cycles = addon_cycles
@@ -47,10 +52,10 @@ const ProductRepository = {
     const subproducts = {}
     const subproducts_cycles = {}
 
-    subProductFields.forEach(({ id, config: [checkbox, { items }] }) => {
-      subproducts[id] = false;
-      subproducts_cycles[id] = items.find(item => item.selected).value;
-    })
+    // subProductFields.forEach(({ id, config: [checkbox, { items }] }) => {
+    //   subproducts[id] = false;
+    //   subproducts_cycles[id] = items.find(item => item.selected).value;
+    // })
 
     product.subproducts = subproducts
     product.subproducts_cycles = subproducts_cycles

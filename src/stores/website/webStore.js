@@ -21,12 +21,7 @@ export const useWebStore = defineStore('webStore', {
     }
   },
   actions: {
-    
-    async logout(){
      
-      this.user = null
-      this.isLogin = false
-    },
 
     async getThemes(){
       this.themes = await WebsiteRepository.themes();

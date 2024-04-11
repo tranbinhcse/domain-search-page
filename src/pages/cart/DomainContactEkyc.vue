@@ -8,17 +8,18 @@
     
     <a-row>
         <a-col :span="24">
-            <a-modal v-model:visible="visibleFaceCheck" @ok="handleOk" @cancel="handleCancel" fullscreen>
+            <a-modal v-model:visible="visibleFaceCheck" @ok="handleOk" @cancel="handleCancel" >
                 <template #title>
                 Title
                 </template>
                 <a-row :gutter="8">
-                    <a-col :span="12">
-                        <FaceDetect v-if="step === 3" :key="faceDetectKey" @DataImage="handleDataImage" :faceOK="faceOK" />
-                    </a-col>
-                    <a-col :span="12">
+                    <a-col :span="24">
                         <a-alert>{{ errorFaceCheck }}</a-alert>
                     </a-col>
+                    <a-col :span="24">
+                        <FaceDetect v-if="step === 3" :key="faceDetectKey" @DataImage="handleDataImage" :faceOK="faceOK" />
+                    </a-col>
+                   
                 </a-row>
             </a-modal>
         </a-col>

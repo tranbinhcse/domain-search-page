@@ -17,10 +17,16 @@
           <Heading text="Chu kỳ thanh toán" class="text-green-500 uppercase text-3xl font-bold border-b-2 border-gray-50 pb-2 mb-2" />
           <PeriodSelect :periods="cycles.items" v-model="selectedCycle" />
         </div>
-        
-        <div v-if="product.domainOptions">
+       
+        <div v-if="product.domainOptions && product.domainOptions.register == '1'">
           <Heading text="Domain Configuration" class="text-green-500 uppercase text-3xl font-bold border-b-2 border-gray-50 pb-2 mb-2" />
-          <DomainOptions  :options="product.domainOptions" />
+          <DomainOptions v-model="domainSelected" :options="product.domainOptions" v-if="!product.domain" />
+          <div v-else class="bg-white flex p-4 rounded mb-5 justify-between">
+            <div>
+              <p class="font-bold text-md">Tên miền đã chọn: {{ domainSelected.domain }}</p>
+            </div>
+            <a-button class="" @click="removeDomainSelected(domainSelected)">Đổi domain</a-button>
+          </div>
         </div>
         
 
@@ -96,107 +102,7 @@
 
           </div>
         </Box>
-        
-        
-        <div class="mb-5 py-5" v-if="product.addonFields.length > 0">
-          <Heading text="Dịch vụ đi kèm"  class="text-green-500 uppercase text-3xl font-bold border-b-2 border-gray-50 pb-2 mb-2" />
-
-          <div role="checkbox" class="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4" aria-checked="false">
-          
-              <label  v-for="{ id, title, description, config: [, { items }] } in product.addonFields" :key="id" :for="`addons-${id}`" class="col-span-1 flex  rounded-md cursor-pointer" > 
-                <div class="relative w-full p-4 rounded-md shadow-sm flex flex-col justify-between bg-white" :class="[product.addon[id] ? 'border-2 border-green-500' : 'border']">
-                  
-                    <CheckCircleIcon v-if="product.addon[id]" class="h-7 w-7 text-green-500 absolute right-1 top-1" aria-hidden="true" />
-                  <div>
-                      <input type="checkbox" class="hidden" v-model="product.addon[id]" :id="`addons-${id}`" />
-                      <p class="font-bold"> {{ title }}</p>
-                      <p class="font-normal text-sm text-gray-500 pt-2">{{ description }}</p>
-                  </div>
-                    <Popover v-if="product.addon[id]" class="relative mt-4 "  v-slot="{ open }">
-                    <div class="flex items-center divide-x  inline-flex rounded-md relative" :class="[product.addon[id] ? 'bg-green-500 text-white' : 'bg-green-100 text-green-500']">
-                      <PopoverButton>
-                        <button class="px-2 py-2 flex items-center">
-                          <span class="pr-2">{{ product.addon_cycles[id] ?? 'chọn'  }}</span><Icon :class="{ 'rotate-180 transform': open }"  icon="heroicons-outline:chevron-down" />
-                        </button>
-                      </PopoverButton>
-                      <button class="px-3" v-if="product.addon[id]" ><Icon icon="heroicons-outline:x-mark" /></button>
-                    </div>
-                      <PopoverPanel class="absolute z-10 w-auto bg-white p-2 shadow-md rounded" v-slot="{ close }">
-                        <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200 min-w-60" aria-labelledby="dropdownRadioHelperButton" >
-                            <li  v-for="(item, index) in items" :key="index" >
-                              <div class="flex p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600" >
-                                <div class="flex items-center h-5">
-                                    <input v-model="product.addon_cycles[id]"  :value="item.value"  :id="index" name="helper-radio" type="radio"  class="w-4 h-4">
-                                </div>
-                                <div class="ms-2 text-sm w-full cursor-pointer">
-                                    <label :for="index" class="font-medium text-gray-900 dark:text-gray-300">
-                                      <div>{{ item.title }}</div>
-                                      <p id="helper-radio-text-4" class="text-xs font-normal text-gray-500 dark:text-gray-300">{{ item.price }}đ</p>
-                                    </label>
-                                </div>
-                              </div>
-                            </li>
-                          </ul>
-                      </PopoverPanel>
-                    </Popover>
-
-                  </div>
-              </label>
-          </div>
-        </div>
-
-        <div class="mb-5 py-5" v-if="product.subProductFields.length > 0">
-        
-          <div role="checkbox" class="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4" aria-checked="false">
-          
-          <label  v-for="{ id, title, description, config: [, { items }] } in product.subProductFields" :key="id" :for="`subproducts-${id}`" class="col-span-1 flex  rounded-md cursor-pointer" > 
-            <div class="relative w-full p-4 rounded-md shadow-sm flex flex-col justify-between bg-white" :class="[product.subproducts[id] ? 'border-2 border-green-500' : 'border']">
-                
-                <CheckCircleIcon v-if="product.subproducts[id]" class="h-7 w-7 text-green-500 absolute right-1 top-1" aria-hidden="true" />
-              <div>
-                  <input type="checkbox" class="hidden" v-model="product.subproducts[id]" :id="`subproducts-${id}`" />
-                  <p class="font-bold"> {{ title }}</p>
-                  <p class="font-normal text-sm text-gray-500 pt-2" v-html="description" />
-              </div>
-                <Popover v-if="product.subproducts[id]" class="relative mt-4 "  v-slot="{ open }">
-                <div class="flex items-center divide-x  inline-flex rounded-md relative" :class="[product.subproducts[id] ? 'bg-green-500 text-white' : 'bg-green-100 text-green-500']">
-                  <PopoverButton>
-                    <button class="px-2 py-2 flex items-center">
-                      <span class="pr-2">{{ product.subproducts_cycles[id] ?? 'chọn'  }}</span><Icon :class="{ 'rotate-180 transform': open }"  icon="heroicons-outline:chevron-down" />
-                    </button>
-                  </PopoverButton>
-                  <button class="px-3" v-if="product.subproducts[id]" ><Icon icon="heroicons-outline:x-mark" /></button>
-                </div>
-                  <PopoverPanel class="absolute z-10 w-auto bg-white p-2 shadow-md rounded" v-slot="{ close }">
-                    <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200 min-w-60" aria-labelledby="dropdownRadioHelperButton" >
-                        <li  v-for="(item, index) in items" :key="index" >
-                          <div class="flex p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600" >
-                            <div class="flex items-center h-5">
-                                <input v-model="product.subproducts_cycles[id]"  :value="item.value"  :id="index" name="helper-radio" type="radio"  class="w-4 h-4">
-                            </div>
-                            <div class="ms-2 text-sm w-full cursor-pointer">
-                                <label :for="index" class="font-medium text-gray-900 dark:text-gray-300">
-                                  <div>{{ item.title }}</div>
-                                  <p id="helper-radio-text-4" class="text-xs font-normal text-gray-500 dark:text-gray-300">{{ item.price }}đ</p>
-                                </label>
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
-                  </PopoverPanel>
-                </Popover>
-
-              </div>
-          </label>
-      </div>
-      
-      </div>
-        <div v-if="selectedProduct && paymentMethods" class="mb-10">
-          <Heading text="Phương thức thanh toán" class="text-green-500 uppercase text-3xl font-bold border-b-2 border-gray-50 pb-2 mb-2" />
-          <PaymentMethod  v-model="paymentMethod" :methods="paymentMethods" />
-           
-
-        </div>
+     
       </div>
       </div>
       <div class="sticky bottom-0 -mx-4 sm:-mx-6 lg:-mx-8">
@@ -210,7 +116,7 @@
             </div>
             
             <div class="left-auto">
-              <Button @click="order" btnClass="bg-green-500 px-10 py-3 text-white rounded" icon="heroicons-outline:banknotes" text="Thanh toán ngay"   />
+              <Button @click="handleAddCart" btnClass="bg-green-500 px-10 py-3 text-white rounded" icon="heroicons-outline:banknotes" text="Thanh toán ngay"   />
             </div>
           </div>
         </Box>
@@ -220,12 +126,12 @@
 <script setup>
 import { storeToRefs } from 'pinia'
 import { onMounted, ref, watch, computed } from 'vue'
+import { Message } from '@arco-design/web-vue';
 import { SERVICES } from '@/config'
 import SelectServiceCategory from '@/components/service/SelectServiceCategory.vue'
 import ProductSelect from '@/components/service/ProductSelect.vue'
 import PeriodSelect from '@/components/service/PeriodSelect.vue'
 import DomainOptions from '@/components/service/DomainOptions.vue'
-import PaymentMethod from '@/components/general/PaymentMethod.vue'
 import Input from '@/components/base/Input.vue'
 import Icon from '@/components/base/Icon.vue'
 import Slider from '@/components/base/Slider.vue'
@@ -240,34 +146,47 @@ import { RadioGroup, RadioGroupDescription, RadioGroupLabel, RadioGroupOption } 
 
 
 const serviceOrderStore = useServiceOrderStore()
-const { getProducts, order } = serviceOrderStore
+const { getProducts, order, removeDomainSelected } = serviceOrderStore
 const {
+  error,
   loading,
   category,
   products,
   selectedProduct,
   product,
   paymentMethods,
-  paymentMethod
+  paymentMethod,
+  domainSelected
 } = storeToRefs(serviceOrderStore)
 
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
-const route = useRoute()
+
+const route = useRoute() 
+const router = useRouter() 
 
 onMounted(() => getProducts())
-
-
-
 
 const cycles = computed(() => {
   return product.value.productFields.find(field => field.id === 'cycle');
 });
-
-
+ 
 const selectedCycle = computed(() => {
   const selectedItem = cycles.value.items.find(item => item.selected);
   return selectedItem ? selectedItem.value : null;
 });
+
+const handleAddCart = () => {
+  if(!product.value.domain && product.value.domainOptions && product.value.domainOptions.register=='1'){
+    Message.success('Vui lòng nhập tên miền')
+    error.value = {'domain': 'Vui lòng nhập tên miền'} 
+  } else {
+    order(router);
+  }
+  
+}
+watch(domainSelected, (newDomainSelected) => {
+  product.value.domain = newDomainSelected.domain
+})
 
 </script>

@@ -11,7 +11,7 @@
                       </span>
                     </span>
                     <CheckCircleIcon v-if="checked" class="h-7 w-7 text-green-500 absolute right-4 top-[50%] transform -translate-y-1/2" aria-hidden="true" />
-                    <img v-else class="absolute grayscale right-4 top-[50%] transform -translate-y-1/2 h-6 w-auto" :src="getIconPath(id)" :alt="method" />
+                    
                     <span :class="[active ? 'border' : 'border-2', checked ? 'border-green-500' : 'border-transparent', 'pointer-events-none absolute -inset-px rounded-lg']" aria-hidden="true" />
                   </div>
                 </RadioGroupOption>
@@ -48,7 +48,7 @@ const emit = defineEmits(['update:modelValue'])
 
   const getIconPath = (methodId) => {
   // Assuming you have icons named as 1.png, 2.png, etc., in your assets
-  return new URL('/src/assets/paymentmethod/'+methodId +'.png', import.meta.url).href;
-};
+    // return new URL('/assets/paymentmethod/'+methodId +'.png', import.meta.url).href;
+  };
 
   </script>

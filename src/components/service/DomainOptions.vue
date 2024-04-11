@@ -192,7 +192,7 @@
               </a-button>
             </div>
             <div v-else>
-              <a-button @click="addToCart(domain)" type="primary">
+              <a-button @click="HandleAddToCart(domain)" type="primary">
                 Đăng ký
                 <template #icon>
                     <Icon icon="heroicons-outline:shopping-cart" />
@@ -223,14 +223,19 @@
   import Icon from '@/components/base/Icon.vue'
   import Input from '@/components/base/Input.vue'
   import { useDomainSearchStore } from "@/stores/domain/domainSearchStore";
+  import { useCartStore } from "@/stores/cartStore";
   const domainSearchStore = useDomainSearchStore()
+  const cartStore = useCartStore()
   const { searchDomains, getDomainTlds } = domainSearchStore
   const { domains, searchKey, tldsLoaded, searching, tlds } = storeToRefs(domainSearchStore)
+  const { addToCart, removeInCart } = cartStore
   const searchResultsRef = ref(null);
 
   const props = defineProps({
     options: Object
   })
+
+  const emits = defineEmits(['update:modelValue'])
 
   const tldsSpotlight = ref([]);
 
@@ -238,6 +243,11 @@
     getDomainTlds()
     tldsSpotlight.value = tlds.value.slice(0,5);
   })
+
+  const HandleAddToCart = (domain) => {
+    emits('update:modelValue', domain)
+    addToCart(domain)
+  }
 
   const handleSearchSubmit = () => {
     searchDomains(false, 1);

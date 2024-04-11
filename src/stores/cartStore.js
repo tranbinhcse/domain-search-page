@@ -17,6 +17,8 @@ export const useCartStore = defineStore('cartStore', () => {
   const error = ref()
   const cartItems = ref([]) 
   const cartQuote = ref()
+  const paymentMethods = ref([])
+  const paymentMethod = ref()
 
   onMounted(() => {
     const storedcartItems= localStorage.getItem('cartItems');
@@ -24,6 +26,16 @@ export const useCartStore = defineStore('cartStore', () => {
         cartItems.value = JSON.parse(storedcartItems);
     }
   });
+
+
+
+  async function getPaymentMethods() {
+    const payments = await PaymentRepository.getPaymentMethods()
+    paymentMethods.value = payments
+    paymentMethod.value = Object.keys(payments)[0]
+  }
+
+
 
   const saveToLocalStorage = () => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems.value));
@@ -84,7 +96,10 @@ export const useCartStore = defineStore('cartStore', () => {
        if( cartItems.value[index].type == 'product' && quoteItems[index].valid){
         cartItems.value[index].name = quoteItems[index].product.name
         cartItems.value[index].category_name = quoteItems[index].product.category_name
-        cartItems.value[index].domain = quoteItems[index].product.domain
+        // if(quoteItems[index].product.domain){
+        //   cartItems.value[index].domain = quoteItems[index].product.domain
+        // }
+     
         cartItems.value[index].cycle = quoteItems[index].product.recurring
         cartItems.value[index].price = quoteItems[index].product.price_today
         cartItems.value[index].recurring_price = quoteItems[index].product.price
@@ -137,7 +152,7 @@ export const useCartStore = defineStore('cartStore', () => {
 
   async function addToCart(newItem) {
     loading.value = true
-    
+    console.log('newItem',newItem);
     if(newItem.itemType == 'domain'){
       const exists = cartItems.value.some(existingDomain => 
         existingDomain.name === newItem.domain && existingDomain.tld === newItem.tld
@@ -312,5 +327,5 @@ export const useCartStore = defineStore('cartStore', () => {
   }
 
 
-  return { getQuote, order, cartQuote,cartItems,  quoteLoading, clearCart, error , updateItem, removeInCart, addToCart, loading, hasDomain, requestEkyc, getFreePromocode, saveToLocalStorage }
+  return { getQuote, order, cartQuote,cartItems,  quoteLoading, clearCart, error , updateItem, removeInCart, addToCart, loading, hasDomain, requestEkyc, getFreePromocode, saveToLocalStorage, getPaymentMethods, paymentMethods, paymentMethod }
 })
