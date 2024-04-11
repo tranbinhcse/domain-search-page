@@ -239,9 +239,6 @@ import { CheckCircleIcon } from '@heroicons/vue/20/solid'
 import { RadioGroup, RadioGroupDescription, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
 
 
-
-
-
 const serviceOrderStore = useServiceOrderStore()
 const { getProducts, order } = serviceOrderStore
 const {

@@ -6,7 +6,7 @@ export const useAuthStore = defineStore('authStore', {
   state: () => {
     return {
       loading: false,
-      error: false,
+      error: false, 
       user: null,
       token: null,
       refresh: null,
@@ -58,7 +58,13 @@ export const useAuthStore = defineStore('authStore', {
     },
     async signup(data){
       this.loading = true
-      data.gender = data.gender == 'Nữ' ? 'Famale' : 'Male'
+      // data.gender = data.gender == 'Nữ' ? 'Famale' : 'Male'
+      if(data.type == 'ind'){
+        data.company = false
+        data.companyname = '';
+      } else {
+        data.company = true
+      }
       const res = await post('signup', data)
       if (res.error) {
 

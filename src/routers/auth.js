@@ -1,4 +1,5 @@
 import Login from '@/pages/auth/Login.vue'
+import Register from '@/pages/auth/Register.vue'
 export const DEFAULT_LAYOUT = () => import('@/layouts/DefaultLayout.vue');
 
 const AuthRoutes = [
@@ -10,7 +11,12 @@ const AuthRoutes = [
   {
     path: '/register',
     name: 'register',
-    component: Login,
+    component: Register,
+  },
+  {
+    path: '/signup',
+    name: 'signup',
+    component: Register,
   },
   {
     path: '/forgot-password',

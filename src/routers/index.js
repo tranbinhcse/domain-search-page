@@ -14,8 +14,8 @@ import EkycRoutes from './ekyc'
 export const DEFAULT_LAYOUT = () => import('@/layouts/DefaultLayout.vue');
 
 const routes = [
-    ...AuthRoutes,
-
+   
+  ...AuthRoutes,
 
   {
     path: '/',
@@ -36,16 +36,18 @@ const routes = [
         ...SupportRoutes,
         ...CartRoutes,
         ...EkycRoutes,
+      
+        
        
         
-        {
-            path: '/:pathMatch(.*)*',
-            name: 'notFound',
-            component: NotFound,
-        }
-        
-    ],
+    ]
   },
+
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'notFound',
+    component: NotFound,
+}
  
 
 

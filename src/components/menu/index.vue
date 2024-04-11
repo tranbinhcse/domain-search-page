@@ -38,7 +38,6 @@ const handleMenuClick = (name) => {
 .menu-demo {
   box-sizing: border-box;
   width: 100%;
-   
-  background-color: var(--color-neutral-2);
+    
 }
 </style>
