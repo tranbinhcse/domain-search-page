@@ -13,6 +13,7 @@ export const useServiceStore = defineStore('serviceStore', () => {
   const filter = ref({
     status: ''
   })
+  const subCategories = ref([])
 
   async function getServices() {
     loading.value = true
@@ -25,7 +26,31 @@ export const useServiceStore = defineStore('serviceStore', () => {
     loading.value = false
   }
 
-  watch([page, perpage, filter], getServices, {deep: true})
+  // async function getSubCategories(parentSlug) {
+  //   console.log(parentSlug);
+  //   const res = await ServiceRepository.getSubCategories();
+  //   const parentCategory = res.categories.find(category => category.slug === parentSlug);
   
-  return { loading, page, perpage, records, totalPages, services, filter, getServices , slug}
+  //   if (!parentCategory) {
+  //     console.error(`Parent category with slug ${parentSlug} not found`);
+  //     return;
+  //   }
+  
+  //   let subCategories = [];
+  //   if (parentCategory.subcategories) {
+  //     // Nếu danh mục cha có subcategories, lấy subcategories đó
+  //     subCategories = parentCategory.subcategories;
+  //   } else {
+  //     // Nếu không, lấy tất cả các danh mục cùng cấp với danh mục cha
+  //     const parentCategoryType = parentCategory.type;
+  //     subCategories = res.categories.filter(category => category.type === parentCategoryType);
+  //   }
+  
+  //   subCategories.value = subCategories;
+  // }
+  
+
+  watch([page, perpage, filter, slug], getServices, {deep: true})
+  
+  return { loading, page, perpage, records, totalPages, services, filter, getServices , slug, subCategories}
 })

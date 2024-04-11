@@ -1,5 +1,6 @@
 <template>
     <div class="max-w-7xl m-auto mt-5">
+      
       <div class="flex justify-end pb-4 gap-x-3">
         <a-button type="primary" @click="router.push({name: 'domainRegister'})">Đăng ký mới</a-button>
       </div> 
@@ -39,8 +40,9 @@
   import { useServiceStore } from "@/stores/service/serviceStore";
  
   import Status from '@/components/base/Status.vue';
-  import { onMounted } from 'vue';
+  import { onMounted, watch } from 'vue';
   import { useRouter, useRoute } from 'vue-router';
+// import SubCategory from './SubCategory.vue';
   const serviceStore = useServiceStore()
   const { getServices } = serviceStore
   const { services, page, perpage, records, loading, slug } = storeToRefs(serviceStore)
@@ -89,5 +91,8 @@
       onMounted(getServices)
 
    
-  
+  watch(() => route.params.slug, () => {
+    slug.value = route.params.slug
+ 
+  })
   </script>

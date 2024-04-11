@@ -14,6 +14,10 @@ const ServiceRepository = {
       perpage: res.page.perpage,
     }
   },
+  getSubCategories: async (slug) => {
+    const res = await get('categories/')
+    return res;
+  }
  
 }
 

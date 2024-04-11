@@ -13,9 +13,9 @@
     
       <p class="text-gray-500 p-2 uppercase mt-4">Dịch vụ</p>
       <a-menu-item key="email_register" @click="handleMenuClick('WebsiteManage')"><template #icon><icon-computer size="20"></icon-computer></template>Website</a-menu-item>
-      <a-menu-item key="CloudServer_manage" @click="router.push({path: '/clientarea/cloud-servers'})" ><template #icon><icon-layers size="20"></icon-layers></template>Cloud Server</a-menu-item>
-      <a-menu-item key="web-hosting_manage" @click="router.push({path: '/clientarea/cloud-hosting'})" > <template #icon><icon-storage size="20"></icon-storage></template>Web Hosting</a-menu-item>
-      <a-menu-item key="email_manage" @click="router.push({path: '/clientarea/bussiness-email'})" > <template #icon><icon-email size="20"></icon-email></template>Quản lý email</a-menu-item>
+      <a-menu-item key="CloudServer_manage" @click="router.push({path: '/clientarea/services/vps-pro'})" ><template #icon><icon-layers size="20"></icon-layers></template>Cloud Server</a-menu-item>
+      <a-menu-item key="web-hosting_manage" @click="router.push({path: '/clientarea/services/cloud-hosting'})" > <template #icon><icon-storage size="20"></icon-storage></template>Web Hosting</a-menu-item>
+      <a-menu-item key="email_manage" @click="router.push({path: '/clientarea/services/unlimited-email'})" > <template #icon><icon-email size="20"></icon-email></template>Quản lý email</a-menu-item>
     
       <p class="text-gray-500 p-2 uppercase mt-4">Tài chính</p>
       <a-menu-item key="invoice" @click="router.push({path: '/cart/bussiness-email'})"> <template #icon><icon-email size="20"></icon-email></template>Hoá đơn</a-menu-item>
