@@ -1,8 +1,7 @@
 import { defineStore } from 'pinia'
 import {  post } from '@/core/apiClient'
 import { ref, watch,  } from 'vue'
-import ProductRepository from '@/repositories/ProductRepository'
-import PaymentRepository from '@/repositories/PaymentRepository'
+import ProductRepository from '@/repositories/ProductRepository' 
 import { useCartStore } from "@/stores/cartStore";
 
 export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
@@ -16,16 +15,23 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
   const domainSelected = ref()
 
   async function getProducts() {
+   
     if (!category.value) return
+    loading.value = true
     products.value = []
     selectedProduct.value = null
     product.value = null
     products.value = await ProductRepository.getProducts(category.value)
+    loading.value = false
   }
 
   async function getProductConfiguration() {
+  
     if (!selectedProduct.value) return
+
+    loading.value = true
     product.value = await ProductRepository.getConfiguration(selectedProduct.value)
+    loading.value = false
   }
 
 //  async function getProductDomainOptions() {
@@ -35,12 +41,13 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
 
   
   async function order(router){
-    
+    loading.value = true
     // const res = await post(`/order/${selectedProduct.value}`, product.value)
     const cartStore = useCartStore()
     product.value.itemType = 'product'
     cartStore.addToCart(product.value)
     router.push({ path: '/cart/checkout' })
+    loading.value = false
   }
 
   async function removeDomainSelected(domain) {

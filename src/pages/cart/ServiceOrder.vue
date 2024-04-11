@@ -1,5 +1,6 @@
 <template>
-  <div>
+ 
+  <a-spin class="w-full" :loading="loading">
     <div class="max-w-7xl mx-auto">
       <div class="mb-5 py-5 ">
         <Heading text="Chọn dịch vụ" class="text-green-500 uppercase text-3xl font-bold border-b-2 border-gray-50 pb-2 mb-2" />
@@ -28,7 +29,12 @@
             <a-button class="" @click="removeDomainSelected(domainSelected)">Đổi domain</a-button>
           </div>
         </div>
-        
+        <div v-if="product.domainOptions && product.domainOptions.register == '0' && product.domainOptions.hostname">
+          <Heading text="Hostname" class="text-green-500 uppercase text-3xl font-bold pb-2 mb-2" />
+          <div class="mb-5  p-5 bg-white rounded">
+            <a-input v-model="product.domain" placeholder="Vui lòng nhập vào hostname" />
+          </div>
+        </div>
 
         <Box v-if="product.formFields.length > 0">
           <Heading text="Cấu hình sản phẩm" class="text-green-500 uppercase text-3xl font-bold border-b-2 border-gray-50 pb-2 mb-2" />
@@ -121,7 +127,7 @@
           </div>
         </Box>
       </div>
-  </div>
+  </a-spin>
 </template>
 <script setup>
 import { storeToRefs } from 'pinia'
