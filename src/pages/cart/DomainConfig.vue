@@ -1,6 +1,6 @@
 <template>
      <div class="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
-      <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Cấu hình sản phẩm</h1>
+      <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Cấu hình tên miền</h1>
       <h2 id="cart-heading">Gần xong rồi, chỉ còn một bức nữa thôi.</h2>
       <form class="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
         <section aria-labelledby="cart-heading" class="lg:col-span-7">
@@ -76,7 +76,7 @@
                             </h3>
                             </div>
                             <p class="mt-1 mb-2 text-sm text-gray-500"><span class="uppercase">{{ product.domain }} </span></p>
-                            <p>{{ product.cycle }}</p>
+                            <p>Chu kỳ thanh toán: {{ product.cycle }}</p>
 
                         </div>
                         <div class="mt-4 sm:mt-0 sm:pr-9">
@@ -234,9 +234,12 @@
         await getQuote();
      
     }
-    onMounted(() => {
-      getQuote();
-     
+    onMounted(async () => {
+      await getQuote();
+      console.log(hasDomain.value);
+     if(!hasDomain.value){
+      router.push({ path: '/cart/checkout' })
+     }
     })
 
     const nextStep = () => {

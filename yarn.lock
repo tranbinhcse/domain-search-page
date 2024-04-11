@@ -33,10 +33,10 @@
     resize-observer-polyfill "^1.5.1"
     scroll-into-view-if-needed "^2.2.28"
 
-"@arco-themes/vue-mytino@^0.0.9":
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/@arco-themes/vue-mytino/-/vue-mytino-0.0.9.tgz#6461195fdf83d9c68d283d7f681500255300614a"
-  integrity sha512-2dFXGid5N0hBTRiXa7omoT36Mk3bqJR4VGXQfGaEz6nLFmbbmKsJXPPcLt1zyErEmepxnZQyn8wqiIWT0oY1nA==
+"@arco-themes/vue-mytino@^0.0.10":
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/@arco-themes/vue-mytino/-/vue-mytino-0.0.10.tgz#3bc86a6f312a00518b5e97980424dec072dc070e"
+  integrity sha512-muQ7XKWz548Z1eqEX8V1QLrJmT4+daEFtudHuPwljfA1rS93HoMEbuknni7au0SJzKPAAvwu2oyTclE0WQpikA==
 
 "@babel/parser@^7.23.5", "@babel/parser@^7.23.9":
   version "7.24.0"
@@ -1470,6 +1470,11 @@ doctrine@^3.0.0:
   integrity sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w==
   dependencies:
     esutils "^2.0.2"
+
+dotenv@^16.4.5:
+  version "16.4.5"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.4.5.tgz#cdd3b3b604cb327e286b4762e13502f717cb099f"
+  integrity sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==
 
 eastasianwidth@^0.2.0:
   version "0.2.0"

@@ -2,7 +2,8 @@ import { API_ENDPOINT } from '@/config'
 import { useAuthStore } from "@/stores/auth/authStore"
 import { storeToRefs } from "pinia"
 import axios from 'axios'
-axios.defaults.baseURL = API_ENDPOINT;
+axios.defaults.baseURL = import.meta.env.VITE_API_URL;
+
 // axios.defaults.baseURL = "https://api.tino.vn";
 
 const getRequestHeaders = () => {
@@ -19,6 +20,7 @@ const getRequestHeaders = () => {
 }
 
 export const send = async (url, method = 'GET', data, params = {}) => {
+
   const headers = getRequestHeaders()
   // const response = await axios({ url, method, params, headers, data })
 

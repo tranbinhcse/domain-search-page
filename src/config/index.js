@@ -1,4 +1,4 @@
-export const API_ENDPOINT = '/api/'
+export const API_ENDPOINT = '/api'
 
 export const SERVICES = {
     'cloud-hosting': [

@@ -17,6 +17,12 @@ export default defineConfig({
       }
     }
   },
+  build: {
+    sourcemap: true,
+  },
+  define: {
+    'import.meta.env': import.meta.env,
+  },
   plugins: [
     vue({
       // script: {

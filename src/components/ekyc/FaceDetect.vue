@@ -19,6 +19,7 @@
  
 import { defineProps, ref, onMounted, watch } from 'vue';
 import { FaceMesh } from "@mediapipe/face_mesh";
+
 import { shuffleFromPositionOne } from "@/utility/ekyc/shuffle-array";
 import { setIntervalAsync } from "set-interval-async/dynamic";
 import { clearIntervalAsync } from "set-interval-async";

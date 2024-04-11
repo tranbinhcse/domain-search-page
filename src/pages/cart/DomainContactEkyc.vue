@@ -5,7 +5,7 @@
             <a-button type="primary"  @click="CheckNationalId(contacts.registrant.nationalid)" :style="{marginLeft:'10px'}">Kiểm tra</a-button>
         </a-form-item>
     </a-form>
-    <FaceDetect :key="faceDetectKey" @DataImage="handleDataImage"  />
+    
     <a-row>
         <a-col :span="24">
             <a-modal v-model:visible="visibleFaceCheck" @ok="handleOk" @cancel="handleCancel" fullscreen>
