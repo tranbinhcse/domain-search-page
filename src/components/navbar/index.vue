@@ -19,15 +19,18 @@
     </div>
     <ul class="right-side">
       <li>
-        <a-tooltip :content="$t('settings.search')">
-          <a-button type="primary" @click="router.push({ name: 'CreateWebsite' })">
-            <template #icon>
-              <icon-plus />
-            </template>
-            Tạo website
-          </a-button>
-        </a-tooltip>
+        <a-dropdown  :popup-max-height="false">
+          <a-button type="primary"><template #icon><icon-plus></icon-plus></template>Đăng ký mới </a-button>
+          <template #content> 
+            <a-doption key="web-hosting_register" @click="router.push({ name: 'CreateWebsite' })"><template #icon><icon-computer size="20"></icon-computer></template>  Tạo website</a-doption>
+            <a-doption key="web-hosting_register" @click="router.push({path: '/cart/cloud-hosting'})"><template #icon><icon-computer size="20"></icon-computer></template>Cloud Hosting</a-doption>
+            <a-doption key="CloudServer_register" @click="router.push({path: '/cart/cloud-servers'})"><template #icon><icon-computer size="20"></icon-computer></template>Cloud Servers</a-doption>
+            <a-doption key="email_register" @click="router.push({path: '/cart/bussiness-email'})"><template #icon><icon-computer size="20"></icon-computer></template>Business email</a-doption>
+
+          </template>
+        </a-dropdown>
       </li>
+        
       <li>
         <a-tooltip :content="$t('settings.language')">
           <a-button
