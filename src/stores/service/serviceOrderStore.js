@@ -53,7 +53,7 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
   watch(category, getProducts)
   watch(selectedProduct, () => {
     getProductConfiguration()
-    getPaymentMethods()
+    
   })
 
   return { loading, error, category, products, selectedProduct, product, getProducts, order, removeDomainSelected, domainSelected }

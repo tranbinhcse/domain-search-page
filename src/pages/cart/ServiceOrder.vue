@@ -140,7 +140,6 @@ import Box from '@/components/base/Box.vue'
 import Button from '@/components/base/Button.vue'
 import Heading from '@/components/base/Heading.vue'
 import { useServiceOrderStore } from '@/stores/service/serviceOrderStore'
-import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { CheckCircleIcon } from '@heroicons/vue/20/solid'
 import { RadioGroup, RadioGroupDescription, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
 
@@ -153,9 +152,7 @@ const {
   category,
   products,
   selectedProduct,
-  product,
-  paymentMethods,
-  paymentMethod,
+  product, 
   domainSelected
 } = storeToRefs(serviceOrderStore)
 
