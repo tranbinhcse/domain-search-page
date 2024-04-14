@@ -33,10 +33,30 @@
     resize-observer-polyfill "^1.5.1"
     scroll-into-view-if-needed "^2.2.28"
 
-"@arco-themes/vue-mytino@^0.0.10":
-  version "0.0.10"
-  resolved "https://registry.yarnpkg.com/@arco-themes/vue-mytino/-/vue-mytino-0.0.10.tgz#3bc86a6f312a00518b5e97980424dec072dc070e"
-  integrity sha512-muQ7XKWz548Z1eqEX8V1QLrJmT4+daEFtudHuPwljfA1rS93HoMEbuknni7au0SJzKPAAvwu2oyTclE0WQpikA==
+"@arco-themes/vue-0000@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@arco-themes/vue-0000/-/vue-0000-0.0.7.tgz#da8356679e8a2d8a3fe891094543033d6ff01b2a"
+  integrity sha512-4bra7hNM+vO/LhhU0gNSnEQiaGjSVwQEn+Gh965tmnkqS2MFvYOftIj4sN4xaWYGd5JE+W0SYKWQ20nZPLHyOA==
+
+"@arco-themes/vue-mytino2@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@arco-themes/vue-mytino2/-/vue-mytino2-0.0.1.tgz#644af1a97dd7a927b10500a3945ba6e4bf53bbf0"
+  integrity sha512-vd5EJjb2TbO/Nw8eDXRAUX7b9TtzTs9ATrKW4woVr9oRzr7SZIlA6TGfowruw4vgE071pwwS9an0IGeK2uzQ6w==
+
+"@arco-themes/vue-mytino@^0.0.11":
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/@arco-themes/vue-mytino/-/vue-mytino-0.0.11.tgz#60acefb61cd2974fd7b800eaaf267eed6ba3f8be"
+  integrity sha512-UuIuSpMCh6QO5QuJusefERQ9+UR6cxMb2HBkIxqKTlPFnsHDLjr2M6V8rDzvMRKnFzreIqgK7kK+mZ2RoGMPRw==
+
+"@arco-themes/vue-onebrand@^0.0.28":
+  version "0.0.28"
+  resolved "https://registry.yarnpkg.com/@arco-themes/vue-onebrand/-/vue-onebrand-0.0.28.tgz#4d12458d51889bc14328f400459f2191e1ac7eaa"
+  integrity sha512-sQhXPnATmIZb8669vMW+uNdpI2GJsUYQYdaGCRN/w5PUzhHSOmn7qBoSOeo0AwpBEZlgrSFMQzKZB5XpcDmkTw==
+
+"@arco-themes/vue-phoenixlake@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@arco-themes/vue-phoenixlake/-/vue-phoenixlake-0.0.3.tgz#8aae0af495ca4aaf0c4e6b3b9a7ee0011428d775"
+  integrity sha512-/cahgYHvbx4RFF0vXrnwZ8CJ9u5Ednw2G2jsT8QvRTV4JZuS919wl/YK51eI3BFEGIRyFAWsK3zG4+OaPjcUPQ==
 
 "@babel/parser@^7.23.5", "@babel/parser@^7.23.9":
   version "7.24.0"

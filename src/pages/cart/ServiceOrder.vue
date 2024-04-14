@@ -191,5 +191,7 @@ const handleAddCart = () => {
 watch(domainSelected, (newDomainSelected) => {
   product.value.domain = newDomainSelected.domain
 })
-
+watch(() => product.value, (newProduct) => {
+ console.log(newProduct);
+})
 </script>

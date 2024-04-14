@@ -9,9 +9,9 @@ export default defineConfig({
     preprocessorOptions: {
       less: {
         modifyVars:{
-          'size-8': '42px',
-          'arcoblue-6': '#f85959',  
-          "menu-dark-bg": '#000',        
+          // 'size-8': '42px',
+          // 'arcoblue-6': '#f85959',  
+          // "menu-dark-bg": '#000',        
         },
         javascriptEnabled: true,        
       }

@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import {  post } from '@/core/apiClient'
 import { ref, watch,  } from 'vue'
 import ProductRepository from '@/repositories/ProductRepository' 
+import CartRepository from '@/repositories/CartRepository' 
 import { useCartStore } from "@/stores/cartStore";
 
 export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
@@ -10,7 +11,6 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
   const category = ref()
   const products = ref([])
   const selectedProduct = ref()
-
   const product = ref()
   const domainSelected = ref()
 
@@ -32,6 +32,7 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
     loading.value = true
     product.value = await ProductRepository.getConfiguration(selectedProduct.value)
     loading.value = false
+    await CartRepository.getQuote(product.value)
   }
 
 //  async function getProductDomainOptions() {
@@ -42,7 +43,6 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
   
   async function order(router){
     loading.value = true
-    // const res = await post(`/order/${selectedProduct.value}`, product.value)
     const cartStore = useCartStore()
     product.value.itemType = 'product'
     cartStore.addToCart(product.value)
@@ -57,11 +57,14 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
     cartStore.removeInCart(domain)
   }
 
+
+ 
+
   watch(category, getProducts)
   watch(selectedProduct, () => {
     getProductConfiguration()
-    
   })
+  
 
   return { loading, error, category, products, selectedProduct, product, getProducts, order, removeDomainSelected, domainSelected }
 })

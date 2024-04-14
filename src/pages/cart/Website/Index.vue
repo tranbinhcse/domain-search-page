@@ -1,7 +1,7 @@
 <template>
     <div class="h-full">
        
-
+      <HeaderWebPage />
       <div class="max-w-7xl m-auto mt-5" id="searchResults" ref="searchResultsRef">
  
         <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -80,6 +80,7 @@
   import { useDomainSearchStore } from "@/stores/domain/domainSearchStore";
   import { storeToRefs } from 'pinia'
 
+  import HeaderWebPage from './components/header.vue';
   const domainSearchStore = useDomainSearchStore()
   const { getDomainTlds } = domainSearchStore
 

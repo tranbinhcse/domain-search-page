@@ -4,8 +4,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import ArcoVue from '@arco-design/web-vue';
 import ArcoVueIcon from '@arco-design/web-vue/es/icon';
 import '@arco-design/web-vue/dist/arco.less';
-import '@arco-themes/vue-mytino/index.less'
-import { Notification } from '@arco-design/web-vue';
+// import '@arco-themes/vue-mytino/index.less'
+// import { Notification } from '@arco-design/web-vue';
 
 import dayjs from "dayjs";
 
@@ -13,7 +13,7 @@ import i18n from './locales';
 
   
 // import '@arco-design/web-vue/dist/arco.less';
-import '@arco-themes/vue-mytino/index.less';
+import '@arco-themes/vue-mytino2/index.less';
 import './style.css'
 
 const app = createApp(App)

@@ -11,13 +11,16 @@
 
               <div class="search-form-wrapper relative" >
                 <a-input type="text" allow-clear required v-model="searchKey" name="domain" placeholder="Nhập tên thương hiệu" class="w-full text-3xl h-[65px]" />
-                <a-button type="primary" :loading="searching" @click="handleSearchSubmit" class="absolute top-1/2 -translate-y-1/2 right-[10px] h-[45px]"  >
-                  Tìm kiếm
+                <a-button type="primary" :loading="searching" @click="handleSearchSubmit" class="absolute top-1/2 -translate-y-1/2 right-[10px]"  >
+                 
                   <template #icon>
                     <IconSearch />
                   </template>
+                  Tìm kiếm
                 </a-button>
+ 
               </div>
+ 
  
             </div>
   
