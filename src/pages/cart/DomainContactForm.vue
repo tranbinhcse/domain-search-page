@@ -45,7 +45,7 @@
        </a-form-item>
 
        <a-row :gutter="8">
-           <a-col :span="10">
+           <a-col :span="9">
                <a-form-item field="registrant.nationalid" label="Số căn cước "
                   :rules="[
                    {required:true,message:'nationalid is required'},
@@ -59,20 +59,20 @@
                </a-form-item>
            </a-col>
            
-           <a-col :span="10">
+           <a-col :span="9">
                    <a-form-item field="registrant.birthday" label="Ngày sinh"
                                :rules="[{required:true,message:'age is required'}]"
-                   >
-                       <a-input  v-model="contacts.registrant.birthday" locale="vi" placeholder="Vui lòng chọn ngày sinh..." />
+                   >   
+                       <a-date-picker format="DD/MM/YYYY"  :model-value="$dayjs(contacts.registrant.birthday)" value-format="DD/MM/YYYY" locale="vi" placeholder="Vui lòng chọn ngày sinh..." />
                    </a-form-item>
            </a-col>
-           <a-col :span="4">
+           <a-col :span="6">
                <a-form-item field="registrant.gender" label="Giới tính" :rules="[{required:true,message:'age is required'}]">
                    <a-radio-group v-model="contacts.registrant.gender">
-                   <a-radio :value="contacts.registrant.gender">{{ $t(contacts.registrant.gender) }}</a-radio>
+                   <a-radio value="Male">{{ $t('Male') }}</a-radio>
+                   <a-radio value="Female">{{ $t('Female') }}</a-radio>
                    </a-radio-group>
                </a-form-item>
-               <a-input v-model="contacts.registrant.gender" type="hidden" class="sr-only" />
            </a-col>
        </a-row>
 
@@ -223,7 +223,9 @@
          
    }
 
-
+//    const formattedBirthday = () => {
+//        return this.$dayjs(contacts.value.registrant.birthday)
+//    }
 
    const handleDataImage = async(image) => {
        const resp = await FaceDetection(image)
@@ -271,13 +273,18 @@
        contacts.value.registrant.ward = '';
        getCities(value);
    }
-   onMounted(() => {
+   onMounted(async() => {
        // syncFormWithContacts()
+       await resetState();
        resetDomainRegisterState();
        listDomainFree();
-       getStates();
-       updateRegistrantFromUser();
-       resetState();
+
+       await updateRegistrantFromUser();
+
+       await getStates();
+       await getCities(contacts.value.registrant.state);
+       await getWards(contacts.value.registrant.city);
+      
        
 
    });  

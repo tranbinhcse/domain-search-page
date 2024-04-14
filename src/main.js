@@ -3,16 +3,11 @@ import App from './App.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import ArcoVue from '@arco-design/web-vue';
 import ArcoVueIcon from '@arco-design/web-vue/es/icon';
-import '@arco-design/web-vue/dist/arco.less';
-// import '@arco-themes/vue-mytino/index.less'
-// import { Notification } from '@arco-design/web-vue';
+import '@arco-design/web-vue/dist/arco.less';;
 
 import dayjs from "dayjs";
 
 import i18n from './locales';
-
-  
-// import '@arco-design/web-vue/dist/arco.less';
 import '@arco-themes/vue-mytino2/index.less';
 import './style.css'
 
@@ -24,7 +19,7 @@ import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
-app.use(pinia)
+
 
 import routes from './routers'
 import { useAuthMiddleware } from './middlewares/authMiddleware'
@@ -42,12 +37,17 @@ const router = createRouter({
 app.use(dayjs);
 
 const dayFormat = (value, formats = "DD/MM/YYYY") => {
- 
+  
+
+  // dd-mm-yyy convert to dd/mm/yyyy
+  value = value.replace(/-/g, '/');
+
   if(value == '0000-00-00') {
     return '-'
   }
-  if(dayjs(value).isValid()){
-    return dayjs(value).format(formats);
+  const formattedDate = dayjs(value, "DD/MM/YYYY").format();
+  if(dayjs(formattedDate).isValid()){
+    return dayjs(formattedDate).format(formats);
   } else {
     return '-'
   }
@@ -61,19 +61,7 @@ app.config.globalProperties.$dayjs = dayFormat;
 Notification._context = app._context;
 
  
-
-
-// const messages = Object.assign(languages)
-// const i18n = createI18n({
-//     legacy: false,
-//     locale: localStorage.getItem('locale') || 'vi',
-//     fallbackLocale: 'vi',
-//     messages: messages
-// })
-
-app.use(i18n);
-
-
+ 
 // 3. Set default currency format
 
 const currencyFormatter = (value) => {
@@ -87,22 +75,15 @@ const currencyFormatter = (value) => {
   }).format(value);
 
   return formattedValue;
-};
-
-
-// const currencyFormatter = new Intl.NumberFormat('vi-VN', {
-//   style: 'currency',
-//   currency: 'VND',
-//   minimumFractionDigits: 0,
-// });
-
+}; 
 
 app.config.globalProperties.$currencyFormatter = currencyFormatter;
 app.config.globalProperties.$currency = currencyFormatter;
 
 
 
-
+app.use(i18n);
+app.use(pinia)
 useAuthMiddleware(router)
 app.use(router)
 

@@ -1,6 +1,6 @@
 <template>
   <div class="h-full">
-    <div class="bg-green-500 text-white     py-10">
+    <div class="bg-black text-white     py-10">
       <div class="max-w-7xl m-auto">
         <div class="box-search-domain text-center ">
             <div class="form-search-domain">
