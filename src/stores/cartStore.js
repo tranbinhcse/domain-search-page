@@ -309,7 +309,7 @@ export const useCartStore = defineStore('cartStore', () => {
     }
 
     // Gọi hàm order của CartRepository với đơn hàng đã được cập nhật
-   const order = await CartRepository.order(updatedCartItems, 8, 3);
+   const order = await CartRepository.order(updatedCartItems, 1, 1);
   
     if(!order.error){
       clearCart();

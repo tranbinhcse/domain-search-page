@@ -13,8 +13,8 @@
                       <RadioGroupDescription as="span" class="mt-1 flex items-center text-sm text-gray-500">{{ cycle.formatted }}</RadioGroupDescription>
                       <RadioGroupDescription as="span" class="mt-4 ">
                         <div class="flex justify-between">
-                          <div class="text-2xl font-medium text-gray-900">{{ cycle.price }}đ</div>
-                          <div class="text-red-500 bg-red-200 px-2 rounded text-sm py-1">Save 88%</div>
+                          <div class="text-2xl font-medium text-gray-900">{{  $currency(cycle.price )}}</div>
+                          <!-- <div class="text-red-500 bg-red-200 px-2 rounded text-sm py-1">Save 88%</div> -->
                         </div>
                       </RadioGroupDescription>
                     </span>

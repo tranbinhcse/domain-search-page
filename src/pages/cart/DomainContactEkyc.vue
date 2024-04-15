@@ -284,8 +284,8 @@
         resetDomainRegisterState();
         listDomainFree();
         getStates();
-        getCities(contacts.registrant.state);
-        getWards(contacts.registrant.city);
+        // getCities(contacts.registrant.state);
+        // getWards(contacts.registrant.city);
         updateRegistrantFromUser();
         resetState();
         

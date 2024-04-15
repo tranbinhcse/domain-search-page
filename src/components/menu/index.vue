@@ -1,7 +1,7 @@
 <template>
   <div class="menu-demo">
-    <a-menu  :default-selected-keys="['1']" theme="dark">
-      <a-menu-item key="1" @click="handleMenuClick('home')"> <template #icon><icon-apps size="20"></icon-apps></template>Tổng quan</a-menu-item>
+    <a-menu  :default-selected-keys="['1']"  >
+      <a-menu-item key="dashboard" @click="handleMenuClick('dashboard')"> <template #icon><icon-apps size="20"></icon-apps></template>Tổng quan</a-menu-item>
       <p class="text-gray-500 p-2 uppercase mt-4">Tên miền</p>
        
       <a-menu-item key="domain_register" @click="handleMenuClick('DomainSearch')">

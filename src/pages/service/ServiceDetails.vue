@@ -10,6 +10,7 @@
 
 import { onMounted, ref } from 'vue'
 
+import DefaultModule from '@/pages/service/modules/Default/index.vue'
 
 import { useServiceDetailStore } from '@/stores/service/serviceDetailStore'
 import { useRoute } from 'vue-router'
@@ -24,12 +25,13 @@ const currentModule = ref(null)
 onMounted(async () => {
     await getService(route.params.id)
     const moduleName = service.value.acc_module
+    let module = null
     // Dynamic import based on moduleName
     try {
         const module = await import(`@/pages/service/modules/${moduleName}/index.vue`)
         currentModule.value = module.default
     } catch (error) {
-        console.error(`Error loading module ${moduleName}:`, error)
+        currentModule.value = DefaultModule
     }
 })
 

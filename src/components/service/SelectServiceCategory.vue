@@ -1,15 +1,4 @@
-<template>
-  <!-- <div class="grid md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5 gap-5">
-    <div v-for="product in products" :key="product.id"
-      class="border p-6 rounded-md cursor-pointer border-dashed border-gray-300"
-      :class="modelValue == product ? 'bg-green-200 border-green-500': ''"
-      @click="$emit('update:modelValue', product.id)"
-    >
-      <h3 class="text-sm font-bold mb-3" :class="modelValue == product.id ? 'text-green-500' : 'text-black'">{{ product.name }}</h3>
-      <div class="text-sm text-gray" v-html="product.description"></div>
-    </div>
-  </div> -->
-
+<template> 
 
   <RadioGroup v-model="internalValue">
 
@@ -34,7 +23,7 @@
   
 </template>
 <script setup>
-import { ref, watch } from 'vue'
+import { onMounted, ref, watch, watchEffect } from 'vue'
 
 import { RadioGroup, RadioGroupDescription, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
 import { CheckCircleIcon } from '@heroicons/vue/20/solid'
@@ -58,4 +47,39 @@ watch(() => props.modelValue, (newValue) => {
   }
 }, { deep: true })
 
+
+
+
+// Xác định hàm chọn phần tử đầu tiên nếu modelValue không khớp với bất kỳ item nào trong categories
+const selectFirstItemIfNotMatched = () => {
+  const matchedItem = props.categories.find(category => category.id === internalValue.value)
+  if (!matchedItem) {
+    if (props.categories.length > 0) {
+      internalValue.value = props.categories[0].id
+    }
+  }
+}
+
+// Theo dõi sự thay đổi trong internalValue và update modelValue
+watch(internalValue, (newValue) => {
+  emit('update:modelValue', newValue)
+}, { deep: true })
+
+// Theo dõi sự thay đổi trong modelValue và update internalValue
+watch(() => props.modelValue, (newValue) => {
+  if (newValue !== internalValue.value) {
+    internalValue.value = newValue
+    selectFirstItemIfNotMatched() // Kiểm tra và chọn phần tử đầu tiên nếu cần
+  }
+}, { deep: true })
+
+onMounted(() => {
+  selectFirstItemIfNotMatched()
+})  
+
+watchEffect(() => {
+  selectFirstItemIfNotMatched()
+})
+// Khi component được tạo, kiểm tra và chọn phần tử đầu tiên nếu cần
+selectFirstItemIfNotMatched()
 </script>

@@ -55,12 +55,7 @@
               </template>
               <a-input v-model="domain" word-length="50" placeholder="Nhập tên miền của bạn" allow-clear></a-input>
             </a-tab-pane>
-            <a-tab-pane key="own">
-              <template #title>
-                <icon-user/> Đã có tên miền
-              </template>
-              Content of Tab Panel 3
-            </a-tab-pane>
+             
           </a-tabs>
         </div>
       </a-modal>

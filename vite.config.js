@@ -40,7 +40,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://ote.tino.org/api',
+        target: 'https://api.tino.vn',
         secure: false,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''), // Xóa tiền tố /api khi gửi yêu cầu tới API

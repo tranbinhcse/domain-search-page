@@ -1,64 +1,23 @@
 export const API_ENDPOINT = '/api'
 
 export const SERVICES = {
-    'cloud-hosting': [
+    'web-hosting': [
         {
-            "name": "WordPress Hosting",
-            "description": "WordPress Hosting detail",
-            "id": "wordpress-hosting"
+            "name": "Hosting NVMe",
+            "description": "Giải pháp hosting cho doanh nghiệp cao cấp và mạnh mẽ nhất, sử dụng toàn bộ ổ cứng NVME U.2 RAID 10 cùng vi xử lý AMD EPYC/Intel Xeon Scalable Gen 2 cao cấp nhất chuyên dụng dành cho máy chủ, hệ thống mạng riêng biệt 10Gbps tốc độ cao giúp tăng sự chịu tải và tốc độ cho website.",
+            "id": "hosting-nvme"
         },
         {
-            "name": "Cloud Hosting",
-            "description": "Cloud Hosting detail",
-            "id": "cloud-hosting"
-        },
-        {
-            "name": "Cloud Business Hosting",
-            "description": "Cloud Business Hosting",
-            "id": "cloud-business-hosting"
-        },
-        {
-            "name": "Cloud Hosting SEO",
-            "description": "Cloud Hosting SEO",
-            "id": "cloud-hosting-seo"
-        },
-        {
-
-            "name": "Unlimited Hosting",
-            "description": "Unlimited Hosting",
-            "id": "unlimited-hosting"
-        },
-        {
-            "name": "Reseller Hosting",
-            "description": "Reseller Hosting",
-            "id": "reseller-hosting"
+            "name": "Business Hosting",
+            "description": "Giải pháp hosting cho doanh nghiệp cao cấp và mạnh mẽ nhất, sử dụng toàn bộ ổ cứng NVME U.2 RAID 10 cùng vi xử lý AMD EPYC/Intel Xeon Scalable Gen 2 cao cấp nhất chuyên dụng dành cho máy chủ, hệ thống mạng riêng biệt 10Gbps tốc độ cao giúp tăng sự chịu tải và tốc độ cho website.",
+            "id": "business-hosting"
         }
     ],
     "cloud-servers": [
         {
-            "name": "VPS Pro",
+            "name": "NVMe VPS",
             "description": "",
-            "id": "vps-pro"
-        },
-        {
-            "name": "VPS Lite",
-            "description": "",
-            "id": "vps-lite"
-        },
-        {
-            "name": "VPS Windows",
-            "description": "",
-            "id": "vps-windows"
-        },
-        {
-            "name": "Dedicated",
-            "description": "",
-            "id": "dedicated"
-        },
-        {
-            "name": "Colocations",
-            "description": "",
-            "id": "colocations"
+            "id": "nvme-vps"
         }
     ],
     "website": [
@@ -66,6 +25,13 @@ export const SERVICES = {
             "name": "WordPress",
             "description": "",
             "id": "website"
+        }
+    ],
+    "email-bao-mat": [
+        {
+            "name": "Business Email",
+            "description": "",
+            "id": "business-email"
         }
     ]
 }

@@ -25,7 +25,7 @@
         </div>
 
 
-        <a-button @click="login(credential)" class="btn btn-primary" :disabled="loading">
+        <a-button type="primary" @click="login(credential)" :disabled="loading">
                 <div class="flex gap-2 items-center">
                     <div v-if="loading" class="w-30 h-30">
                         <Icon class="animate-spin" icon="mdi:loading"  width="20" />
@@ -42,7 +42,7 @@
      <!-- Footer -->
      <div class="pt-5 mt-6 border-t border-slate-200 dark:border-slate-700">
               <div class="text-sm">
-                Don't have an account ?<router-link class="font-medium text-primary hover:text-red-600 dark:hover:text-red-400 pl-2" to="/signup"> Sign in</router-link>
+                Don't have an account ?<router-link class="font-medium text-primary hover:text-red-600 dark:hover:text-red-400 pl-2" to="/signup"> Đăng ký</router-link>
               </div>
               <!-- Warning -->
               <div class="mt-5">

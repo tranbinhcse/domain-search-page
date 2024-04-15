@@ -39,20 +39,26 @@ app.use(dayjs);
 const dayFormat = (value, formats = "DD/MM/YYYY") => {
   
 
-  // dd-mm-yyy convert to dd/mm/yyyy
-  value = value.replace(/-/g, '/');
-
+ 
   if(value == '0000-00-00') {
     return '-'
   }
   const formattedDate = dayjs(value, "DD/MM/YYYY").format();
   if(dayjs(formattedDate).isValid()){
     return dayjs(formattedDate).format(formats);
-  } else {
-    return '-'
+  }
+  
+  const formattedDate2 = dayjs(value, "YYYY-MM-DD").format();
+  if(dayjs(formattedDate2).isValid()){
+    return dayjs(formattedDate2).format(formats);
   }
 
-   
+const formattedDate3 = dayjs(value, "DD-MM-YYYY").format();
+  if(dayjs(formattedDate3).isValid()){
+    return dayjs(formattedDate3).format(formats);
+  }
+
+  return '-'
 
 
   
@@ -80,7 +86,26 @@ const currencyFormatter = (value) => {
 app.config.globalProperties.$currencyFormatter = currencyFormatter;
 app.config.globalProperties.$currency = currencyFormatter;
 
+const UnitFormat = (value, from = 'kb', to = 'gb') => {
+  const units = {
+      'kb': 1,
+      'mb': 1024,
+      'gb': 1024 * 1024,
+      'tb': 1024 * 1024 * 1024,
+  };
+  if (!(from in units) || !(to in units)) {
+      throw new Error('Đơn vị không hợp lệ');
+  }
+  const baseValue = value * units[from];
 
+    // Chuyển đổi từ đơn vị cơ bản sang đơn vị đích
+    const convertedValue = baseValue / units[to];
+
+    return convertedValue;
+
+}
+
+app.config.globalProperties.$unitFormat = UnitFormat;
 
 app.use(i18n);
 app.use(pinia)

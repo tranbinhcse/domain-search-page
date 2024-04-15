@@ -4,13 +4,13 @@ const ProductRepository = {
     const { products } = await get(`/category/${categoryId}/product`)
     return products
   },
-  getConfiguration: async productId => {
+  getConfiguration: async (productId, period = 'a') => {
+    console.log('period', period);
     const { product: { config: { 
       // addons: addonFields, 
       forms: formFields, 
       product: productFields, 
-      // subproducts: subProductFields 
-    }, domain_options: domainOptionsFields } } = await get(`/order/${productId}`)
+    }, domain_options: domainOptionsFields, recurring_price, setup, cycle} } = await get(`/order/${productId}?period=${period}`)
 
     const product = {
       product_id: productId,
@@ -19,6 +19,7 @@ const ProductRepository = {
       // addonFields,
       formFields,
       productFields,
+      recurring_price, setup, cycle
       // subProductFields
     }
 
@@ -36,6 +37,7 @@ const ProductRepository = {
       }
     })
 
+    product.cycle = 'a'
     product.custom = custom
 
     const addon = {}
@@ -62,12 +64,9 @@ const ProductRepository = {
 
     productFields.forEach(({ id, value}) => {
       product[id] = value
+      // if(id === 'cycle') product.cycle = value
     })
-
     product.domainOptions = domainOptionsFields;
-
-
-
     return product
   }
 }

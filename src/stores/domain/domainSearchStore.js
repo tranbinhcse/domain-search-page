@@ -163,8 +163,14 @@ async function searchDomains(loadMore = false) {
   }
 
   async function getDomainTlds() {
-    tlds.value = await DomainRepository.getTlds()
-    tldsLoaded.value = true
+    if(tldsLoaded.value == true){
+        return 
+    } else {
+      tlds.value = await DomainRepository.getTlds()
+      tldsLoaded.value = true
+    }
+      
+    
   }
 
   return { tldsLoaded, searching, searchKey, domains, searchDomains, getDomainTlds, lastTldIndex, getWhoisDomain, updateInCart, tlds, topDomains }

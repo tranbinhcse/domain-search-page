@@ -45,7 +45,7 @@
             <div  v-html="invoiceBody" ></div>
     
         </Box>
-        <Box v-if="invoice.status == 'Unpaid'" class="flex-auto">
+        <Box v-if="invoice.status == 'Unpaid'" class="flex-auto max-w-[400px]">
             <div class=" px-4 py-6 sm:px-6 lg:px-8" v-if="invoice.status == 'Unpaid'">
                   <p class="text-sm font-medium leading-6 text-gray-400">Hình thức thanh toán</p>
                   <p class="mt-2 flex items-baseline gap-x-2">

@@ -2,7 +2,8 @@
  
 import NotFound from '@/pages/NotFound.vue'
 import Website from '@/pages/cart/Website/Index.vue'
-
+import Dashboard from '@/pages/Dashboard.vue'
+import Home from '@/pages/Home.vue'
 
 
 import AuthRoutes from './auth'
@@ -30,7 +31,7 @@ const routes = [
       {
           path: '',
           name: 'home',
-          component: Website,
+          component: Home,
       },
         ...ClientAreaRoutes,
         ...SupportRoutes,

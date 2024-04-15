@@ -2,11 +2,11 @@
   <div class="navbar">
     <div class="left-side">
       <a-space>
-        <img
+       
+        <router-link to="/"> <img
           alt="logo"
           src="@/assets/logo.png"
-        />
-        
+        /></router-link>
         <icon-menu-fold
           v-if="!topMenu && appStore.device === 'mobile'"
           style="font-size: 22px; cursor: pointer" class="ml-2"
@@ -23,9 +23,9 @@
           <a-button type="primary"><template #icon><icon-plus></icon-plus></template>Đăng ký mới </a-button>
           <template #content> 
             <a-doption key="web-hosting_register" @click="router.push({ name: 'CreateWebsite' })"><template #icon><icon-computer size="20"></icon-computer></template>  Tạo website</a-doption>
-            <a-doption key="web-hosting_register" @click="router.push({path: '/cart/cloud-hosting'})"><template #icon><icon-computer size="20"></icon-computer></template>Cloud Hosting</a-doption>
+            <a-doption key="web-hosting_register" @click="router.push({path: '/cart/web-hosting'})"><template #icon><icon-computer size="20"></icon-computer></template>Cloud Hosting</a-doption>
             <a-doption key="CloudServer_register" @click="router.push({path: '/cart/cloud-servers'})"><template #icon><icon-computer size="20"></icon-computer></template>Cloud Servers</a-doption>
-            <a-doption key="email_register" @click="router.push({path: '/cart/bussiness-email'})"><template #icon><icon-computer size="20"></icon-computer></template>Business email</a-doption>
+            <a-doption key="email_register" @click="router.push({path: '/cart/email-bao-mat'})"><template #icon><icon-computer size="20"></icon-computer></template>Business email</a-doption>
 
           </template>
         </a-dropdown>

@@ -24,7 +24,7 @@
                              </h3>
                              </div>
                              <p class="mt-1 mb-2 text-sm text-gray-500"><span class="uppercase">{{ product.tld }} </span>   Domain {{ product.action }}</p>
-                             <p>Chu kỳ thanh toán: {{ product.years }}</p>
+                             <p>Chu kỳ thanh toán: {{ $t(product.years) }}</p>
                             
                          </div>
                          <div class="mt-4 sm:mt-0 sm:pr-9">
@@ -55,7 +55,7 @@
                              </h3>
                              </div>
                              <p class="mt-1 mb-2 text-sm text-gray-500"><span class="uppercase">{{ product.domain }} </span></p>
-                             <p>Chu kỳ thanh toán:  {{ product.cycle }}</p>
+                             <p>Chu kỳ thanh toán:  {{ $t(product.cycle) }}</p>
  
                          </div>
                          <div class="mt-4 sm:mt-0 sm:pr-9">

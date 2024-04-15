@@ -9,6 +9,7 @@ import WebsiteRoutes from './website'
 import DomainRoutes from './domain'
 import SecurityRoutes from './security'
 import LogsRoutes from './logs'
+import UserRoutes from './user'
 
 
 export const DEFAULT_LAYOUT = () => import('@/layouts/DefaultLayout.vue');
@@ -26,7 +27,7 @@ const ClientAreaRoutes = [
         },
         children: [
             {
-                path: '',
+                path: '/clientarea',
                 name: 'dashboard',
                 component: Dashboard,
                 meta: {
@@ -42,6 +43,7 @@ const ClientAreaRoutes = [
             ...DomainRoutes,
             ...SecurityRoutes,
             ...LogsRoutes,
+            ...UserRoutes,
         ],
       },
 

@@ -55,3 +55,7 @@ export const get = async (url, params = {}) => {
 export const post = async (url, data = {}) => {
   return await send(url, 'POST', data)
 }
+
+export const put = async (url, data = {}) => {
+  return await send(url, 'PUT', data)
+}

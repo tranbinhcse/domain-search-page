@@ -17,7 +17,7 @@ export const usePaymentStore = defineStore('paymentStore', () => {
   async function getPaymentLink(invoiceId, method) {
     loading.value = true
     const res = await InvoiceRepository.paymentLink(invoiceId, method)
-    paymentLink.value = res.content.gateway
+    paymentLink.value = res.content
     loading.value = false;
   }
 

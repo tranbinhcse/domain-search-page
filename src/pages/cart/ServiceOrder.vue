@@ -1,7 +1,7 @@
 <template>
  
   <a-spin class="w-full" :loading="loading">
-    <div class="max-w-7xl mx-auto">
+    <div class="max-w-7xl mx-auto mb-[150px]">
       <div class="mb-5 py-5 ">
         <Heading text="Chọn dịch vụ" class="text-green-500 uppercase text-3xl font-bold border-b-2 border-gray-50 pb-2 mb-2" />
         <SelectServiceCategory
@@ -14,6 +14,7 @@
         <ProductSelect v-model="selectedProduct" :products="products" />
       </div>
       <div v-if="product">
+       
         <div class="mb-5  py-5">
           <Heading text="Chu kỳ thanh toán" class="text-green-500 uppercase text-3xl font-bold border-b-2 border-gray-50 pb-2 mb-2" />
           <PeriodSelect :periods="cycles.items" v-model="selectedCycle" />
@@ -55,7 +56,7 @@
                     <span class="flex flex-1">
                       <span class="flex flex-col w-full ">
                         <RadioGroupLabel as="span" class="block text-sm font-medium text-gray-900">{{ item.title }}</RadioGroupLabel>
-                        <RadioGroupDescription as="span" class="mt-1 flex items-center text-sm text-gray-500" >{{ item.price }}đ</RadioGroupDescription>
+                        <RadioGroupDescription as="span" class="mt-1 flex items-center text-sm text-gray-500" >{{ $currency(item.price) }}</RadioGroupDescription>
                       </span>
                     </span>
                     <CheckCircleIcon v-if="checked" class="h-7 w-7 text-green-500 absolute right-1 top-1" aria-hidden="true" />
@@ -82,12 +83,11 @@
                 </div>
               </div>
           </div>
-
+         
           <div v-if="type == 'input' || type == 'sliderinput' || type == 'slidersequenced' || type == 'qty'"> 
             <Input  v-for="item in items" :key="item.id" :value="item.id" type="text" aria-describedby="email-description" />
           </div>
-
-
+ 
 
             <Slider
               v-if="type == 'slider'"
@@ -95,11 +95,12 @@
               :min="minvalue"
               :max="maxvalue"
               :step="step"
-            />
+            /> 
+           
+          
  
-            <a-select  v-if="type == 'select'" :style="{width:'320px'}" v-model="product.custom[id]" placeholder="Please select ..." allow-clear>
+            <a-select  v-if="type == 'select' || type == 'servergroupselector' || type == 'sshkeyselect'" :style="{width:'320px'}" v-model="product.custom[id]" placeholder="Please select ..." allow-clear allow-search>
                 <a-option  v-for="item in items" :key="item.id" :value="item.id" v-slot="{ checked, active }">{{item.title}} - {{$currency(item.price)}}</a-option>
-             
               </a-select>
 
               
@@ -111,13 +112,16 @@
      
       </div>
       </div>
-      <div class="sticky bottom-0 -mx-4 sm:-mx-6 lg:-mx-8">
-        <Box v-if="product" class="drop-shadow-2xl mb-0">
+      <div class="bottom-0 left-0 right-0 fixed pl-[250px]">
+        <div v-if="product" class="drop-shadow-2xl mb-0 bg-white p-5">
           <div class="flex justify-between max-w-7xl mx-auto">
             <div>
               <p>Tổng thanh toán:</p>
               <p>
-                <span  class="font-bold text-2xl text-green-500">100.000đ</span><span>/năm</span>
+
+           
+            
+                <span  class="font-bold text-2xl text-green-500">{{ $currency(quote?.summary?.total) }}</span><span></span>
               </p>
             </div>
             
@@ -125,7 +129,7 @@
               <Button @click="handleAddCart" btnClass="bg-green-500 px-10 py-3 text-white rounded" icon="heroicons-outline:banknotes" text="Thanh toán ngay"   />
             </div>
           </div>
-        </Box>
+        </div>
       </div>
   </a-spin>
 </template>
@@ -151,15 +155,17 @@ import { RadioGroup, RadioGroupDescription, RadioGroupLabel, RadioGroupOption } 
 
 
 const serviceOrderStore = useServiceOrderStore()
-const { getProducts, order, removeDomainSelected } = serviceOrderStore
+const { getProducts, order, removeDomainSelected, getQuoteProduct, getProductConfiguration } = serviceOrderStore
 const {
   error,
   loading,
   category,
   products,
   selectedProduct,
+  cycle,
   product, 
-  domainSelected
+  domainSelected,
+  quote
 } = storeToRefs(serviceOrderStore)
 
 import { useRoute, useRouter } from 'vue-router'
@@ -168,16 +174,34 @@ import { useRoute, useRouter } from 'vue-router'
 const route = useRoute() 
 const router = useRouter() 
 
-onMounted(() => getProducts())
+onMounted(() => {
+  
+  getProducts()
+})
 
 const cycles = computed(() => {
   return product.value.productFields.find(field => field.id === 'cycle');
 });
  
-const selectedCycle = computed(() => {
-  const selectedItem = cycles.value.items.find(item => item.selected);
-  return selectedItem ? selectedItem.value : null;
+const selectedCycle = computed({
+  get: () => {
+    const selectedItem = cycles.value.items.find(item => item.selected);
+    return selectedItem ? selectedItem.value : null;
+  },
+  set: (newValue) => {
+    // Update the value of 'cycle' field
+    const cycleField = product.value.productFields.find(field => field.id === 'cycle');
+    if (cycleField) {
+      cycleField.value = newValue;
+      product.value.cycle = newValue; 
+      // Perform any other actions you need here
+    }
+    cycle.value=newValue
+    getProductConfiguration()
+  }
 });
+
+ 
 
 const handleAddCart = () => {
   if(!product.value.domain && product.value.domainOptions && product.value.domainOptions.register=='1'){
@@ -191,7 +215,12 @@ const handleAddCart = () => {
 watch(domainSelected, (newDomainSelected) => {
   product.value.domain = newDomainSelected.domain
 })
-watch(() => product.value, (newProduct) => {
- console.log(newProduct);
-})
+
+ 
+// watch(product, (newProduct) => {
+//   console.log(newProduct);
+//   // getQuoteProduct()
+// })
+
+
 </script>

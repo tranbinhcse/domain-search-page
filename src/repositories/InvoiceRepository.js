@@ -18,7 +18,7 @@ const InvoiceRepository = {
     return await get('payment')
   },
   paymentLink: async (invoice_id, gateway_id) => {
-    return await get('billing/'+ invoice_id +'/pay/' + gateway_id)
+    return await get('billing/'+ invoice_id +'/pay/' + gateway_id ?? 1)
   }
  
 }

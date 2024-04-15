@@ -18,6 +18,18 @@ export default {
     'navbar.action.locale': 'Đã chọn Tiếng Việt',
     'Male': 'Nam',
     'Female': 'Nữ',
+    'field_format_error': 'Không đúng định dạng yêu cầu',
+    'emailformat_error': 'Email không đúng định dạng',
+    'field_marked_required': 'Yêu cầu nhập trường này',
+    'passwordmatch_error': 'Mật khẩu không trùng khớp',
+    'm': '1 tháng',
+    'q': '3 tháng',
+    's': '6 tháng',
+    'a': '12 tháng',
+    'b': '24 tháng',
+    't': '36 tháng',
+    'p4': '48 tháng',
+    'p5': '60 tháng',
     ...localeSettings,
     ...localeStatus
   };
