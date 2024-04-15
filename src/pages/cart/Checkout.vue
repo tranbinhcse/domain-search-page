@@ -152,66 +152,7 @@
          </section>
  
          <!-- Order summary -->
-         <section v-show="quoteLoading === false" aria-labelledby="summary-heading" class="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8" v-if="cartQuote">
-  
-
-
-           <h2 id="summary-heading" class="text-lg font-medium text-gray-900">Order summary</h2>
- 
-                      <div class="flex justify-between text-base font-medium text-gray-900">
-                       <p>Subtotal</p>
-                       <p>{{ $currency(cartQuote.summary.subtotal) }}</p>
-                     </div>
- 
-                     <div class="flex justify-between text-base font-medium text-gray-900">
-                       <p>tax</p>
-                       <p>
-                         <p v-for="tax in cartQuote.summary.tax" :key="tax.name"class="text-gray-500">
-                            <small>{{ tax.name }}: </small>
-                            <small>{{ $currency(tax.tax) }}</small>
-                         </p>
-                       </p>
-                     </div>
- 
-                     <div class="flex justify-between text-base font-medium text-gray-900">
-                       <p>discount</p>
-                       <p>{{ $currency(cartQuote.summary.discount) }}</p>
-                     </div>
-                     <div class="flex justify-between text-base font-medium text-gray-900">
-                       <p>credit</p>
-                       <p>{{ $currency(cartQuote.summary.credit) }}</p>
-                     </div>
- 
-                     <div class="flex justify-between text-base font-medium text-gray-900">
-                       <p>total</p>
-                       <p>{{ $currency(cartQuote.summary.total) }}</p>
-                     </div>
- 
-                     <div class="">
-                       <p>recurring</p>
-                         <ul>
-                             <li class="flex justify-between gap-4" v-for="recurring in cartQuote.summary.recurring">
-                                 <p>{{ recurring.title }}</p>
-                                 <p>{{ recurring.price }}</p>
-                             </li>
-                         </ul>
-                     </div>
-                     <p class="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
-                     <div class="mt-6">
-                       <a-button  @click="createOrder()" type="primary" class="w-full">Checkout</a-button>
-                     </div>
-                     <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
-                       <p>
-                         or{{ ' ' }}
-                         <button type="button" class="font-medium text-indigo-600 hover:text-indigo-500" @click="nextStep()">
-                           Continue Shopping
-                           <span aria-hidden="true"> &rarr;</span>
-                         </button>
-                       </p>
-                     </div>
-               
-        
-         </section>
+         <OrderSummary />
        </form>
      </div>
     </a-spin>
@@ -224,7 +165,7 @@
     import Heading from '@/components/base/Heading.vue'
     import { Notification } from '@arco-design/web-vue';
     import PaymentMethod from '@/components/general/PaymentMethod.vue'
-
+  import OrderSummary from './OrderSummary.vue'
      import Icon from '@/components/base/Icon.vue'
     
      import { storeToRefs } from 'pinia'

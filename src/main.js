@@ -72,7 +72,9 @@ Notification._context = app._context;
 
 const currencyFormatter = (value) => {
  
-
+if(value === 0) {
+  return ''
+}
   // Use Intl.NumberFormat for other values
   const formattedValue = new Intl.NumberFormat('vi-VN', {
     style: 'currency',
