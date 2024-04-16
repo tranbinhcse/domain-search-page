@@ -8,6 +8,7 @@ console.log(items);
    const modifiedItems = items.map(item => {
     if (item.type === 'product') {
      const rest = {
+      type: item.type,
       product_id: item.product_id,
       domain: item.domain,
       cycle: item.cycle,
@@ -15,7 +16,8 @@ console.log(items);
       addon: item.addon,
       addon_cycles: item.addon_cycles,
       subproducts: item.subproducts,
-      subproducts_cycles: item.subproducts_cycles
+      subproducts_cycles: item.subproducts_cycles,
+      coupon: item.coupon
      }
      return rest
     } else {
