@@ -1,9 +1,9 @@
 import { get, post } from "@/core/apiClient"
 
 const WebsiteRepository = {
-  themes: async () => {
-    const res = await get(`/tinosite/themes`)
-    return res.themes
+  themes: async (options) => {
+    const res = await get(`/tinosite/themes`, options)
+    return res
   },
   users: async (id) => {
     const res = await get(`/tinosite/${id}/users`)

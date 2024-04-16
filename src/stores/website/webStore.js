@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
-import { reactive, ref, watch, onMounted } from 'vue'
-import CartRepository from '@/repositories/CartRepository'
+import {  ref, watch} from 'vue'
 import WebsiteRepository from '@/repositories/WebsiteRepository'
 import { useCartStore } from "@/stores/cartStore";
 
@@ -13,7 +12,12 @@ export const useWebStore = defineStore('webStore', {
       loading: false,
       error: false,
       domain: '',
-      themes: [], 
+      themes: ref([]), 
+      page: ref(0),
+      records: ref(0),
+      perpage: ref(10),
+      totalPages: ref(0),
+      filter: ref({}),
       themeSelected: {
         "type": "subdomain"
       },
@@ -24,7 +28,15 @@ export const useWebStore = defineStore('webStore', {
      
 
     async getThemes(){
-      this.themes = await WebsiteRepository.themes();
+      this.loading = true
+      const res = await WebsiteRepository.themes({ page: this.page, perpage: this.perpage, filter: this.filter });
+     
+      this.themes = res.themes
+      this.page = res.page.current
+      this.records = res.page.records
+      this.perpage = res.page.perpage
+      this.totalPages = res.page.totalPages
+      this.loading = false
     },
 
  
@@ -37,11 +49,11 @@ export const useWebStore = defineStore('webStore', {
           {
               "itemType": "product",
               "type": "product",
-              "product_id": 4015,
+              "product_id": 2094,
               "domain": this.themeSelected.type == 'subdomain' ? this.domain + '.cloudwp.vn' : this.domain,
               "cycle": "a",
               "custom": {
-                  21975: this.themeSelected.id
+                1543: this.themeSelected.id
               }
           }
         
@@ -66,7 +78,9 @@ export const useWebStore = defineStore('webStore', {
 
     }
   },
+ 
   persist: {
     paths: ['themeSelected', 'domain', 'cartItems']
   }
 })  
+ 

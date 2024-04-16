@@ -98,13 +98,10 @@
             /> 
            
             <!-- <a-slider v-if="type == 'slider'" show-tooltip show-input show-ticks v-model.number="product.custom[id][firstItemId]"  :min="minvalue" :max="maxvalue" :step="step" /> -->
- 
+            
             <a-select  v-if="type == 'select' || type == 'servergroupselector' || type == 'sshkeyselect'" :style="{width:'320px'}" v-model="product.custom[id]" placeholder="Please select ..." allow-clear allow-search>
                 <a-option  v-for="item in items" :key="item.id" :value="item.id" v-slot="{ checked, active }">{{item.title}} - {{$currency(item.price)}}</a-option>
-              </a-select>
-
-              
-  
+            </a-select>
 
 
           </div>

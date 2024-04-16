@@ -2,6 +2,7 @@
     <div class="h-full">
        
       <HeaderWebPage />
+   
       <div class="max-w-7xl m-auto mt-5" id="searchResults" ref="searchResultsRef">
  
         <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -23,6 +24,11 @@
             </div>
             </li>
         </ul>
+
+        <div class="flex justify-end p-4 my-4 rounded-md">
+         
+          <a-pagination :total="records" v-model="page" @change="changePage" @page-size-change="changePerPage" show-page-size show-total/>
+        </div>
         
       </div>
   
@@ -69,29 +75,37 @@
   </template>
   <script setup>
   
-  import { onMounted, ref } from 'vue';
+  import { onMounted, ref, watch } from 'vue';
   import { useRouter } from 'vue-router';
   import { useWebStore } from "@/stores/website/webStore";
   import { useDomainSearchStore } from "@/stores/domain/domainSearchStore";
   import { storeToRefs } from 'pinia'
 
-  import HeaderWebPage from './components/header.vue';
+  import HeaderWebPage from './components/header.vue'; 
   const domainSearchStore = useDomainSearchStore()
   const { getDomainTlds } = domainSearchStore
 
 
   const webStore = useWebStore()
   const { createWebsite, getThemes, addCart } = webStore 
-  const {   themeSelected, domain, themes } = storeToRefs(webStore)
+  const {   themeSelected, domain, themes, page, perpage, records } = storeToRefs(webStore)
   
   const router = useRouter()
-
-
   const searchResultsRef = ref(null);
 
   
   const visible = ref(false);
   
+
+  const changePerPage = (value) => {
+    perpage.value = value
+  }
+  
+  const changePage = (currentpage) => {
+    page.value = currentpage - 1
+  }
+
+
 
   const handleBeforeOk = async(done) => {
     
@@ -126,6 +140,13 @@
     themeSelected.value.type = key;
   }
   
+
+  watch(() => page.value, () => {
+   getThemes()
+  })
+  watch(() => perpage.value, () => {
+   getThemes()
+  })
 
  
    
