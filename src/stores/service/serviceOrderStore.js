@@ -40,7 +40,16 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
   }
 
   async function getQuoteProduct() {
-    quote.value = await CartRepository.getQuote([product.value])
+    if (!product.value) return
+
+     const productOrder = product.value
+    delete productOrder.domainOptions;
+    delete productOrder.domainOptionsFields;
+    // delete productOrder.formFields;
+    // delete productOrder.productFields;
+   
+
+    quote.value = await CartRepository.getQuote([productOrder])
   }
 
 //  async function getProductDomainOptions() {
