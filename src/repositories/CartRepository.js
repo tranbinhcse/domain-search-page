@@ -3,7 +3,11 @@ const CartRepository = {
   getQuote: async (items) => {
 
      // Loại bỏ thuộc tính domainOptions từ mỗi mục trong mảng items
-     const modifiedItems = items.map(item => ({
+     
+console.log(items);
+   const modifiedItems = items.map(item => {
+    if (item.type === 'product') {
+     const rest = {
       product_id: item.product_id,
       domain: item.domain,
       cycle: item.cycle,
@@ -12,8 +16,14 @@ const CartRepository = {
       addon_cycles: item.addon_cycles,
       subproducts: item.subproducts,
       subproducts_cycles: item.subproducts_cycles
-    }));
+     }
+     return rest
+    } else {
+      return item
+    }
+   })
 
+   console.log(modifiedItems);
 
     const carts = await post(`/quote`, {'items': modifiedItems})
     return carts
