@@ -43,8 +43,8 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
     if (!product.value) return
 
      const productOrder = product.value
-    delete productOrder.domainOptions;
-    delete productOrder.domainOptionsFields;
+    // delete productOrder.domainOptions;
+    // delete productOrder.domainOptionsFields;
     // delete productOrder.formFields;
     // delete productOrder.productFields;
    
