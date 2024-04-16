@@ -3,7 +3,7 @@
         
       {
         "source": "/api/:path*",
-        "destination": "https://my.tino.org/api/:path*"
+        "destination": "https://api.tino.vn/:path*"
       },
       {
         "source": "/(.*)",

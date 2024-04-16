@@ -19,7 +19,7 @@ export const useWebStore = defineStore('webStore', {
       totalPages: ref(0),
       filter: ref({}),
       themeSelected: {
-        "type": "subdomain"
+        "type": "register"
       },
       cartItems: [],
     }
