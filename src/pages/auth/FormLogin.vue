@@ -2,7 +2,7 @@
 
     <div class="flex-1"></div>
 <div class="max-w-sm mx-auto w-full px-4 py-8 bg-white dark:bg-slate-900">
-            <h1 class="text-3xl text-slate-800 dark:text-slate-100 font-bold mb-6">Welcome back! ✨</h1>
+            <h1 class="text-3xl text-slate-800 dark:text-slate-100 font-bold mb-6">Đăng nhập</h1>
             <!-- Form -->
            
            

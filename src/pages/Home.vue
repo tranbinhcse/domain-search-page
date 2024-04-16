@@ -21,8 +21,8 @@
             <div class="mx-auto max-w-7xl px-6 pb-32 pt-36 sm:pt-60 lg:px-8 lg:pt-32">
               <div class="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center">
                 <div class="relative w-full max-w-xl lg:shrink-0 xl:max-w-2xl">
-                  <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">We’re changing the way people connect.</h1>
-                  <p class="mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none">Cupidatat minim id magna ipsum sint dolor qui. Sunt sit in quis cupidatat mollit aute velit. Et labore commodo nulla aliqua proident mollit ullamco exercitation tempor. Sint aliqua anim nulla sunt mollit id pariatur in voluptate cillum.</p>
+                  <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Tìm và đăng ký tên miền thương hiệu của bạn.</h1>
+                  <p class="mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none">Tên miền Internet là địa chỉ duy nhất trên mạng, ví dụ ".vn", dùng để truy cập website. Định danh thương hiệu số là việc xác định thương hiệu qua các kênh trực tuyến như trang web, mạng xã hội, nhằm tạo ấn tượng mạnh mẽ.</p>
                   <div class="mt-10 flex items-center gap-x-0">
                     <a-input size="large" v-model="searchKey" placeholder="Nhập tên miền của bạn" allow-clear></a-input>
                     <a-button type="primary" :loading="loading" size="large" @click="handleSearchSubmit">Tìm <template #icon> <IconSearch /></template></a-button>

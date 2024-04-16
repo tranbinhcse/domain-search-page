@@ -41,12 +41,19 @@
         </template>
         <div class="w-full">
           <a-tabs @tab-click="handleTabClick" :active-key="themeSelected.type">
+            
+            <a-tab-pane key="register">
+              <template #title>
+                <icon-clock-circle/> Đăng ký tên miền mới
+              </template>
+              <a-input v-model="domain" word-length="50" placeholder="Nhập tên miền của bạn" allow-clear></a-input>
+            </a-tab-pane>
             <a-tab-pane key="subdomain">
               <template #title>
                 <icon-calendar/> Tên miền tạm
               </template>
               <div>
-                  <a-input v-model="themeSelected.id" name="theme" readonly type="hidden" /> 
+                  <a-input v-model="themeSelected.id" name="theme" readonly type="hidden" class="sr-only" /> 
                   <a-input v-model="domain" word-length="50" placeholder="Nhập tên miền của bạn" allow-clear>
                     <template #append>
                       .cloudwp.vn
@@ -55,13 +62,6 @@
                   
               </div>
             </a-tab-pane>
-            <a-tab-pane key="register">
-              <template #title>
-                <icon-clock-circle/> Đăng ký tên miền mới
-              </template>
-              <a-input v-model="domain" word-length="50" placeholder="Nhập tên miền của bạn" allow-clear></a-input>
-            </a-tab-pane>
-             
           </a-tabs>
         </div>
       </a-modal>

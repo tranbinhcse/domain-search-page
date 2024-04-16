@@ -1,15 +1,14 @@
 <template>
 
-
-
-  <template v-if="isLogin">
-    <router-view></router-view>
-  </template>
-  <template v-else>
+ 
+  <template v-if="!isLogin && requiresAuth">
     <div class="min-h-[100dvh] h-full flex flex-col after:flex-1">
       <FormLogin />
     </div>
+  </template>
+  <template v-else>
     
+    <router-view></router-view>
   </template>
 </template>
 
@@ -21,6 +20,10 @@
   import { useAuthStore } from '@/stores';
   import FormLogin from '@/pages/auth/FormLogin.vue';
 
+import { useRoute  } from 'vue-router';
+const route = useRoute();
+
+ const requiresAuth = computed(() => route.meta.requiresAuth || false)
   const tabBarStore = useTabBarStore();
   const authStore = useAuthStore();
 

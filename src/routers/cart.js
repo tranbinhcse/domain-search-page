@@ -28,7 +28,7 @@ const CartRoutes = [
                 component: Website,
                 meta: {
                     locale: 'menu.cart.website',
-                    requiresAuth: true,
+                    requiresAuth: false,
                     roles: ['*'],
                 },
             },
@@ -39,7 +39,7 @@ const CartRoutes = [
                 component: WebsiteDomain,
                 meta: {
                     locale: 'menu.cart.website',
-                    requiresAuth: true,
+                    requiresAuth: false,
                     roles: ['*'],
                 },
             },
@@ -51,7 +51,7 @@ const CartRoutes = [
                 component: DomainSearch,
                 meta: {
                     locale: 'menu.dashboard.workplace',
-                    requiresAuth: true,
+                    requiresAuth: false,
                     roles: ['*'],
                 },
             },
@@ -62,7 +62,7 @@ const CartRoutes = [
                 component: DomainConfig,
                 meta: {
                     locale: 'menu.domains',
-                    requiresAuth: false,
+                    requiresAuth: true,
                     roles: ['*'],
                 },
             },  
@@ -72,7 +72,7 @@ const CartRoutes = [
                 component: DomainConfig,
                 meta: {
                     locale: 'menu.domains',
-                    requiresAuth: false,
+                    requiresAuth: true,
                     roles: ['*'],
                 },
             }, 
@@ -81,12 +81,22 @@ const CartRoutes = [
                 path: ':slug',
                 name: 'serviceOrder',
                 component: ServiceOrder,
+                meta: {
+                    locale: 'menu.domains',
+                    requiresAuth: false,
+                    roles: ['*'],
+                },
             },
 
             {
                 path: 'checkout',
                 name: 'checkout',
                 component: Checkout,
+                meta: {
+                    locale: 'menu.domains',
+                    requiresAuth: true,
+                    roles: ['*'],
+                },
             },
         ],
       },
