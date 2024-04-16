@@ -3,15 +3,15 @@
   
 
 
-        <h2 id="summary-heading" class="text-lg font-medium text-gray-900">Order summary</h2>
+        <h2 id="summary-heading" class="text-lg font-medium text-gray-900">Tổng quan</h2>
 
                     <div class="flex justify-between text-base font-medium text-gray-900">
-                    <p>Subtotal</p>
+                    <p>Tạm tính</p>
                     <p>{{ $currency(cartQuote.summary.subtotal) }}</p>
                     </div>
 
                     <div class="flex justify-between text-base font-medium text-gray-900">
-                    <p>tax</p>
+                    <p>Thuế</p>
                     <p>
                         <p v-for="tax in cartQuote.summary.tax" :key="tax.name"class="text-gray-500">
                         <small>{{ tax.name }}: </small>
@@ -21,21 +21,21 @@
                     </div>
 
                     <div class="flex justify-between text-base font-medium text-gray-900">
-                    <p>discount</p>
+                    <p>Giảm giá</p>
                     <p>{{ $currency(cartQuote.summary.discount) }}</p>
                     </div>
                     <div class="flex justify-between text-base font-medium text-gray-900">
-                    <p>credit</p>
+                    <p>Tín dụng</p>
                     <p>{{ $currency(cartQuote.summary.credit) }}</p>
                     </div>
 
                     <div class="flex justify-between text-base font-medium text-gray-900">
-                    <p>total</p>
+                    <p>Tổng thanh toán</p>
                     <p>{{ $currency(cartQuote.summary.total) }}</p>
                     </div>
 
                     <div class="">
-                    <p>recurring</p>
+                    <p>Thanh toán định kỳ</p>
                         <ul>
                             <li class="flex justify-between gap-4" v-for="recurring in cartQuote.summary.recurring">
                                 <p>{{ recurring.title }}</p>
@@ -43,19 +43,11 @@
                             </li>
                         </ul>
                     </div>
-                    <p class="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
+
                     <div class="mt-6">
-                    <a-button  @click="createOrder()" type="primary" class="w-full">Checkout</a-button>
+                    <a-button  @click="createOrder()" type="primary" class="w-full">Tiếp tục</a-button>
                     </div>
-                    <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
-                    <p>
-                        or{{ ' ' }}
-                        <button type="button" class="font-medium text-indigo-600 hover:text-indigo-500" @click="nextStep()">
-                        Continue Shopping
-                        <span aria-hidden="true"> &rarr;</span>
-                        </button>
-                    </p>
-                    </div>
+                   
             
 
         </section>

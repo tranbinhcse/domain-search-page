@@ -132,7 +132,7 @@
 
         <!-- Order summary -->
         <section aria-labelledby="summary-heading" class="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8">
-          <h2 id="summary-heading" class="text-lg font-medium text-gray-900">Order summary</h2>
+          <h2 id="summary-heading" class="text-lg font-medium text-gray-900">Tổng quan</h2>
               <template v-if="quoteLoading" >
                 <a-skeleton :animation="true">
                   <a-space direction="vertical" :style="{width:'100%'}" size="large">
@@ -145,40 +145,41 @@
               <template v-else >
                 <div v-if="cartQuote">
                      <div class="flex justify-between text-base font-medium text-gray-900">
-                      <p>Subtotal</p>
+                      <p>Tạm tính</p>
                       <p>{{ $currency(cartQuote.summary.subtotal) }}</p>
                     </div>
 
-                    <div class="flex justify-between text-base font-medium text-gray-900">
-                      <p>tax</p>
+                    <div class="flex justify-between text-base font-medium text-gray-900" v-if="cartQuote.summary.tax">
+                      <p>Thuế</p>
                       <p>{{ $currency(cartQuote.summary.tax) }}</p>
                     </div>
 
-                    <div class="flex justify-between text-base font-medium text-gray-900">
-                      <p>discount</p>
+                    <div class="flex justify-between text-base font-medium text-gray-900" v-if="cartQuote.summary.discount">
+                      <p>Giảm giá</p>
                       <p>{{ $currency(cartQuote.summary.discount) }}</p>
                     </div>
-                    <div class="flex justify-between text-base font-medium text-gray-900">
-                      <p>credit</p>
+                    <div class="flex justify-between text-base font-medium text-gray-900" v-if="cartQuote.summary.credit">
+                      <p>Tín dụng</p>
                       <p>{{ $currency(cartQuote.summary.credit) }}</p>
                     </div>
 
                     <div class="flex justify-between text-base font-medium text-gray-900">
-                      <p>total</p>
+                      <p>Tổng thanh toán</p>
                       <p>{{ $currency(cartQuote.summary.total) }}</p>
                     </div>
 
-                    <div class="">
-                      <p>recurring</p>
+                    <div class="mt-5">
+                      <p>Thanh toán định kỳ</p>
                         <ul>
                             <li class="flex justify-between gap-4" v-for="recurring in cartQuote.summary.recurring">
                                 <p>{{ recurring.title }}</p>
-                                <p>{{ recurring.price }}</p>
+                                <p>{{ $currency(recurring.price) }}</p>
                             </li>
                         </ul>
                     </div>
 
-                    
+
+                    <a-button type="text" class="w-full mt-5">Kéo xuống để tiếp tục</a-button>
                   
                     
                   </div>
