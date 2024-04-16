@@ -1,7 +1,21 @@
 import { get, post } from "@/core/apiClient"
 const CartRepository = {
   getQuote: async (items) => {
-    const carts = await post(`/quote`, {'items': items})
+
+     // Loại bỏ thuộc tính domainOptions từ mỗi mục trong mảng items
+     const modifiedItems = items.map(item => ({
+      product_id: item.product_id,
+      domain: item.domain,
+      cycle: item.cycle,
+      custom: item.custom,
+      addon: item.addon,
+      addon_cycles: item.addon_cycles,
+      subproducts: item.subproducts,
+      subproducts_cycles: item.subproducts_cycles
+    }));
+
+
+    const carts = await post(`/quote`, {'items': modifiedItems})
     return carts
   },
 
