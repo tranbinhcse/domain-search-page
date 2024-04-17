@@ -1,7 +1,6 @@
 <script setup>
 import { ref, watchEffect, onMounted } from 'vue';
 import { useDevicesList, useUserMedia } from '@vueuse/core';
-import { FaceMesh } from '@mediapipe/face_mesh';
  
 import { shuffleFromPositionOne } from "@/utility/ekyc/shuffle-array";
 import { setIntervalAsync } from "set-interval-async/dynamic";
@@ -10,6 +9,7 @@ import { faceLiveNessCheck, getBoundingBox } from "@/utility/ekyc/face-liveness"
 import delay from "@/utility/ekyc/delay";
 
 // const { FaceLandmarker, FilesetResolver, DrawingUtils } = vision;
+import { FaceMesh } from '@mediapipe/face_mesh';
 
 const currentCamera = ref();
 const video = ref();
@@ -64,6 +64,7 @@ const isPhotoTaken = ref(false);
   
 const handleGetUserMedia = async () => {
     randomActionSequenceRef.value = getActionsSequence();
+    
     const faceMesh = new FaceMesh({
         locateFile: (file) => {
             return "/component/face_mesh/" + file;
@@ -173,7 +174,7 @@ const handleGetUserMedia = async () => {
 };
 
 const stopCameraStream = () => {
-    enabled.value = false;
+    enabled.value = !enabled.value
 }
 // onMounted(handleGetUserMedia);
 </script>
@@ -182,7 +183,7 @@ const stopCameraStream = () => {
     <div class="flex flex-col gap-4 text-center">
         <a-alert type="success">{{ randomActionSequenceRef[stepRef]?.message }}</a-alert>
         <div>
-            <button @click="enabled = !enabled">
+            <button @click="stopCameraStream">
                 {{ enabled ? 'Stop' : 'Start' }}
             </button>
         </div>
