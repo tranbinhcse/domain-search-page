@@ -16,7 +16,8 @@
 </template>
 
 <script setup>
- 
+ import { isMobile } from 'mobile-device-detect';
+
 import { defineProps, ref, onMounted, watch } from 'vue'; 
 
 import { shuffleFromPositionOne } from "@/utility/ekyc/shuffle-array";
@@ -29,7 +30,7 @@ import * as facemesh from '@mediapipe/face_mesh';
 // import { FaceMesh } from '@mediapipe/face_mesh';
 
 import delay from "@/utility/ekyc/delay"; 
-const isMobile = ref(false)
+ 
 const props = defineProps(['open', 'faceOK']);
 const emits = defineEmits(['DataImage']);
 
@@ -41,9 +42,9 @@ const faceActions = [
     { action: "forward", message: "Nhìn thẳng về phía máy ảnh" },
     // { action: "up", message: "Quay lên trên" },
     // { action: "down", message: "Quay xuống dưới" },
-    // { action: "left", message: "Quay sang trái" },
-    // { action: "right", message: "Quay sang phải" },
-    // { action: "eye-closed", message: "Nhắm mắt" },
+    { action: "left", message: "Quay sang trái" },
+    { action: "right", message: "Quay sang phải" },
+    { action: "eye-closed", message: "Nhắm mắt" },
 ];
 
 const getActionsSequence = () => {
