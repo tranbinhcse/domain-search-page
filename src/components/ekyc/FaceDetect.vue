@@ -19,14 +19,13 @@
  
 import { defineProps, ref, onMounted, watch } from 'vue'; 
 
-// import * as FaceMesh from '@mediapipe/face_mesh';
-import { FaceMesh } from "@mediapipe/face_mesh"; 
 import { shuffleFromPositionOne } from "@/utility/ekyc/shuffle-array";
 import { setIntervalAsync } from "set-interval-async/dynamic";
 import { clearIntervalAsync } from "set-interval-async";
 import { faceLiveNessCheck, getBoundingBox } from "@/utility/ekyc/face-liveness";
 
  
+import { FaceMesh } from '@mediapipe/face_mesh';
 
 import delay from "@/utility/ekyc/delay"; 
 const isMobile = ref(false)
@@ -66,21 +65,22 @@ const loadingVideo = ref(true);
 const isLoading = ref(false);
 // const cameraType = ref('user');
 const camera = ref(null);
+ 
 let faceMesh = null;
 
 const handleGetUserMedia = async () => {
     randomActionSequenceRef.value = getActionsSequence();
     
     faceMesh = new FaceMesh({
-        locateFile: (file) => {
-            return "/component/face_mesh/" + file;
-        },
+      locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`
     });
+  
     faceMesh.setOptions({
         selfieMode: true,
         maxNumFaces: 1,
         refineLandmarks: true,
     });
+    await faceMesh.initialize();
 
     const timer = setIntervalAsync(async () => {
         // Setting up callback for face detection for the first time
