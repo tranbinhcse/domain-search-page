@@ -24,8 +24,9 @@ import { setIntervalAsync } from "set-interval-async/dynamic";
 import { clearIntervalAsync } from "set-interval-async";
 import { faceLiveNessCheck, getBoundingBox } from "@/utility/ekyc/face-liveness";
 
- 
-import { FaceMesh } from '@mediapipe/face_mesh';
+import * as facemesh from '@mediapipe/face_mesh';
+
+// import { FaceMesh } from '@mediapipe/face_mesh';
 
 import delay from "@/utility/ekyc/delay"; 
 const isMobile = ref(false)
@@ -66,12 +67,12 @@ const isLoading = ref(false);
 // const cameraType = ref('user');
 const camera = ref(null);
  
-let faceMesh = null;
+// let faceMesh = null;
 
 const handleGetUserMedia = async () => {
     randomActionSequenceRef.value = getActionsSequence();
     
-    faceMesh = new FaceMesh({
+   const faceMesh = new facemesh.FaceMesh({
       locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`
     });
   
