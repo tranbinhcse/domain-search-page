@@ -73,7 +73,9 @@ const handleGetUserMedia = async () => {
     randomActionSequenceRef.value = getActionsSequence();
     
    const faceMesh = new facemesh.FaceMesh({
-      locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`
+            locateFile: (file) => {
+                    return "/component/face_mesh/" + file;
+                },
     });
   
     faceMesh.setOptions({
