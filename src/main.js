@@ -64,7 +64,7 @@ const formattedDate3 = dayjs(value, "DD-MM-YYYY").format();
   
 }
 app.config.globalProperties.$dayjs = dayFormat;
-Notification._context = app._context;
+ 
 
  
  
@@ -111,6 +111,7 @@ app.config.globalProperties.$unitFormat = UnitFormat;
 
 app.use(i18n);
 app.use(pinia)
+
 useAuthMiddleware(router)
 app.use(router)
 

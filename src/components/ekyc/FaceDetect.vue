@@ -20,7 +20,7 @@
 import { defineProps, ref, onMounted, watch } from 'vue'; 
 
 // import * as FaceMesh from '@mediapipe/face_mesh';
-import { FaceMesh } from '@mediapipe/face_mesh';
+import { FaceMesh } from "@mediapipe/face_mesh"; 
 import { shuffleFromPositionOne } from "@/utility/ekyc/shuffle-array";
 import { setIntervalAsync } from "set-interval-async/dynamic";
 import { clearIntervalAsync } from "set-interval-async";
@@ -66,18 +66,17 @@ const loadingVideo = ref(true);
 const isLoading = ref(false);
 // const cameraType = ref('user');
 const camera = ref(null);
- 
-const face = new FaceMesh({
-    locateFile: (file) => {
-        return "https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/" + file;
-    },
-});
+let faceMesh = null;
 
 const handleGetUserMedia = async () => {
     randomActionSequenceRef.value = getActionsSequence();
     
-   
-    face.setOptions({
+    faceMesh = new FaceMesh({
+        locateFile: (file) => {
+            return "/component/face_mesh/" + file;
+        },
+    });
+    faceMesh.setOptions({
         selfieMode: true,
         maxNumFaces: 1,
         refineLandmarks: true,
@@ -89,7 +88,7 @@ const handleGetUserMedia = async () => {
             console.log("Start liveness check");
             setUpFaceDetectionCallBack.value = true;
 
-            face.onResults(async (results) => {
+            faceMesh.onResults(async (results) => {
             // Just to check if the countdown reset the step in-between the face liveness check
             let currentStep = stepRef.value;
 
@@ -158,7 +157,7 @@ const handleGetUserMedia = async () => {
             });
         }
 
-        await face.send({ image: camera.value });
+        await faceMesh.send({ image: camera.value });
         // Start to process frame by frame
         if (
             camera.value !== null
@@ -167,7 +166,7 @@ const handleGetUserMedia = async () => {
             await delay(1000);
             firstStepDelayRef.value = false;
             }
-            await face.send({ image:  camera.value });
+            await faceMesh.send({ image:  camera.value });
         } else {
          
             clearIntervalAsync(timer);
