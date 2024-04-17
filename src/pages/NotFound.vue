@@ -3,7 +3,7 @@
      
       <a-result class="result" status="404" :subtitle="'not found'"> </a-result>
       <div class="operation-row">
-        <FaceDetect />
+        <FaceDetectv2 />
         <a-button key="back" type="primary" @click="back"> back </a-button>
       </div>
     </div>
@@ -11,7 +11,7 @@
   
   <script   setup>
     import { useRouter } from 'vue-router';
-    import FaceDetect from '@/components/ekyc/FaceDetect.vue';
+    import FaceDetectv2 from '@/components/ekyc/FaceDetectv2.vue';
 
     const router = useRouter();
     const back = () => {
