@@ -20,6 +20,7 @@
     "@mediapipe/drawing_utils": "^0.3.1675466124",
     "@mediapipe/face_mesh": "^0.4.1633559619",
     "@tensorflow/tfjs": "^4.6.0",
+    "@vueuse/core": "^10.9.0",
     "autoprefixer": "^10.4.19",
     "axios": "^1.6.2",
     "blueimp-load-image": "^5.16.0",
