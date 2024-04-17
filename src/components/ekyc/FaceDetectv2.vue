@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watchEffect, onMounted } from 'vue';
 import { useDevicesList, useUserMedia } from '@vueuse/core';
-import * as facemesh from '@mediapipe/face_mesh';
+import { FaceMesh } from '@mediapipe/face_mesh';
 
 import { shuffleFromPositionOne } from "@/utility/ekyc/shuffle-array";
 import { setIntervalAsync } from "set-interval-async/dynamic";
@@ -57,15 +57,14 @@ let validFrameCountRef = ref(0);
 let faceImageRef = ref(null);
 
 const randomActionSequenceRef = ref(getActionsSequence());
-const VALID_FRAME = 2;
+const VALID_FRAME = 5;
 const isPhotoTaken = ref(false); 
-
-const ctx = canvas.getContext('2d')
+ 
 
 
 const handleGetUserMedia = async () => {
     randomActionSequenceRef.value = getActionsSequence();
-    const faceMesh = new facemesh.FaceMesh({
+    const faceMesh = new FaceMesh({
         locateFile: (file) => {
             return "/component/face_mesh/" + file;
         },
@@ -139,7 +138,7 @@ const handleGetUserMedia = async () => {
                             } else {
                                 confirmAudio.play();
                                 console.log("Stop liveness check end step");
-                                // stopCameraStream();
+                                stopCameraStream();
                                 isPhotoTaken.value = true;
                                 clearIntervalAsync(timer);
                             }
@@ -152,14 +151,7 @@ const handleGetUserMedia = async () => {
                 }
             });
         }
-        // console.log(canvas.height);
-        // ctx.drawImage(video.value, 0, 0, canvas.width, canvas.height);
-        // // Lấy dữ liệu hình ảnh từ canvas dưới dạng base64
-        // const imageData = canvas.toDataURL('image/jpeg');
-        // // console.log(imageData);
-        // // Truyền dữ liệu hình ảnh vào send method của faceMesh
-        // await faceMesh.send({ image: imageData }); 
-        console.log(video.value);
+     
 
         if (
             video.value !== null
@@ -179,6 +171,9 @@ const handleGetUserMedia = async () => {
     }, 100);
 };
 
+const stopCameraStream = () => {
+    enabled.value = false;
+}
 // onMounted(handleGetUserMedia);
 </script>
 
