@@ -21,6 +21,7 @@
     "@mediapipe/face_mesh": "^0.4.1633559619",
     "@tensorflow/tfjs": "^4.6.0",
     "@vue/composition-api": "^1.7.2",
+    "autoprefixer": "^10.4.19",
     "axios": "^1.6.2",
     "blueimp-load-image": "^5.16.0",
     "dayjs": "^1.11.10",
