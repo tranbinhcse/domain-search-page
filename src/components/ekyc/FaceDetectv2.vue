@@ -2,12 +2,15 @@
 import { ref, watchEffect, onMounted } from 'vue';
 import { useDevicesList, useUserMedia } from '@vueuse/core';
 import { FaceMesh } from '@mediapipe/face_mesh';
+import { FaceLandmarker, FilesetResolver, DrawingUtils } from '@mediapipe/tasks-vision';
 
 import { shuffleFromPositionOne } from "@/utility/ekyc/shuffle-array";
 import { setIntervalAsync } from "set-interval-async/dynamic";
 import { clearIntervalAsync } from "set-interval-async";
 import { faceLiveNessCheck, getBoundingBox } from "@/utility/ekyc/face-liveness";
 import delay from "@/utility/ekyc/delay";
+
+// const { FaceLandmarker, FilesetResolver, DrawingUtils } = vision;
 
 const currentCamera = ref();
 const video = ref();
@@ -54,29 +57,50 @@ let setUpFaceDetectionCallBack = ref(false);
 let stepRef = ref(0);
 let firstStepDelayRef = ref(true);
 let validFrameCountRef = ref(0);
-let faceImageRef = ref(null);
+let faceImageRef = ref(null); 
 
 const randomActionSequenceRef = ref(getActionsSequence());
 const VALID_FRAME = 5;
 const isPhotoTaken = ref(false); 
  
+let faceLandmarker;
+let runningMode = "IMAGE";
+let webcamRunning = false;
+var videoWidth = 500;
 
 
 const handleGetUserMedia = async () => {
     randomActionSequenceRef.value = getActionsSequence();
-    const faceMesh = new FaceMesh({
-        locateFile: (file) => {
-            return "/component/face_mesh/" + file;
+    // const faceMesh = new FaceMesh({
+    //     locateFile: (file) => {
+    //         return "/component/face_mesh/" + file;
+    //     },
+    // });
+
+    // faceMesh.setOptions({
+    //     selfieMode: true,
+    //     maxNumFaces: 1,
+    //     refineLandmarks: true,
+    // });
+
+    // await faceMesh.initialize();
+
+
+    const filesetResolver = await FilesetResolver.forVisionTasks(
+        "https://my.tino.org/id-biz-vn/Scripts/TenMien/FreeVN/models/task-vision-0.10.0/wasm"
+    );
+
+    faceLandmarker = await FaceLandmarker.createFromOptions(filesetResolver, {
+        baseOptions: {
+            modelAssetPath: `https://my.tino.org/id-biz-vn/Scripts/TenMien/FreeVN/models/face_landmarker.task`,
+            // modelAssetPath: `https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task`,
+            delegate: "GPU"
         },
+        outputFaceBlendshapes: true,
+        runningMode,
+        numFaces: 1
     });
-
-    faceMesh.setOptions({
-        selfieMode: true,
-        maxNumFaces: 1,
-        refineLandmarks: true,
-    });
-
-    await faceMesh.initialize();
+    await faceLandmarker.setOptions({ runningMode });
 
     const timer = setIntervalAsync(async () => {
         // Thực hiện xử lý khung hình ở đây
@@ -86,7 +110,7 @@ const handleGetUserMedia = async () => {
         if (!setUpFaceDetectionCallBack.value) {
             console.log("Start liveness check");
             setUpFaceDetectionCallBack.value = true;
-            faceMesh.onResults(async (results) => {
+            faceLandmarker.result_callback(async (results) => {
                 console.log('results', results);
                 // Just to check if the countdown reset the step in-between the face liveness check
                 let currentStep = stepRef.value;
@@ -161,7 +185,7 @@ const handleGetUserMedia = async () => {
             await delay(1000);
             firstStepDelayRef.value = false;
             }
-            await faceMesh.send({ image:  video.value });
+            await faceLandmarker.send({ image:  video.value });
         } else {
 
             clearIntervalAsync(timer);
