@@ -29,7 +29,9 @@ export default {
     'b': '24 tháng',
     't': '36 tháng',
     'p4': '48 tháng',
-    'p5': '60 tháng',
+    'p5': '60 tháng', 
+    'years': 'năm', 
+    'Domain register': 'đăng ký mới',
     ...localeSettings,
     ...localeStatus
   };

@@ -5,17 +5,19 @@
       <form class="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
         <section aria-labelledby="cart-heading" class="lg:col-span-7">
           <ul role="list" class="bg-white p-4 rounded" v-if="quoteLoading">
-            <a-skeleton :animation="true">
-                  <a-space direction="vertical" :style="{width:'100%'}" size="large">
-                    
-                    
-                    <a-row gutter="8">
-                      <a-col :span="4"> <a-skeleton-shape shape="circle" size="large" /></a-col>
-                      <a-col :span="16"><a-skeleton-line :rows="3" /></a-col>
-                      <a-col :span="4"><a-skeleton-line :rows="1" /></a-col>
-                    </a-row>
-                  </a-space>
-                </a-skeleton>
+              <a-skeleton :animation="true" v-for="i in 3" :key="i">
+                <a-space direction="vertical" :style="{width:'100%'}" size="large" class="border-b mb-4"> 
+                  <a-row gutter="8" class="mb-5 bg-white">
+                    <a-col :span="4"> <a-skeleton-shape shape="circle" size="large" /></a-col>
+                    <a-col :span="16"> 
+                      <a-skeleton-line :rows="3" :widths="['100%', '30%','70%']" :line-height="15" />
+                    </a-col>
+                    <a-col :span="4">
+                      <a-skeleton-line :rows="2" :widths="['100%', '30%','70%']" />
+                    </a-col>
+                  </a-row>
+                </a-space>
+              </a-skeleton>
           </ul>
           <ul role="list" class="bg-white p-4 rounded" v-else>
             <li v-for="(product, productIdx) in cartItems" :key="product.tld" class="p-2  mb-2 border-b">
@@ -34,18 +36,10 @@
                                 <a class="font-medium text-gray-700 hover:text-gray-800">{{ product.name }}</a>
                             </h3>
                             </div>
-                            <p class="mt-1 mb-2 text-sm text-gray-500"><span class="uppercase">{{ product.tld }} </span>   Domain {{ product.action }}</p>
-                            <select @change="handleChangePeriod(product, $event)" :name="`quantity-${productIdx}`" v-model="product.years" class="w-full rounded-md border p-2">
-                            <option value="1">1 years</option>
-                            <option value="2">2 years</option>
-                            <option value="3">3 years</option>
-                            <option value="4">4 years</option>
-                            <option value="5">5 years</option>
-                            <option value="6">6 years</option>
-                            <option value="7">7 years</option>
-                            <option value="8">8 years</option>
-                            <option value="9">9 years</option>
-                            <option value="10">10 years</option>
+                          
+                            <p class="mt-1 mb-2 text-sm text-gray-500"><span class="uppercase">{{ product.tld }} </span>  {{ $t(`Domain ${product.action}`) }}</p>
+                            <select class="border-gray-300 border p-2 rounded" @change="handleChangePeriod(product, $event)"  :name="`quantity-${productIdx}`" v-model="product.years">
+                              <option :value="cycles.value" v-for="cycles in product.cycles.items" :key="cycles.value">{{ cycles.formatted }}</option>
                             </select>
                         </div>
                         <div class="mt-4 sm:mt-0 sm:pr-9">

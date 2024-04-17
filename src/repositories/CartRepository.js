@@ -1,10 +1,7 @@
-import { get, post } from "@/core/apiClient"
+import { post } from "@/core/apiClient"
 const CartRepository = {
   getQuote: async (items) => {
-
-     // Loại bỏ thuộc tính domainOptions từ mỗi mục trong mảng items
-     
-console.log(items);
+ 
    const modifiedItems = items.map(item => {
     if (item.type === 'product') {
      const rest = {

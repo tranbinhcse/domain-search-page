@@ -34,29 +34,15 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
  
     loading.value = true
     product.value = await ProductRepository.getConfiguration(selectedProduct.value, cycle.value)
-    // quote.value = await CartRepository.getQuote([product.value])
     loading.value = false
     
   }
 
   async function getQuoteProduct() {
     if (!product.value) return
-
-     const productOrder = product.value
-    // delete productOrder.domainOptions;
-    // delete productOrder.domainOptionsFields;
-    // delete productOrder.formFields;
-    // delete productOrder.productFields;
-   
-
-    quote.value = await CartRepository.getQuote([productOrder])
+    quote.value = await CartRepository.getQuote([product.value])
   }
-
-//  async function getProductDomainOptions() {
-//     if (!selectedProduct.value) return
-//     // product.value = await ProductRepository.getDomainOptions(selectedProduct.value)
-//   }
-
+ 
   
   async function order(router){
     loading.value = true

@@ -1,11 +1,11 @@
-import { get, post } from "@/core/apiClient"
+import { get } from "@/core/apiClient"
 const ProductRepository = {
   getProducts: async categoryId => {
     const { products } = await get(`/category/${categoryId}/product`)
     return products
   },
   getConfiguration: async (productId, period = 'a') => {
-    console.log('period', period);
+    
     const { product: { config: { 
       // addons: addonFields, 
       forms: formFields, 

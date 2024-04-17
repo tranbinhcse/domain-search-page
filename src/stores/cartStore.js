@@ -1,9 +1,7 @@
-import { defineStore } from 'pinia'
-import { get, post } from '@/core/apiClient'
-import { reactive, ref, watch, onMounted } from 'vue'
+import { defineStore } from 'pinia' 
+import {  ref, onMounted, computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import CartRepository from '@/repositories/CartRepository'
-import ProductRepository from '@/repositories/ProductRepository'
 import PaymentRepository from '@/repositories/PaymentRepository'
 import { useDomainSearchStore } from "@/stores/domain/domainSearchStore";
 import { useDomainRegisterStore } from "@/stores/domain/domainRegisterStore";
@@ -86,11 +84,21 @@ export const useCartStore = defineStore('cartStore', () => {
         cartItems.value[index].setup = quoteItems[index].domains[cartItems.value[index].name].setup
         cartItems.value[index].nameservers = quoteItems[index].domains[cartItems.value[index].name].nameservers
         cartItems.value[index].tld = quoteItems[index].domains[cartItems.value[index].name].tld
+        // cartItems.value[index].config = quoteItems[index].domains[cartItems.value[index].name].config
 
         hasDomain.value = true
         if(quoteItems[index].domains[cartItems.value[index].name].tld == '.id.vn'){
           requestEkyc.value = true
         }
+
+
+        const cycles = computed(() => {
+          return quoteItems[index].domains[cartItems.value[index].name]?.config?.product.find(field => field.id === 'period');
+        });
+
+        cartItems.value[index].cycles = cycles
+
+
        }
 
        if( cartItems.value[index].type == 'product' && quoteItems[index].valid){
