@@ -9,11 +9,6 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       less: {
-        modifyVars:{
-          // 'size-8': '42px',
-          // 'arcoblue-6': '#f85959',  
-          // "menu-dark-bg": '#000',        
-        },
         javascriptEnabled: true,        
       }
     }
@@ -24,9 +19,7 @@ export default defineConfig({
   define: {
     'import.meta.env': import.meta.env,
   },
-  plugins: [
-    vue({}),
-  ],
+  plugins: [vue()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
