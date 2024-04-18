@@ -66,6 +66,6 @@ const menus = [
   @apply grayscale-0;
 }
 .active span, .menu:hover span {
-  @apply text-green-500;
+  @apply text-primary;
 }
 </style>

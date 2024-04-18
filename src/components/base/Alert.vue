@@ -3,7 +3,7 @@
     class="border-l-4 p-4"
     :class="{
       'bg-orange-100 border-orange-500 text-orange-700': variant == 'warning',
-      'bg-green-200 text-green-500': variant == 'active',
+      'bg-green-200 text-primary': variant == 'active',
       'bg-purple-200 text-purple-500': variant == 'processing',
     }"
   >

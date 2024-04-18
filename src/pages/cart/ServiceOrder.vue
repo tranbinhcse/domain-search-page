@@ -3,25 +3,28 @@
   
     <div class="max-w-7xl mx-auto mb-[150px]">
       <div class="mb-5 py-5 ">
-        <Heading text="Chọn dịch vụ" class="text-green-500 uppercase text-3xl font-bold border-b-2 border-gray-50 pb-2 mb-2" />
+        <Heading text="Chọn dịch vụ" class="text-primary uppercase text-3xl font-bold border-b-2 border-gray-50 pb-2 mb-2" />
         <SelectServiceCategory
           v-model="category"
           :categories="SERVICES[route.params.slug]"
         />
       </div>
       <div class="mb-5  py-5" v-if="products.length">
-        <Heading text="Chọn gói dịch vụ" class="text-green-500 uppercase text-3xl font-bold border-b-2 border-gray-50 pb-2 mb-2"/>
+        <Heading text="Chọn gói dịch vụ" class="text-primary uppercase text-3xl font-bold border-b-2 border-gray-50 pb-2 mb-2"/>
         <ProductSelect v-model="selectedProduct" :products="products" />
       </div>
+      
+      <SkeletonServiceOrder v-if="loadingProduct" />
       <div v-if="product">
-       
-        <div class="mb-5  py-5">
-          <Heading text="Chu kỳ thanh toán" class="text-green-500 uppercase text-3xl font-bold border-b-2 border-gray-50 pb-2 mb-2" />
-          <PeriodSelect :periods="cycles.items" v-model="selectedCycle" />
+        <div class="mb-5 py-5">
+          <a-spin :loading="loadingProductConfig">
+            <Heading text="Chu kỳ thanh toán" class="text-primary uppercase text-3xl font-bold border-b-2 border-gray-50 pb-2 mb-2" />
+            <PeriodSelect :periods="cycles.items" v-model="selectedCycle" />
+          </a-spin>
         </div>
         <Box>
         <div v-if="product.domainOptions && product.domainOptions.register == '1'">
-          <Heading text="Domain Configuration" class="text-green-500 uppercase text-3xl font-bold border-b-2 border-gray-50 pb-2 mb-2" />
+          <Heading text="Domain Configuration" class="text-primary uppercase text-3xl font-bold border-b-2 border-gray-50 pb-2 mb-2" />
           <DomainOptions v-model="domainSelected" :options="product.domainOptions" v-if="!product.domain" />
           <div v-else class="bg-white flex p-4 rounded mb-5 justify-between">
             <div>
@@ -32,15 +35,15 @@
         </div>
         
         <div v-if="product.domainOptions && product.domainOptions.register == '0' && product.domainOptions.hostname">
-          <Heading text="Hostname" class="text-green-500 uppercase text-3xl font-bold pb-2 mb-2" />
+          <Heading text="Hostname" class="text-primary uppercase text-3xl font-bold pb-2 mb-2" />
           <div class="mb-5  p-5 bg-white rounded">
             <a-input v-model="product.domain" placeholder="Vui lòng nhập vào hostname" />
           </div>
         </div>
       </Box>
       
-        <Box v-if="product.formFields.length > 0" >
-          <Heading text="Cấu hình sản phẩm" class="text-green-500 uppercase text-3xl font-bold border-b-2 border-gray-50 pb-2 mb-2" />
+        <Box v-if="product.formFields.length > 0" :loading="loadingProductConfig">
+          <Heading text="Cấu hình sản phẩm" class="text-primary uppercase text-3xl font-bold border-b-2 border-gray-50 pb-2 mb-2" />
           
           <div
             v-for="(
@@ -54,15 +57,15 @@
             <RadioGroup v-model="product.custom[id]">
               <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-x-4">
                 <RadioGroupOption as="template" v-for="item in items" :key="item.id" :value="item.id" v-slot="{ checked, active }"> 
-                  <div :class="[checked ? 'border-transparent ' : 'border-gray-300 ', active ? 'ring-2 ring-green-500' : '', 'relative flex cursor-pointer bg-white rounded-lg border p-4 shadow-sm focus:outline-none']">
+                  <div :class="[checked ? 'border-transparent ' : 'border-gray-300 ', active ? 'ring-2 ring-primary' : '', 'relative flex cursor-pointer bg-white rounded-lg border p-4 shadow-sm focus:outline-none']">
                     <span class="flex flex-1">
                       <span class="flex flex-col w-full ">
                         <RadioGroupLabel as="span" class="block text-sm font-medium text-gray-900">{{ item.title }}</RadioGroupLabel>
                         <RadioGroupDescription as="span" class="mt-1 flex items-center text-sm text-gray-500" >{{ $currency(item.price) }}</RadioGroupDescription>
                       </span>
                     </span>
-                    <CheckCircleIcon v-if="checked" class="h-7 w-7 text-green-500 absolute right-1 top-1" aria-hidden="true" />
-                    <span :class="[active ? 'border' : 'border-2', checked ? 'border-green-500' : 'border-transparent', 'pointer-events-none absolute -inset-px rounded-lg']" aria-hidden="true" />
+                    <CheckCircleIcon v-if="checked" class="h-7 w-7 text-primary absolute right-1 top-1" aria-hidden="true" />
+                    <span :class="[active ? 'border' : 'border-2', checked ? 'border-primary' : 'border-transparent', 'pointer-events-none absolute -inset-px rounded-lg']" aria-hidden="true" />
                   </div>
                 </RadioGroupOption>
               </div>
@@ -120,13 +123,13 @@
             <div class="pr-10">
               <p>Tổng thanh toán:</p>
               <p>
-                <span  class="font-bold text-2xl text-green-500">{{ $currency(quote?.summary?.total) }}</span><span></span>
+                <span  class="font-bold text-2xl text-primary">{{ $currency(quote?.summary?.total) }}</span><span></span>
               </p>
             </div>
             <div class="flex-1" v-if="quote?.summary?.discount">
               <p>Giảm giá:</p>
               <p>
-                <span  class="font-bold text-2xl text-green-500">{{ $currency(quote?.summary?.discount) }}</span><span></span>
+                <span  class="font-bold text-2xl text-primary">{{ $currency(quote?.summary?.discount) }}</span><span></span>
                 <a-button size="mini" type="text" @click="promocode = ''">Xoá</a-button>
               </p>
               
@@ -138,7 +141,7 @@
             </div>
             
             <div class="left-auto">
-              <Button @click="handleAddCart" btnClass="bg-green-500 px-10 py-3 text-white rounded" icon="heroicons-outline:banknotes" text="Thanh toán ngay"   />
+              <Button @click="handleAddCart" btnClass="bg-primary px-10 py-3 text-white rounded" icon="heroicons-outline:banknotes" text="Thanh toán ngay"   />
             </div>
           </div>
         </Box>
@@ -157,6 +160,8 @@ import DomainOptions from '@/components/service/DomainOptions.vue'
 import Input from '@/components/base/Input.vue'
 import Icon from '@/components/base/Icon.vue'
 import Slider from '@/components/base/Slider.vue'
+
+import SkeletonServiceOrder from '@/components/skeleton/SkeletonServiceOrder.vue'
 
 import Box from '@/components/base/Box.vue'
 import Button from '@/components/base/Button.vue'
@@ -178,7 +183,9 @@ const {
   product, 
   domainSelected,
   quote,
-  errorCoupon
+  errorCoupon,
+  loadingProduct,
+  loadingProductConfig
 } = storeToRefs(serviceOrderStore)
 
 import { useRoute, useRouter } from 'vue-router'

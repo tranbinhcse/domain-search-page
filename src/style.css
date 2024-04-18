@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+
+.layout-content{
+    @apply dark:bg-gray-900
+}
+body{
+    @apply dark:text-white
+}
 /* 
 body {
     --color-menu-dark-bg: #1E1E2D; 

@@ -139,7 +139,7 @@
         
         <a-form-item class="text-center">
             <a-button type="primary" html-type="submit"  >Đăng ký</a-button>
-            <p class="pl-5">Bạn đã có tài khoản? <router-link to="/login" class="text-green-500">Đăng nhập</router-link></p>
+            <p class="pl-5">Bạn đã có tài khoản? <router-link to="/login" class="text-primary">Đăng nhập</router-link></p>
         </a-form-item>
         <a-form-item>
            <p>Bằng việc đăng ký là bạn đã xác nhận đồng ý các điểu khoản sử dụng, điều khoản bảo mật thông tin cá nhân của chúng tôi.</p>

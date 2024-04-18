@@ -5,7 +5,7 @@
     [&::-webkit-slider-thumb]:h-5
     [&::-webkit-slider-thumb]:-mt-1
     [&::-webkit-slider-thumb]:appearance-none
-    [&::-webkit-slider-thumb]:bg-green-500
+    [&::-webkit-slider-thumb]:bg-primary
     [&::-webkit-slider-thumb]:rounded-full
     [&::-webkit-slider-thumb]:transition-all
     [&::-webkit-slider-thumb]:duration-150
@@ -16,7 +16,7 @@
     [&::-moz-range-thumb]:appearance-none
     [&::-moz-range-thumb]:bg-white
     [&::-moz-range-thumb]:border-4
-    [&::-moz-range-thumb]:border-green-500
+    [&::-moz-range-thumb]:border-primary
     [&::-moz-range-thumb]:rounded-full
     [&::-moz-range-thumb]:transition-all
     [&::-moz-range-thumb]:duration-150

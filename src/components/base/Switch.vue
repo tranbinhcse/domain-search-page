@@ -1,6 +1,6 @@
 <template>
   <div class="relative w-14 h-8 cursor-pointer select-none rounded-full" @click="$emit('update:modelValue', !modelValue)"
-    :class="modelValue ? 'bg-green-500' : 'bg-gray-300'">
+    :class="modelValue ? 'bg-primary' : 'bg-gray-300'">
     <span class="absolute flex items-center justify-center w-6 h-6 transition bg-white rounded-full left-1 top-1"
       :class="modelValue ? 'translate-x-full' : ''">
       <svg v-if="modelValue" class="h-4 w-4" fill="currentColor" viewBox="0 0 12 12">

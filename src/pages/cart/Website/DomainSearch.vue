@@ -302,7 +302,7 @@
   .found-domain {
   .name{
     .icon {
-      @apply text-green-500 bg-green-100 rounded p-2 mr-2
+      @apply text-primary bg-green-100 rounded p-2 mr-2
     }
   }
   }

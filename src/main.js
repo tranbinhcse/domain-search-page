@@ -3,7 +3,7 @@ import App from './App.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import ArcoVue from '@arco-design/web-vue';
 import ArcoVueIcon from '@arco-design/web-vue/es/icon';
-import '@arco-design/web-vue/dist/arco.less';;
+// import '@arco-design/web-vue/dist/arco.less';;
 
 import dayjs from "dayjs";
 

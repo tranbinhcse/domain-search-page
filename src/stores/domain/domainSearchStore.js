@@ -163,11 +163,20 @@ async function searchDomains(loadMore = false) {
   }
 
   async function getDomainTlds() {
+      
+    if(localStorage.getItem('tlds') != null){
+        tlds.value = JSON.parse(localStorage.getItem('tlds'));
+        tldsLoaded.value = true 
+        return
+    }
+
+
     if(tldsLoaded.value == true){
         return 
     } else {
       tlds.value = await DomainRepository.getTlds()
       tldsLoaded.value = true
+      localStorage.setItem('tlds', JSON.stringify(tlds.value));
     }
       
     

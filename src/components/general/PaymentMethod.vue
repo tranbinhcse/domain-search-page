@@ -3,16 +3,16 @@
             <RadioGroup v-model="internalValue"> 
               <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 sm:gap-x-4">
                 <RadioGroupOption as="template" v-for="(method, id) in methods" :key="id" :value="id" v-slot="{ checked, active }">
-                  <div :class="[checked ? 'border-transparent ' : 'border-gray-300', active ? 'ring-2 ring-green-500' : '', 'relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none pl-[20px]']">
+                  <div :class="[checked ? 'border-transparent ' : 'border-gray-300', active ? 'ring-2 ring-primary' : '', 'relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none pl-[20px]']">
                     <span class="flex flex-1">
                       <span class="flex flex-col w-full">
                         <RadioGroupLabel as="span" class="block text-sm font-medium text-gray-900">{{ method }}</RadioGroupLabel>
                         <RadioGroupDescription as="span" class="mt-1 flex items-center text-sm text-gray-500">Miễn phí thanh toán, kích hoạt ngay</RadioGroupDescription>
                       </span>
                     </span>
-                    <CheckCircleIcon v-if="checked" class="h-7 w-7 text-green-500 absolute right-4 top-[50%] transform -translate-y-1/2" aria-hidden="true" />
+                    <CheckCircleIcon v-if="checked" class="h-7 w-7 text-primary absolute right-4 top-[50%] transform -translate-y-1/2" aria-hidden="true" />
                     
-                    <span :class="[active ? 'border' : 'border-2', checked ? 'border-green-500' : 'border-transparent', 'pointer-events-none absolute -inset-px rounded-lg']" aria-hidden="true" />
+                    <span :class="[active ? 'border' : 'border-2', checked ? 'border-primary' : 'border-transparent', 'pointer-events-none absolute -inset-px rounded-lg']" aria-hidden="true" />
                   </div>
                 </RadioGroupOption>
               </div>

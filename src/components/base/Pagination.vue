@@ -16,7 +16,7 @@
       </li>
 
       <li v-for="page in pagesToShow" :key="page">
-        <Button   :btnClass="`page-link hover:bg-green-200 hover:text-green-500 px-2 py-2  ${ page == currentPage ? 'border-green-200 bg-green-200 border-2' : 'bg-white'}`" @click="updatePage(page)" :text="`${ page }`" />
+        <Button   :btnClass="`page-link hover:bg-green-200 hover:text-primary px-2 py-2  ${ page == currentPage ? 'border-green-200 bg-green-200 border-2' : 'bg-white'}`" @click="updatePage(page)" :text="`${ page }`" />
       </li>
  
 
@@ -133,7 +133,7 @@ function hoverEnd(position) {
 }
 
 .page-link.active {
-  @apply bg-green-500 text-white;
+  @apply bg-primary text-white;
 }
  
 </style>

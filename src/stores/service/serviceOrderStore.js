@@ -10,6 +10,8 @@ import { useCartStore } from "@/stores/cartStore";
 
 export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
   const loading = ref(false)
+  const loadingProduct = ref(false)
+  const loadingProductConfig = ref(false)
   const errorCoupon = ref()
   const error = ref()
   const category = ref()
@@ -26,7 +28,7 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
     loading.value = true
     products.value = []
     selectedProduct.value = null
-    cycle.value = 'a'
+    // cycle.value = 'a'
     product.value = null
     products.value = await ProductRepository.getProducts(category.value)
     loading.value = false
@@ -35,10 +37,10 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
   async function getProductConfiguration() {
   
     if (!selectedProduct.value) return
- 
-    loading.value = true
+  
+    loadingProductConfig.value = true
     product.value = await ProductRepository.getConfiguration(selectedProduct.value, cycle.value)
-    loading.value = false
+    loadingProductConfig.value = false
     
   }
 
@@ -78,8 +80,12 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
  
 
   watch(category, getProducts)
-  watch(selectedProduct, () => {
-    getProductConfiguration()
+  watch(selectedProduct, async () => {
+    loadingProduct.value = true
+    product.value = null
+    
+   await getProductConfiguration()
+   loadingProduct.value = false
   })
 
 
@@ -92,5 +98,8 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
   }, { deep: true });
   
 
-  return { loading, error, errorCoupon, category, products, selectedProduct, cycle,  product, quote, domainSelected, getProducts, order, removeDomainSelected, getQuoteProduct, getProductConfiguration }
+  return { 
+    loading, loadingProduct,loadingProductConfig, error, errorCoupon, category, products, selectedProduct, cycle,  product, quote, domainSelected, 
+    getProducts, order, removeDomainSelected, getQuoteProduct, getProductConfiguration 
+  }
 })

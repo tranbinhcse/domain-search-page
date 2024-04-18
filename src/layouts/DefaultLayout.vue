@@ -4,7 +4,7 @@
         <NavBar />
       </div>
       <a-layout>
-        <a-layout>
+        <a-layout >
           <a-layout-sider
             v-if="renderMenu"
             v-show="!hideMenu"
@@ -107,8 +107,8 @@
   </script>
   
   <style scoped lang="less">
-  @nav-size-height: 60px;
-  @layout-max-width: 1100px;
+  // @nav-size-height: 60px;
+  // @layout-max-width: 1100px;
   
   .layout {
     width: 100%;
@@ -121,7 +121,7 @@
     left: 0;
     z-index: 100;
     width: 100%;
-    height: @nav-size-height;
+    // height: @nav-size-height;
   }
   
   .layout-sider {
@@ -173,8 +173,9 @@
   .layout-content {
     min-height: 100vh;
     overflow-y: hidden;
-    background-color: var(--color-fill-2);
-    transition: padding 0.2s cubic-bezier(0.34, 0.69, 0.1, 1);
+   
+    transition: padding 0.2s cubic-bezier(0.34, 0.69, 0.1, 1); 
   }
+ 
   </style>
   

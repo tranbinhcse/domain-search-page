@@ -106,7 +106,7 @@
       <div class="max-w-7xl mx-auto flex justify-center">
          <div></div>
        <div> 
-        <a href="#" @click.stop="handleSummaryCart()"  class="flex items-center justify-center rounded-md border border-transparent bg-green-500 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-green-700 min-w-80 pointer">Xem giỏ hàng</a>
+        <a href="#" @click.stop="handleSummaryCart()"  class="flex items-center justify-center rounded-md border border-transparent bg-primary px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-green-700 min-w-80 pointer">Xem giỏ hàng</a>
        </div>
       </div>
     </div>

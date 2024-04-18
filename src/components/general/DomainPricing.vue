@@ -33,7 +33,7 @@
                     </div>
                   </td>
                   <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                    <div class="text-green-500 flex">
+                    <div class="text-primary flex">
                       <span class=" font-bold text-lg">{{ $currency(tld.periods[0].register) }} </span>
                       <Tooltip bg="light" size="lg" position="bottom" class="cursor-pointer">
                         <template v-slot:button>
@@ -52,7 +52,7 @@
                     
                   </td> 
                   <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                    <div class="text-green-500 flex">
+                    <div class="text-primary flex">
                       <span class=" font-bold text-lg">{{ $currency(tld.periods[0].renew) }} </span>
                     </div>
                   </td>

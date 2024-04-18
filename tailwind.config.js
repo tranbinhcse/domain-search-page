@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  
+  darkMode: ['selector', '[arco-theme="dark"]'],
   content: [
     "./index.html",
     "./src/**/*.{vue,js,ts,jsx,tsx}",
@@ -8,6 +8,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        'primary': '#15a984',
         // 'page-background': '#F8FCFF',
         // 'white': '#ffffff',
         // 'black': '#181C32',

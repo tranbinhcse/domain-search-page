@@ -47,7 +47,7 @@
     </div>
     </Box>
     <Box>
-      <Heading text="Cấu hình tên miền" class="text-green-500 uppercase text-lg border-b-2 border-gray-50 pb-2 mb-2" />
+      <Heading text="Cấu hình tên miền" class="text-primary uppercase text-lg border-b-2 border-gray-50 pb-2 mb-2" />
       <dl
         class="mx-auto grid grid-cols-1 gap-px /5 sm:grid-cols-2 lg:grid-cols-4 divide-x divide-gray-50 mb-[40px] mt-5">
         <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 bg-white px-4 py-10 sm:px-6 xl:px-8">
@@ -72,7 +72,7 @@
           </dd>
         </div>
       </dl>
-      <Heading text="Thông tin tên miền" class="text-green-500 uppercase text-lg border-b-2 border-gray-50 pb-2 mb-2" />
+      <Heading text="Thông tin tên miền" class="text-primary uppercase text-lg border-b-2 border-gray-50 pb-2 mb-2" />
       <dl class="mx-auto flex divide-x divide-gray-50 mb-[40px] mt-5">
         <div class="flex flex-col gap-x-4 gap-y-2 bg-white pr-4 py-10 sm:pr-6 xl:r-8 flex-auto">
           <dt class="text-sm font-medium leading-6 text-gray-500 uppercase">Thông tin liên hệ</dt>
@@ -139,13 +139,13 @@
           </dd>
         </div>
       </dl>
-      <Heading text="Dịch vụ liên quan" class="text-green-500 uppercase text-lg border-b-2 border-gray-50 pb-2 mb-2" />
+      <Heading text="Dịch vụ liên quan" class="text-primary uppercase text-lg border-b-2 border-gray-50 pb-2 mb-2" />
       <div class="mx-auto mt-12 grid max-w-sm grid-cols-1 gap-x-8 gap-y-10 sm:max-w-none  sm:grid-cols-4 lg:grid-cols-7 ">
         <div v-for="incentive in incentives" :key="incentive.name"
           class="text-center sm:flex sm:text-left lg:block lg:text-center">
           <div class="sm:flex-shrink-0">
             <div class="flow-root">
-              <img class="mx-auto h-16 w-16 green-500" :src="incentive.imageSrc" alt="" />
+              <img class="mx-auto h-16 w-16 primary" :src="incentive.imageSrc" alt="" />
             </div>
           </div>
           <div class="mt-3 sm:ml-6 sm:mt-0 lg:ml-0 lg:mt-6">

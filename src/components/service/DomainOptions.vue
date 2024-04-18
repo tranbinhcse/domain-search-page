@@ -5,9 +5,9 @@
               <Tab  v-slot="{ selected }" class="focus-visible:outline-none mb-4" v-if="options.register == '1'">
                   <span :class="[
                 'w-full py-2.5 text-sm font-medium leading-5 px-8 py-4 focus-visible:outline-none',
-                'ring-white/60  focus:outline-none hover:border-gray-300 hover:text-green-500',
+                'ring-white/60  focus:outline-none hover:border-gray-300 hover:text-primary',
                 selected
-                  ? ' text-green-500 border-b-2 border-green-500'
+                  ? ' text-primary border-b-2 border-primary'
                   : 'text-black hover:bg-white/[0.12]  border-b-2 border-gray-50',
               ]">Đăng ký tên miền</span>
               </Tab>
@@ -15,9 +15,9 @@
               <Tab  v-slot="{ selected }" class="focus-visible:outline-none mb-4"  v-if="options.register == '1'">
                   <span :class="[
                 'w-full py-2.5 text-sm font-medium leading-5 px-8 py-4 focus-visible:outline-none',
-                'ring-white/60  focus:outline-none hover:border-gray-300 hover:text-green-500',
+                'ring-white/60  focus:outline-none hover:border-gray-300 hover:text-primary',
                 selected
-                  ? ' text-green-500 border-b-2 border-green-500'
+                  ? ' text-primary border-b-2 border-primary'
                   : 'text-black hover:bg-white/[0.12]  border-b-2 border-gray-50',
               ]">Chuyển tên miền</span>
               </Tab>
@@ -25,9 +25,9 @@
               <Tab  v-slot="{ selected }" class="focus-visible:outline-none mb-4" v-if="options.owndomain">
                   <span :class="[
                 'w-full py-2.5 text-sm font-medium leading-5 px-8 py-4 focus-visible:outline-none',
-                'ring-white/60  focus:outline-none hover:border-gray-300 hover:text-green-500',
+                'ring-white/60  focus:outline-none hover:border-gray-300 hover:text-primary',
                 selected
-                  ? ' text-green-500 border-b-2 border-green-500'
+                  ? ' text-primary border-b-2 border-primary'
                   : 'text-black hover:bg-white/[0.12]  border-b-2 border-gray-50',
               ]">Sủ dụng tên miền đã có</span>
               </Tab>
@@ -35,9 +35,9 @@
               <Tab  v-slot="{ selected }" class="focus-visible:outline-none mb-4" v-if="options.subdomain">
                   <span :class="[
                 'w-full py-2.5 text-sm font-medium leading-5 px-8 py-4 focus-visible:outline-none',
-                'ring-white/60  focus:outline-none hover:border-gray-300 hover:text-green-500',
+                'ring-white/60  focus:outline-none hover:border-gray-300 hover:text-primary',
                 selected
-                  ? ' text-green-500 border-b-2 border-green-500'
+                  ? ' text-primary border-b-2 border-primary'
                   : 'text-black hover:bg-white/[0.12]  border-b-2 border-gray-50',
               ]">Tên miền phụ miễn phí</span>
               </Tab>
@@ -45,7 +45,7 @@
             </TabList>
             <TabPanels>
               <TabPanel v-if="options.owndomain">
-                  <div class="search-form-wrapper w-full bg-gradient-to-r from-green-500 from-10% via-green-600 to-green-300 rounded-t-md p-6">
+                  <div class="search-form-wrapper w-full bg-gradient-to-r from-primary from-10% via-green-600 to-green-300 rounded-t-md p-6">
                      <div class="search-form-wrapper relative" >
                       <a-input type="text" allow-clear required v-model="searchKey" name="domain" placeholder="Nhập tên thương hiệu" class="w-full text-3xl h-[65px]" />
                       <a-button type="primary" :loading="searching" @click="handleSearchSubmit" class="absolute top-1/2 -translate-y-1/2 right-[10px] h-[45px]"  >
@@ -71,7 +71,7 @@
                   </div>
               </TabPanel>
               <TabPanel  v-if="options.register == '1'">
-                <div class="search-form-wrapper w-full bg-gradient-to-r from-green-500 from-10% via-green-600 to-green-300 rounded-t-md p-6">
+                <div class="search-form-wrapper w-full bg-gradient-to-r from-primary from-10% via-green-600 to-green-300 rounded-t-md p-6">
                   
                   <div class="search-form-wrapper relative" >
                       <a-input type="text" allow-clear required v-model="searchKey" name="domain" placeholder="Nhập tên thương hiệu" class="w-full text-3xl h-[65px]" />
@@ -86,7 +86,7 @@
                 </div>
               </TabPanel>
               <TabPanel v-if="options.register == '1'">
-                <div class="search-form-wrapper w-full bg-gradient-to-r from-green-500 from-10% via-green-600 to-green-300 rounded-t-md p-6">
+                <div class="search-form-wrapper w-full bg-gradient-to-r from-primary from-10% via-green-600 to-green-300 rounded-t-md p-6">
                   <div class="search-form-wrapper relative" >
                       <a-input type="text" allow-clear required v-model="searchKey" name="domain" placeholder="Nhập tên thương hiệu" class="w-full text-3xl h-[65px]" />
                       <a-button type="primary" :loading="searching" @click="handleSearchSubmit" class="absolute top-1/2 -translate-y-1/2 right-[10px] h-[45px]"  >
@@ -100,7 +100,7 @@
               </TabPanel>
 
               <TabPanel v-if="options.subdomain">
-                <div class="search-form-wrapper w-full bg-gradient-to-r from-green-500 from-10% via-green-600 to-green-300 rounded-t-md p-6">
+                <div class="search-form-wrapper w-full bg-gradient-to-r from-primary from-10% via-green-600 to-green-300 rounded-t-md p-6">
 
                   <div class="search-form-wrapper relative" >
                       <a-input type="text" allow-clear required v-model="searchKey" name="domain" placeholder="Nhập tên thương hiệu" class="w-full text-3xl h-[65px]" />
@@ -121,7 +121,7 @@
         </TabGroup>
 
 
-        <div v-if="options.hostname" class="search-form-wrapper w-full bg-gradient-to-r from-green-500 from-10% via-green-600 to-green-300 rounded-t-md p-6">
+        <div v-if="options.hostname" class="search-form-wrapper w-full bg-gradient-to-r from-primary from-10% via-green-600 to-green-300 rounded-t-md p-6">
           <form @submit.prevent="handleSearchSubmit" action="/" method="get" class=" relative  focus-visible:outline-none focus:outline-none focus:outline-none" >
             <Input type="text" append="heroicons-outline:search" v-model="searchKey" name="domain" placeholder="Nhập tên miền của bạn" size="leading-[32px]" class="bg-white rounded-md text-black w-full forcus-visible:outline-none focus:outline-none" />
             <Button :isLoading="searching" type="submit" text="Xác nhận" icon="heroicons-outline:check" class="flex-auto absolute right-0 top-[50%] h-[50px] -translate-y-[50%] rounded-tr-md rounded-br-md focus:outline-none" />

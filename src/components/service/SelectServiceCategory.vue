@@ -4,15 +4,15 @@
 
       <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-x-4">
         <RadioGroupOption as="template" v-for="category in categories" :key="category.id" :value="category.id" v-slot="{ checked, active }"> 
-          <div :class="[checked ? 'border-transparent bg-green-50' : 'border-gray-300  bg-white', active ? 'ring-2 ring-green-500' : '', 'relative flex cursor-pointer rounded-lg border p-4 shadow-sm focus:outline-none']">
+          <div :class="[checked ? 'border-transparent' : 'border-gray-300  bg-white dark:bg-gray-800 dark:border-gray-700', active ? 'ring-1  ring-primary' : '', 'relative flex cursor-pointer rounded-lg border p-4 shadow-sm focus:outline-none']">
             <span class="flex flex-1">
               <span class="flex flex-col">
-                <RadioGroupLabel as="span" class="block text-sm font-medium text-gray-900">{{ category.name }}</RadioGroupLabel>
+                <RadioGroupLabel as="span" class="block text-sm font-medium text-gray-900 dark:text-gray-400">{{ category.name }}</RadioGroupLabel>
                 <RadioGroupDescription as="span" class="mt-1 flex items-center text-sm text-gray-500"  v-html="category.description" />
               </span>
             </span>
-            <CheckCircleIcon v-if="checked" class="h-7 w-7 text-green-500 absolute right-1 top-1" aria-hidden="true" />
-            <span :class="[active ? 'border' : 'border-2', checked ? 'border-green-500' : 'border-transparent', 'pointer-events-none absolute -inset-px rounded-lg']" aria-hidden="true" />
+            <CheckCircleIcon v-if="checked" class="h-7 w-7 text-primary absolute right-1 top-1" aria-hidden="true" />
+            <span :class="[active ? 'border-2' : 'border-2', checked ? 'border-primary' : 'border-transparent', 'pointer-events-none absolute -inset-px rounded-lg']" aria-hidden="true" />
           </div>
         </RadioGroupOption>
       </div>

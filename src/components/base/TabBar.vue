@@ -5,7 +5,7 @@
         <a href="#"
           class="inline-block p-4 text-sm font-semibold"
           :class="{
-            'text-green-500 border-green-500 border-b-2' : modelValue == tab.ref,
+            'text-primary border-primary border-b-2' : modelValue == tab.ref,
             'hover:text-gray-400' : modelValue !== tab.ref,
           }"
           @click.prevent="$emit('update:modelValue', tab.ref)"

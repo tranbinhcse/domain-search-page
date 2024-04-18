@@ -51,7 +51,7 @@
             <div v-if="domain.status == 'inCheck'"><Button btnClass="bg-white text-gray" icon="heroicons-outline:search" isLoading textLoading="Đang kiểm tra..." ></Button></div>
             <div v-else-if="domain.avaliable === false"><Button btnClass="bg-gray-50 text-gray" icon="heroicons-outline:user" @click.stop="getWhoisInfo(domain)" text="Xem whois" /></div>
             <div v-else-if="domain.inCart"><Button @click="handlePayCart()" btnClass="bg-red-50 text-red-500" icon="heroicons-outline:credit-card" text="Thanh toán" /></div>
-            <div v-else><Button  @click="addToCart(domain)" :btnClass="domain.isFeatured ? 'bg-green-500 text-white' : 'text-green-500 border-2 border-green-500'" icon="heroicons-outline:shopping-cart" text="Đăng ký"   /></div>
+            <div v-else><Button  @click="addToCart(domain)" :btnClass="domain.isFeatured ? 'bg-primary text-white' : 'text-primary border-2 border-primary'" icon="heroicons-outline:shopping-cart" text="Đăng ký"   /></div>
             <div v-if="domain.inCart" class="text-right">
               <Button @click="removeInCart(domain)" btnClass=" text-gray-500 btn-sm" icon="mdi:times" />
             </div>
@@ -81,7 +81,7 @@
     </div>
   </div>
 
-  <Heading text="Tên miền được tìm thấy" class="text-green-500 uppercase text-lg border-b-2 border-gray-50 pb-2 mb-2 mt-10" />  
+  <Heading text="Tên miền được tìm thấy" class="text-primary uppercase text-lg border-b-2 border-gray-50 pb-2 mb-2 mt-10" />  
   <div v-for="domain in domains" :key="domain.id" >
     <div v-if="!domain.error && !domain.isFeatured" class="rounded-md  px-6 bg-white mb-2  py-4" :class="[domain.status == 'inCheck' ? 'check-domain' : domain.status == 'ok' ? 'found-domain' : 'not-found-domain']" >
       <div  class="flex items-center flex-wrap py-2" >
@@ -136,7 +136,7 @@
             <div v-if="domain.status == 'inCheck'"><Button btnClass="bg-white text-gray" icon="heroicons-outline:search" isLoading textLoading="Đang kiểm tra..." ></Button></div>
             <div v-else-if="domain.avaliable === false"><Button btnClass="bg-gray-50 text-gray" icon="heroicons-outline:user" @click.stop="getWhoisInfo(domain)" text="Xem whois" /></div>
             <div v-else-if="domain.inCart"><Button @click="handlePayCart()" btnClass="bg-red-50 text-red-500" icon="heroicons-outline:credit-card"  text="Thanh toán" /></div>
-            <div v-else><Button  @click="addToCart(domain)"  :btnClass="domain.isFeatured ? 'bg-green-500 text-white' : 'text-green-500 border-2 border-green-500'" icon="heroicons-outline:shopping-cart" text="Đăng ký"  /></div>
+            <div v-else><Button  @click="addToCart(domain)"  :btnClass="domain.isFeatured ? 'bg-primary text-white' : 'text-primary border-2 border-primary'" icon="heroicons-outline:shopping-cart" text="Đăng ký"  /></div>
             <div v-if="domain.inCart" class="text-right">
               <Button @click="removeInCart(domain)" btnClass=" text-gray-500 btn-sm" icon="mdi:times" />
             </div>
@@ -256,7 +256,7 @@ const  getCookie = (name) => {
 .found-domain {
 .name{
   .icon {
-    @apply text-green-500 bg-green-100 rounded p-2 mr-2
+    @apply text-primary bg-green-100 rounded p-2 mr-2
   }
 }
 }

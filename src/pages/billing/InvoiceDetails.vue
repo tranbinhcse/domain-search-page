@@ -39,7 +39,7 @@
       </Box>
       <div class="flex gap-4">
         <Box class="flex-auto">
-            <Heading text="Chi tiết hoá đơn" class="text-green-500 uppercase text-lg border-b-2 border-gray-50 pb-2 mb-2" />
+            <Heading text="Chi tiết hoá đơn" class="text-primary uppercase text-lg border-b-2 border-gray-50 pb-2 mb-2" />
             
         
             <div  v-html="invoiceBody" ></div>

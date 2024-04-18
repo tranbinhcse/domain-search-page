@@ -4,9 +4,9 @@
         {{ addons }}
         <ul role="list" class="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
         <li  v-for="{ id, title, description, config: [, { items }] } in addons" :key="id" class="col-span-1 flex  rounded-md">
-            <div class="relative w-full p-4 rounded-md shadow-sm flex flex-col justify-between bg-white" :class="[product.addon[id] ? 'border-2 border-green-500' : 'border']">
+            <div class="relative w-full p-4 rounded-md shadow-sm flex flex-col justify-between bg-white" :class="[product.addon[id] ? 'border-2 border-primary' : 'border']">
             <div class="check-sign absolute right-0 top-0 overflow-hidden w-10 h-10" v-if="product.addon[id]">
-                <p class="RadioCheck bg-green-500 absolute -top-2 -right-5 text-center w-[50px] h-[30px] text-center origin-center rotate-45" >
+                <p class="RadioCheck bg-primary absolute -top-2 -right-5 text-center w-[50px] h-[30px] text-center origin-center rotate-45" >
                 <Icon icon="heroicons-outline:check" class="w-13 h-1 text-white flex origin-center -rotate-45" fontSize="25px" />
                 </p>
             </div>
@@ -16,7 +16,7 @@
                 <p class="font-normal text-sm text-gray-500 pt-2">{{ description }}</p>
             </div>
             <Popover class="relative mt-4 "  v-slot="{ open }">
-                <div class="flex items-center divide-x  inline-flex rounded-md relative" :class="[product.addon[id] ? 'bg-green-500 text-white' : 'bg-green-100 text-green-500']">
+                <div class="flex items-center divide-x  inline-flex rounded-md relative" :class="[product.addon[id] ? 'bg-primary text-white' : 'bg-green-100 text-primary']">
                 <PopoverButton>
                 <button class="px-2 py-2 flex items-center">
                     <span class="pr-2">{{ product.addon_cycles[id] ?? 'chọn'  }}</span><Icon :class="{ 'rotate-180 transform': open }"  icon="heroicons-outline:chevron-down" />

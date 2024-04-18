@@ -38,7 +38,7 @@
             <div v-if="isCheck"><Button btnClass="bg-white text-gray" icon="heroicons-outline:search" isLoading textLoading="Đang kiểm tra..." ></Button></div>
             <div v-else-if="isTaken"><Button btnClass="bg-gray-50 text-gray" icon="heroicons-outline:user" :link="`/whois/${ domain }`" text="Xem whois" /></div>
             <div v-else-if="inCart"><Button  btnClass="bg-red-50 text-red-500" icon="heroicons-outline:credit-card" link="/cart" text="Thanh toán" /></div>
-            <div v-else><Button :btnClass="isFeatured ? 'bg-green-500 text-white' : 'text-green-500 border-2 border-green-500'" icon="heroicons-outline:shopping-cart" text="Đăng ký"   /></div>
+            <div v-else><Button :btnClass="isFeatured ? 'bg-primary text-white' : 'text-primary border-2 border-primary'" icon="heroicons-outline:shopping-cart" text="Đăng ký"   /></div>
           </div>
       </div>
     </div>
@@ -88,7 +88,7 @@ defineProps(
 .found-domain {
 .name{
   .icon {
-    @apply text-green-500 bg-green-100 rounded p-2 mr-2
+    @apply text-primary bg-green-100 rounded p-2 mr-2
   }
 }
 }

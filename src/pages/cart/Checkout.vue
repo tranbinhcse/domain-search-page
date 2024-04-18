@@ -181,7 +181,7 @@
           </div>
 
           <Heading text="Phương thức thanh toán"
-            class="text-green-500 uppercase text-3xl font-bold border-b-2 border-gray-50 pb-2 mb-2" />
+            class="text-primary uppercase text-3xl font-bold border-b-2 border-gray-50 pb-2 mb-2" />
           <PaymentMethod v-model="paymentMethod" :methods="paymentMethods" />
 
         </section>

@@ -109,7 +109,7 @@
             </li>
           </ul>
           <div class="mt-8 bg-white p-4 rounded"  v-if="hasDomain">
-            <Heading text="Thông tin chủ thể" class="text-green-500 uppercase text-lg border-b-2 border-gray-50 pb-2 mb-2" />
+            <Heading text="Thông tin chủ thể" class="text-primary uppercase text-lg border-b-2 border-gray-50 pb-2 mb-2" />
             <template v-if="requestEkyc">
               <DomainContactEkyc />
             </template>

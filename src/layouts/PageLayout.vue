@@ -2,12 +2,11 @@
 
  
   <template v-if="!isLogin && requiresAuth">
-    <div class="min-h-[100dvh] h-full flex flex-col after:flex-1">
+    <div class="min-h-[100dvh] h-full flex flex-col after:flex-1 dark:bg-gray-800">
       <FormLogin />
     </div>
   </template>
   <template v-else>
-    
     <router-view></router-view>
   </template>
 </template>
