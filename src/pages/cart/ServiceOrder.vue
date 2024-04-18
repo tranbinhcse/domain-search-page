@@ -259,14 +259,14 @@ const productCycle = ref()
 const productOption = ref()
 const scrollTosearchCycle = () => {
   if (productCycle.value) {
-    const topPosition = productCycle.value.getBoundingClientRect().top + window.pageYOffset + 100;
+    const topPosition = productCycle.value.getBoundingClientRect().top + window.pageYOffset;
     window.scrollTo({ top: topPosition, behavior: 'smooth' });
   }
 }
 const scrollTosearchOption = () => {
   
   if (productOption.value) {
-    const topPosition = productOption.value.getBoundingClientRect().top + window.pageYOffset + 100;
+    const topPosition = productOption.value.getBoundingClientRect().top + window.pageYOffset ;
     window.scrollTo({ top: topPosition, behavior: 'smooth' });
   }
 }
