@@ -1,6 +1,6 @@
 <template>
  
-  <a-spin class="w-full" :loading="loading">
+  
     <div class="max-w-7xl mx-auto mb-[150px]">
       <div class="mb-5 py-5 ">
         <Heading text="Chọn dịch vụ" class="text-green-500 uppercase text-3xl font-bold border-b-2 border-gray-50 pb-2 mb-2" />
@@ -19,7 +19,7 @@
           <Heading text="Chu kỳ thanh toán" class="text-green-500 uppercase text-3xl font-bold border-b-2 border-gray-50 pb-2 mb-2" />
           <PeriodSelect :periods="cycles.items" v-model="selectedCycle" />
         </div>
-       
+        <Box>
         <div v-if="product.domainOptions && product.domainOptions.register == '1'">
           <Heading text="Domain Configuration" class="text-green-500 uppercase text-3xl font-bold border-b-2 border-gray-50 pb-2 mb-2" />
           <DomainOptions v-model="domainSelected" :options="product.domainOptions" v-if="!product.domain" />
@@ -30,14 +30,16 @@
             <a-button class="" @click="removeDomainSelected(domainSelected)">Đổi domain</a-button>
           </div>
         </div>
+        
         <div v-if="product.domainOptions && product.domainOptions.register == '0' && product.domainOptions.hostname">
           <Heading text="Hostname" class="text-green-500 uppercase text-3xl font-bold pb-2 mb-2" />
           <div class="mb-5  p-5 bg-white rounded">
             <a-input v-model="product.domain" placeholder="Vui lòng nhập vào hostname" />
           </div>
         </div>
-
-        <Box v-if="product.formFields.length > 0">
+      </Box>
+      
+        <Box v-if="product.formFields.length > 0" >
           <Heading text="Cấu hình sản phẩm" class="text-green-500 uppercase text-3xl font-bold border-b-2 border-gray-50 pb-2 mb-2" />
           
           <div
@@ -106,48 +108,41 @@
 
           </div>
         </Box>
+     
 
-
-        <Box>
-          <a-form @submit="applyPromo">
-                  <a-row :gutter="8">
-                  
-                  <a-col :span="16">
-                    <a-form-item no-style>
-                      <a-input v-model="product.promocode" allow-clear="" placeholder="Nhập mã giảm giá"></a-input>
-                    </a-form-item>
-                  </a-col>
-                  <a-col :span="8">
-                    <a-form-item>
-                      <a-button type="primary" htmlType="submit">Áp dụng</a-button>
-                    </a-form-item>
-                  </a-col>
-                </a-row>
-                </a-form>
-        </Box>
+        
      
       </div>
       </div>
       <div class="bottom-0 left-0 right-0 fixed pl-[250px]">
-        <div v-if="product" class="drop-shadow-2xl mb-0 bg-white p-5">
+        <Box :loading="loading" v-if="product" class="drop-shadow-2xl mb-0 bg-white ">
           <div class="flex justify-between max-w-7xl mx-auto">
-            <div>
+            <div class="pr-10">
               <p>Tổng thanh toán:</p>
               <p>
-
-           
-            
                 <span  class="font-bold text-2xl text-green-500">{{ $currency(quote?.summary?.total) }}</span><span></span>
               </p>
+            </div>
+            <div class="flex-1" v-if="quote?.summary?.discount">
+              <p>Giảm giá:</p>
+              <p>
+                <span  class="font-bold text-2xl text-green-500">{{ $currency(quote?.summary?.discount) }}</span><span></span>
+                <a-button size="mini" type="text" @click="product.promocode = ''">Xoá</a-button>
+              </p>
+              
+            </div>
+            <div class="flex-1" v-else>
+              <a-input :style="{width:'320px'}" v-model="promocode" allow-clear="" placeholder="Nhập mã giảm giá"></a-input>
+              <a-button type="outline" @click="applyCoupon" >{{ $t('Apply') }}</a-button>
             </div>
             
             <div class="left-auto">
               <Button @click="handleAddCart" btnClass="bg-green-500 px-10 py-3 text-white rounded" icon="heroicons-outline:banknotes" text="Thanh toán ngay"   />
             </div>
           </div>
-        </div>
+        </Box>
       </div>
-  </a-spin>
+  
 </template>
 <script setup>
 import { storeToRefs } from 'pinia'
@@ -193,6 +188,12 @@ const router = useRouter()
 onMounted(() => {
   getProducts()
 })
+
+const promocode = ref()
+const applyCoupon = () => {
+  product.value.promocode = promocode.value
+  // getQuoteProduct()
+}
 
 const cycles = computed(() => {
   return product.value.productFields.find(field => field.id === 'cycle');

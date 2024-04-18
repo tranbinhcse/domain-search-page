@@ -1,6 +1,9 @@
 import { defineStore } from 'pinia'
 import {  post } from '@/core/apiClient'
 import { ref, watch, watchEffect } from 'vue'
+import debounce from 'lodash/debounce';
+
+
 import ProductRepository from '@/repositories/ProductRepository' 
 import CartRepository from '@/repositories/CartRepository' 
 import { useCartStore } from "@/stores/cartStore";
@@ -40,7 +43,15 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
 
   async function getQuoteProduct() {
     if (!product.value) return
+    loading.value = true
     quote.value = await CartRepository.getQuote([product.value])
+
+    const filteredErrors = quote.value.items[0].error.filter(error => error.code === "coupon_not_exist" || error.code === 'coupon_not_applicable_1');
+
+    error.value = filteredErrors[0]
+
+    loading.value = false
+
   }
  
   
@@ -67,12 +78,16 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
   watch(selectedProduct, () => {
     getProductConfiguration()
   })
- 
-   // Theo dõi sự thay đổi của product và gọi getQuoteProduct
-   watch(product, () => {
-    
-    getQuoteProduct()
-  }, { deep: true })
+
+
+  const debouncedGetQuoteProduct = debounce(getQuoteProduct, 1000);
+
+
+
+  watch(product, () => {
+   debouncedGetQuoteProduct()
+  }, { deep: true });
+  
 
   return { loading, error, category, products, selectedProduct, cycle,  product, quote, domainSelected, getProducts, order, removeDomainSelected, getQuoteProduct, getProductConfiguration }
 })
