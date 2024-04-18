@@ -10,6 +10,7 @@ import { useCartStore } from "@/stores/cartStore";
 
 export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
   const loading = ref(false)
+  const errorCoupon = ref()
   const error = ref()
   const category = ref()
   const quote = ref([])
@@ -44,12 +45,14 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
   async function getQuoteProduct() {
     if (!product.value) return
     loading.value = true
+    errorCoupon.value = false
     quote.value = await CartRepository.getQuote([product.value])
 
     const filteredErrors = quote.value.items[0].error.filter(error => error.code === "coupon_not_exist" || error.code === 'coupon_not_applicable_1');
+    if(filteredErrors){
+      errorCoupon.value = filteredErrors[0]?.message
 
-    error.value = filteredErrors[0]
-
+    }  
     loading.value = false
 
   }
@@ -89,5 +92,5 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
   }, { deep: true });
   
 
-  return { loading, error, category, products, selectedProduct, cycle,  product, quote, domainSelected, getProducts, order, removeDomainSelected, getQuoteProduct, getProductConfiguration }
+  return { loading, error, errorCoupon, category, products, selectedProduct, cycle,  product, quote, domainSelected, getProducts, order, removeDomainSelected, getQuoteProduct, getProductConfiguration }
 })

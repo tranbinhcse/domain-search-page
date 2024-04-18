@@ -127,13 +127,14 @@
               <p>Giảm giá:</p>
               <p>
                 <span  class="font-bold text-2xl text-green-500">{{ $currency(quote?.summary?.discount) }}</span><span></span>
-                <a-button size="mini" type="text" @click="product.promocode = ''">Xoá</a-button>
+                <a-button size="mini" type="text" @click="promocode = ''">Xoá</a-button>
               </p>
               
             </div>
             <div class="flex-1" v-else>
               <a-input :style="{width:'320px'}" v-model="promocode" allow-clear="" placeholder="Nhập mã giảm giá"></a-input>
               <a-button type="outline" @click="applyCoupon" >{{ $t('Apply') }}</a-button>
+              <a-alert :style="{width:'320px'}" v-if="errorCoupon">{{ errorCoupon }}</a-alert>
             </div>
             
             <div class="left-auto">
@@ -176,7 +177,8 @@ const {
   cycle,
   product, 
   domainSelected,
-  quote
+  quote,
+  errorCoupon
 } = storeToRefs(serviceOrderStore)
 
 import { useRoute, useRouter } from 'vue-router'
