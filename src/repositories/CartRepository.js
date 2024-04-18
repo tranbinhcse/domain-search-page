@@ -14,7 +14,7 @@ const CartRepository = {
       addon_cycles: item.addon_cycles,
       subproducts: item.subproducts,
       subproducts_cycles: item.subproducts_cycles,
-      coupon: item.coupon
+      promocode: item.promocode
      }
      return rest
     } else {
