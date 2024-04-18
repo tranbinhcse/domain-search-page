@@ -10,7 +10,7 @@ const ProductRepository = {
       // addons: addonFields, 
       forms: formFields, 
       product: productFields, 
-    }, domain_options: domainOptionsFields, recurring_price, setup, cycle} } = await get(`/order/${productId}?period=${period}`)
+    }, domain_options: domainOptionsFields, recurring_price, setup, cycle, promocode} } = await get(`/order/${productId}?period=${period}`)
 
     const product = {
       product_id: productId,
@@ -19,7 +19,7 @@ const ProductRepository = {
       // addonFields,
       formFields,
       productFields,
-      recurring_price, setup, cycle
+      recurring_price, setup, cycle, promocode
       // subProductFields
     }
 
@@ -67,6 +67,7 @@ const ProductRepository = {
       // if(id === 'cycle') product.cycle = value
     })
     product.domainOptions = domainOptionsFields;
+    product.promocode = promocode;
     return product
   }
 }

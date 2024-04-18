@@ -106,6 +106,25 @@
 
           </div>
         </Box>
+
+
+        <Box>
+          <a-form @submit="applyPromo">
+                  <a-row :gutter="8">
+                  
+                  <a-col :span="16">
+                    <a-form-item no-style>
+                      <a-input v-model="product.promocode" allow-clear="" placeholder="Nhập mã giảm giá"></a-input>
+                    </a-form-item>
+                  </a-col>
+                  <a-col :span="8">
+                    <a-form-item>
+                      <a-button type="primary" htmlType="submit">Áp dụng</a-button>
+                    </a-form-item>
+                  </a-col>
+                </a-row>
+                </a-form>
+        </Box>
      
       </div>
       </div>
