@@ -1,12 +1,13 @@
-import { defineStore } from 'pinia'
+import { defineStore, storeToRefs } from 'pinia'
 import {  post } from '@/core/apiClient'
-import { ref, watch, watchEffect } from 'vue'
+import { ref, stop, watch, watchEffect } from 'vue'
 import debounce from 'lodash/debounce';
 
 
 import ProductRepository from '@/repositories/ProductRepository' 
 import CartRepository from '@/repositories/CartRepository' 
 import { useCartStore } from "@/stores/cartStore";
+import { useDomainSearchStore } from "@/stores/domain/domainSearchStore";
 
 export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
   const loading = ref(false)
@@ -37,7 +38,9 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
   async function getProductConfiguration() {
   
     if (!selectedProduct.value) return
-  
+    const domainSearchStore = useDomainSearchStore()
+    const { domains } = storeToRefs(domainSearchStore)
+    domains.value = []
     loadingProductConfig.value = true
     product.value = await ProductRepository.getConfiguration(selectedProduct.value, cycle.value)
     loadingProductConfig.value = false

@@ -73,7 +73,7 @@
         <Button v-if="searching" btnClass="bg-white text-gray w-full h-20 flex  items-center justify-center" isLoading textLoading="Chúng tôi đang tìm kiếm tên miền phù hợp với bạn..." />
           <div class="mt-10 m-auto text-center" v-if="!searching & domains.length > 0" >
             <Button @click="searchDomains(true)" iconPosition="right" btnClass="bg-gray-50 text-gray" icon="heroicons-outline:arrow-down" text="Xem thêm"></Button>
-        </div>
+          </div>
 
       
     </div>

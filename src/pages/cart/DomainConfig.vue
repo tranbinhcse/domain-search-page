@@ -1,6 +1,6 @@
 <template>
      <div class="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
-      <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Cấu hình tên miền</h1>
+      <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{{ $t('Shopping Cart') }}</h1>
       <h2 id="cart-heading">Gần xong rồi, chỉ còn một bức nữa thôi.</h2>
       <form class="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
         <section aria-labelledby="cart-heading" class="lg:col-span-7">
@@ -29,29 +29,29 @@
                     </div>
                     
                     <div class="ml-4 flex flex-1 flex-col justify-between sm:ml-6">
-                        <div class="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
-                        <div class="w-full">
-                            <div class="flex justify-between">
-                            <h3 class="text-xl">
-                                <a class="font-medium text-gray-700 hover:text-gray-800">{{ product.name }}</a>
-                            </h3>
-                            </div>
-                          
-                            <p class="mt-1 mb-2 text-sm text-gray-500"><span class="uppercase">{{ product.tld }} </span>  {{ $t(`Domain ${product.action}`) }}</p>
-                            <select class="border-gray-300 border p-2 rounded" @change="handleChangePeriod(product, $event)"  :name="`quantity-${productIdx}`" v-model="product.years">
-                              <option :value="cycles.value" v-for="cycles in product.cycles.items" :key="cycles.value">{{ cycles.formatted }}</option>
-                            </select>
-                        </div>
-                        <div class="mt-4 sm:mt-0 sm:pr-9">
-                            <div class="absolute right-0 top-0 text-right leading-10">
-                                <p class="text-md font-medium text-gray-900">{{ $currency(product.price) }}</p>
-                                <p class="text-gray-500 text-sm line-through"  v-if="product.before">{{ $currency(product.before) }}</p>
-                            <button type="button" @click="handleRemoveInCart(product)" class="-m-2 inline-flex p-2 text-gray-400 hover:text-gray-500">
-                                <span class="sr-only">Remove</span>
-                                <Icon icon="heroicons-outline:trash" class="h-5 w-5" aria-hidden="true" />
-                            </button>
-                            </div>
-                        </div>
+                        <div class="relative pr-9 ">
+                          <div class="w-full">
+                              <div class="flex justify-between">
+                              <h3 class="text-xl">
+                                  <a class="font-medium text-gray-700 hover:text-gray-800">{{ product.name }}</a>
+                              </h3>
+                              </div>
+                            
+                              <p class="mt-1 mb-2 text-sm text-gray-500"><span class="uppercase">{{ product.tld }} </span>  {{ $t(`Domain ${product.action}`) }}</p>
+                              <select class="border-gray-300 border p-2 rounded" @change="handleChangePeriod(product, $event)"  :name="`quantity-${productIdx}`" v-model="product.years">
+                                <option :value="cycles.value" v-for="cycles in product?.cycles?.items" :key="cycles.value">{{ cycles.formatted }}</option>
+                              </select>
+                          </div>
+                          <div class="mt-4 sm:mt-0 sm:pr-9">
+                              <div class="absolute right-0 top-0 text-right leading-10">
+                                  <p class="text-md font-medium text-gray-900">{{ $currency(product.price) }}</p>
+                                  <p class="text-gray-500 text-sm line-through"  v-if="product.before">{{ $currency(product.before) }}</p>
+                              <button type="button" @click="handleRemoveInCart(product)" class="-m-2 inline-flex p-2 text-gray-400 hover:text-gray-500">
+                                  <span class="sr-only">Remove</span>
+                                  <Icon icon="heroicons-outline:trash" class="h-5 w-5" aria-hidden="true" />
+                              </button>
+                              </div>
+                          </div>
                         </div>
                     </div>
                   
@@ -62,7 +62,7 @@
                         <img src="@/assets/products/img_cart-domains-default.svg" class="h-14 w-14 rounded-md object-cover object-center sm:h-38 sm:w-38" />
                     </div>
                     <div class="ml-4 flex flex-1 flex-col justify-between sm:ml-6">
-                        <div class="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
+                        <div class="relative pr-9">
                         <div class="w-full">
                             <div class="flex justify-between">
                             <h3 class="text-xl">
@@ -70,7 +70,7 @@
                             </h3>
                             </div>
                             <p class="mt-1 mb-2 text-sm text-gray-500"><span class="uppercase">{{ product.domain }} </span></p>
-                            <p>Chu kỳ thanh toán: {{ product.cycle }}</p>
+                            <p>Chu kỳ thanh toán: {{ $t(product.cycle) }}</p>
 
                         </div>
                         <div class="mt-4 sm:mt-0 sm:pr-9">
@@ -165,7 +165,7 @@
                     <div class="mt-5">
                       <p>Thanh toán định kỳ</p>
                         <ul>
-                            <li class="flex justify-between gap-4" v-for="recurring in cartQuote.summary.recurring">
+                            <li class="flex justify-between gap-4" v-for="recurring in cartQuote.summary.recurring" :key="recurring.title">
                                 <p>{{ recurring.title }}</p>
                                 <p>{{ $currency(recurring.price) }}</p>
                             </li>
@@ -188,8 +188,7 @@
 </template>
   
   <script setup>
-    import { onMounted, ref, watch } from 'vue'
-    import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
+    import { onMounted, ref, watch } from 'vue' 
     import { XMarkIcon } from '@heroicons/vue/24/outline'
     import Icon from '@/components/base/Icon.vue'
     import Heading from '@/components/base/Heading.vue'
@@ -232,15 +231,12 @@
     onMounted(async () => {
       await getQuote();
       console.log(hasDomain.value);
-     if(!hasDomain.value){
-      router.push({ path: '/cart/checkout' })
-     }
+    //  if(!hasDomain.value){
+    //   router.push({ path: '/cart/checkout' })
+    //  }
     })
 
-    const nextStep = () => {
-      router.push({path: '/ekyc'})
-    }
-
+    
 
     
   </script>

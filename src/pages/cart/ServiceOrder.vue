@@ -3,28 +3,30 @@
   
     <div class="max-w-7xl mx-auto mb-[150px]">
       <div class="mb-5 py-5 ">
-        <Heading text="Chọn dịch vụ" class="text-primary uppercase text-3xl font-bold border-b-2 border-gray-50 pb-2 mb-2" />
+        <Heading text="Chọn dịch vụ" class="text-primary uppercase text-3xl font-bold pb-2 mb-2" />
         <SelectServiceCategory
           v-model="category"
           :categories="SERVICES[route.params.slug]"
         />
       </div>
       <div class="mb-5  py-5" v-if="products.length">
-        <Heading text="Chọn gói dịch vụ" class="text-primary uppercase text-3xl font-bold border-b-2 border-gray-50 pb-2 mb-2"/>
+        <Heading text="Chọn gói dịch vụ" class="text-primary uppercase text-3xl font-bold  pb-2 mb-2"/>
         <ProductSelect v-model="selectedProduct" :products="products" />
       </div>
-      
-      <SkeletonServiceOrder v-if="loadingProduct" />
+      <div v-if="!product"  class="pb-[400px]"></div>
+      <SkeletonServiceOrder v-if="loadingProduct " class="pb-[400px]" />
+      <div ref="productCycle"></div>
       <div v-if="product">
-        <div class="mb-5 py-5">
+        <div class="mb-5 py-5"  >
           <a-spin :loading="loadingProductConfig">
-            <Heading text="Chu kỳ thanh toán" class="text-primary uppercase text-3xl font-bold border-b-2 border-gray-50 pb-2 mb-2" />
+            <Heading text="Chu kỳ thanh toán" class="text-primary uppercase text-3xl font-bold  pb-2 mb-2" />
             <PeriodSelect :periods="cycles.items" v-model="selectedCycle" />
           </a-spin>
         </div>
+        <div  ref="productOption" ></div>
         <Box>
         <div v-if="product.domainOptions && product.domainOptions.register == '1'">
-          <Heading text="Domain Configuration" class="text-primary uppercase text-3xl font-bold border-b-2 border-gray-50 pb-2 mb-2" />
+          <Heading text="Domain Configuration" class="text-primary uppercase text-3xl font-bold  pb-2 mb-2" />
           <DomainOptions v-model="domainSelected" :options="product.domainOptions" v-if="!product.domain" />
           <div v-else class="bg-white flex p-4 rounded mb-5 justify-between">
             <div>
@@ -43,7 +45,7 @@
       </Box>
       
         <Box v-if="product.formFields.length > 0" :loading="loadingProductConfig">
-          <Heading text="Cấu hình sản phẩm" class="text-primary uppercase text-3xl font-bold border-b-2 border-gray-50 pb-2 mb-2" />
+          <Heading text="Cấu hình sản phẩm" class="text-primary uppercase text-3xl font-bold  pb-2 mb-2" />
           
           <div
             v-for="(
@@ -114,7 +116,11 @@
      
 
         
-     
+        <Box v-if="!quote?.summary?.discount">
+              <a-input :style="{width:'320px'}" v-model="promocode" allow-clear="" placeholder="Nhập mã giảm giá"></a-input>
+              <a-button type="outline" @click="applyCoupon" >{{ $t('Apply') }}</a-button>
+              <a-alert class="mt-4" v-if="errorCoupon">{{ errorCoupon }}</a-alert>
+        </Box>
       </div>
       </div>
       <div class="bottom-0 left-0 right-0 fixed pl-[250px]">
@@ -130,15 +136,11 @@
               <p>Giảm giá:</p>
               <p>
                 <span  class="font-bold text-2xl text-primary">{{ $currency(quote?.summary?.discount) }}</span><span></span>
-                <a-button size="mini" type="text" @click="promocode = ''">Xoá</a-button>
+                <a-button size="mini" type="text" @click="product.promocode = ''">Xoá</a-button>
               </p>
               
             </div>
-            <div class="flex-1" v-else>
-              <a-input :style="{width:'320px'}" v-model="promocode" allow-clear="" placeholder="Nhập mã giảm giá"></a-input>
-              <a-button type="outline" @click="applyCoupon" >{{ $t('Apply') }}</a-button>
-              <a-alert :style="{width:'320px'}" v-if="errorCoupon">{{ errorCoupon }}</a-alert>
-            </div>
+           
             
             <div class="left-auto">
               <Button @click="handleAddCart" btnClass="bg-primary px-10 py-3 text-white rounded" icon="heroicons-outline:banknotes" text="Thanh toán ngay"   />
@@ -223,6 +225,7 @@ const selectedCycle = computed({
     }
     cycle.value=newValue
     getProductConfiguration()
+    scrollTosearchOption()
   }
 });
 
@@ -241,11 +244,31 @@ watch(domainSelected, (newDomainSelected) => {
   product.value.domain = newDomainSelected.domain
 })
 
+watch(selectedProduct,  () => {
+  scrollTosearchCycle()
+})
  
 // watch(product, (newProduct) => {
 //   console.log(newProduct);
 //   // getQuoteProduct()
 // })
 
+
+
+const productCycle = ref()
+const productOption = ref()
+const scrollTosearchCycle = () => {
+  if (productCycle.value) {
+    const topPosition = productCycle.value.getBoundingClientRect().top + window.pageYOffset + 100;
+    window.scrollTo({ top: topPosition, behavior: 'smooth' });
+  }
+}
+const scrollTosearchOption = () => {
+  
+  if (productOption.value) {
+    const topPosition = productOption.value.getBoundingClientRect().top + window.pageYOffset + 100;
+    window.scrollTo({ top: topPosition, behavior: 'smooth' });
+  }
+}
 
 </script>

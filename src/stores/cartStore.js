@@ -52,6 +52,7 @@ export const useCartStore = defineStore('cartStore', () => {
   
   
   async function getQuote() {
+
     requestEkyc.value = false;
     hasDomain.value = false;
     loading.value = true
@@ -93,7 +94,7 @@ export const useCartStore = defineStore('cartStore', () => {
 
 
         const cycles = computed(() => {
-          return quoteItems[index].domains[cartItems.value[index].name]?.config?.product.find(field => field.id === 'period');
+          return quoteItems[index].domains[cartItems.value[index]?.name]?.config?.product.find(field => field.id === 'period');
         });
 
         cartItems.value[index].cycles = cycles
@@ -119,7 +120,7 @@ export const useCartStore = defineStore('cartStore', () => {
 
     saveToLocalStorage()
     loading.value = false
-   console.log('cartItems', cartItems.value)
+  
 
   }
 
@@ -141,7 +142,7 @@ export const useCartStore = defineStore('cartStore', () => {
 
 
   async function removeInCart(domain) {
-    console.log(domain);
+    
       // Filter out the domain from cartItems
     cartItems.value = cartItems.value.filter(
       (cartDomain) => !(cartDomain.name === domain.domain && cartDomain.tld === domain.tld)
@@ -255,7 +256,7 @@ export const useCartStore = defineStore('cartStore', () => {
       idnumber: contacts.value.registrant.nationalid,
       domain: 'example.com'
     }
-    const order = await CartRepository.getFreePromocode(options);
+    await CartRepository.getFreePromocode(options);
   }
 
   async function order(router){

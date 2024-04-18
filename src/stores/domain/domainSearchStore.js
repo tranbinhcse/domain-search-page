@@ -57,7 +57,7 @@ async function searchDomains(loadMore = false) {
   const currentSearchKey = searchKey.value;
 
   let searchName = currentSearchKey;
-  let searchTld = '';
+  let searchTld = '.id.vn';
 
   // Kiểm tra xem searchKey có phải dạng name.tld không
   if (currentSearchKey.includes('.')) {
