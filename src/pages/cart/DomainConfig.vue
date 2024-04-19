@@ -2,7 +2,18 @@
      <div class="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
       <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{{ $t('Shopping Cart') }}</h1>
       <h2 id="cart-heading">Gần xong rồi, chỉ còn một bức nữa thôi.</h2>
-      <form class="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
+
+      <div v-if="cartItems.length == 0">
+        <a-result status="404" subtitle="Giỏ hàng của bạn đang trống">
+          <template #extra>
+            <a-space>
+              <a-button type="primary" @click="router.push({name:'DomainSearch'})">Tìm kiếm tên miền</a-button>
+            </a-space>
+          </template>
+        </a-result>
+      </div>
+
+      <form v-else class="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
         <section aria-labelledby="cart-heading" class="lg:col-span-7">
           <ul role="list" class="bg-white p-4 rounded" v-if="quoteLoading">
               <a-skeleton :animation="true" v-for="i in 3" :key="i">
@@ -108,6 +119,10 @@
               
             </li>
           </ul>
+         
+          <div>
+            <a-button @click="clearCart()">{{ $t('Clear cart') }}</a-button>
+          </div>
           <div class="mt-8 bg-white p-4 rounded"  v-if="hasDomain">
             <Heading text="Thông tin chủ thể" class="text-primary uppercase text-lg border-b-2 border-gray-50 pb-2 mb-2" />
             <template v-if="requestEkyc">
@@ -203,12 +218,11 @@
     // const domainRegisterStore = useDomainRegisterStore()
     const cartStore = useCartStore()
    
-    const { getQuote, loading } = cartStore
-    const { updateItem, removeInCart} = cartStore
+    const { updateItem, removeInCart, clearCart, getQuote} = cartStore
 
   
 
-    const { cartQuote, quoteLoading, hasDomain, requestEkyc } = storeToRefs(cartStore)
+    const { cartQuote, quoteLoading, hasDomain, requestEkyc, loading } = storeToRefs(cartStore)
     const { cartItems } = storeToRefs(cartStore)
 
     const router = useRouter()
@@ -229,11 +243,13 @@
      
     }
     onMounted(async () => {
+
+      if(cartItems.value.length == 0) {
+        return
+      }
+
       await getQuote();
       console.log(hasDomain.value);
-    //  if(!hasDomain.value){
-    //   router.push({ path: '/cart/checkout' })
-    //  }
     })
 
     

@@ -8,6 +8,7 @@ export const useDomainRegisterStore = defineStore({
   state: () => ({
     loading: false,
     freeVN: [],
+    loadingGetPromoVN: false,
     domainFree: [],
     isPromocode: false,
     confirmContact: false,
@@ -47,6 +48,7 @@ export const useDomainRegisterStore = defineStore({
       this.contacts.registrant = { ...user.value }; // Assuming user structure matches registrant 
     },
     async getFreePromoVN(options) {
+      this.loadingGetPromoVN = true
       const res = await CartRepository.getFreePromocode(options);
       this.freeVN = res
       this.isPromocode = false
@@ -68,6 +70,7 @@ export const useDomainRegisterStore = defineStore({
        
       }
       this.errorPromo = res.error
+      this.loadingGetPromoVN = false
 
     },
     listDomainFree(){

@@ -1,33 +1,32 @@
 <template> 
-
-  <RadioGroup v-model="internalValue">
-
-      <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-x-4">
-        <RadioGroupOption as="template" v-for="category in categories" :key="category.id" :value="category.id" v-slot="{ checked, active }"> 
-          <div :class="[checked ? 'border-transparent' : 'border-gray-300  bg-white dark:bg-gray-800 dark:border-gray-700', active ? 'ring-1  ring-primary' : '', 'relative flex cursor-pointer rounded-lg border p-4 shadow-sm focus:outline-none']">
-            <span class="flex flex-1">
-              <span class="flex flex-col">
-                <RadioGroupLabel as="span" class="block text-sm font-medium text-gray-900 dark:text-gray-400">{{ category.name }}</RadioGroupLabel>
-                <RadioGroupDescription as="span" class="mt-1 flex items-center text-sm text-gray-500"  v-html="category.description" />
-              </span>
-            </span>
-            <CheckCircleIcon v-if="checked" class="h-7 w-7 text-primary absolute right-1 top-1" aria-hidden="true" />
-            <span :class="[active ? 'border-2' : 'border-2', checked ? 'border-primary' : 'border-transparent', 'pointer-events-none absolute -inset-px rounded-lg']" aria-hidden="true" />
-          </div>
-        </RadioGroupOption>
-      </div>
-    </RadioGroup>
- 
-
-
-  
+  <a-radio-group v-model="internalValue" class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-x-4">
+    <template v-for="category in categories" :key="category.id">
+      <a-radio :value="category.id" class="w-full p-0 m-0">
+        <template #radio="{ checked }">
+            <a-space
+              align="start"
+              class="custom-radio-card w-full "
+              :class="{ 'custom-radio-card-checked ': checked  }"
+            >
+              
+              <div>
+                <div className="custom-radio-card-title">
+                  {{ category.name }}
+                </div>
+                <div type="secondary" v-html="category.description" ></div>
+                  
+              </div>
+              <div className="custom-radio-card-mask">
+                <div className="custom-radio-card-mask-dot" />
+              </div>
+            </a-space>
+          </template>
+      </a-radio>
+    </template>
+  </a-radio-group>
 </template>
 <script setup>
-import { onMounted, ref, watch, watchEffect } from 'vue'
-
-import { RadioGroup, RadioGroupDescription, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
-import { CheckCircleIcon } from '@heroicons/vue/20/solid'
-
+import { onMounted, ref, watch, watchEffect } from 'vue' 
 const props = defineProps({
 categories: Array,
 modelValue: Object
@@ -83,3 +82,62 @@ watchEffect(() => {
 // Khi component được tạo, kiểm tra và chọn phần tử đầu tiên nếu cần
 selectFirstItemIfNotMatched()
 </script>
+
+
+<style scoped>
+.custom-radio-card {
+  padding: 10px 16px;
+  border: 1px solid var(--color-border-2);
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.custom-radio-card-mask {
+  height: 14px;
+  width: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  border: 1px solid var(--color-border-2);
+  box-sizing: border-box;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.custom-radio-card-mask-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+}
+
+.custom-radio-card-title {
+  color: var(--color-text-1);
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.custom-radio-card:hover,
+.custom-radio-card-checked,
+.custom-radio-card:hover .custom-radio-card-mask,
+.custom-radio-card-checked  .custom-radio-card-mask{
+  border-color: rgb(var(--primary-6));
+  margin: 0;
+}
+
+.custom-radio-card-checked {
+  background-color: var(--color-primary-light-1);
+}
+
+.custom-radio-card:hover .custom-radio-card-title,
+.custom-radio-card-checked .custom-radio-card-title {
+  color: rgb(var(--primary-6));
+}
+
+.custom-radio-card-checked .custom-radio-card-mask-dot {
+  background-color: rgb(var(--primary-6));
+}
+</style>

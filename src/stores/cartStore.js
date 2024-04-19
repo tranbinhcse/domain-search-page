@@ -10,6 +10,7 @@ export const useCartStore = defineStore('cartStore', () => {
 
   const loading = ref(false)
   const quoteLoading = ref(false)
+  const loadingGetPromoVN = ref(false)
   const hasDomain = ref(false)
   const requestEkyc = ref(false)
   const error = ref()
@@ -249,7 +250,7 @@ export const useCartStore = defineStore('cartStore', () => {
   }
 
   async function getFreePromocode() {
-
+    loadingGetPromoVN.value = true
     const domainRegisterStore = useDomainRegisterStore();
     const { contacts } = storeToRefs(domainRegisterStore)
     const options = {
@@ -257,6 +258,7 @@ export const useCartStore = defineStore('cartStore', () => {
       domain: 'example.com'
     }
     await CartRepository.getFreePromocode(options);
+    loadingGetPromoVN.value = false
   }
 
   async function order(router){
@@ -336,5 +338,5 @@ export const useCartStore = defineStore('cartStore', () => {
   }
 
 
-  return { getQuote, order, cartQuote,cartItems,  quoteLoading, clearCart, error , updateItem, removeInCart, addToCart, loading, hasDomain, requestEkyc, getFreePromocode, saveToLocalStorage, getPaymentMethods, paymentMethods, paymentMethod }
+  return { getQuote, order, cartQuote,cartItems,  quoteLoading, loadingGetPromoVN, clearCart, error , updateItem, removeInCart, addToCart, loading, hasDomain, requestEkyc, getFreePromocode, saveToLocalStorage, getPaymentMethods, paymentMethods, paymentMethod }
 })

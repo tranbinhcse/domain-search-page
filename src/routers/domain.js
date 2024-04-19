@@ -2,13 +2,8 @@
 
 import DomainDetail from '@/pages/domain/DomainDetail.vue'
 import DomainManage from '@/pages/domain/DomainManage.vue'
-import DomainConfig from '@/pages/cart/DomainConfig.vue'
-
 export const DEFAULT_LAYOUT = () => import('@/layouts/DefaultLayout.vue');
-
-
 const DomainRoutes = [
-
     {
         path: 'domains',
         name: 'domains',
@@ -20,9 +15,6 @@ const DomainRoutes = [
         },
         
     },
-
- 
-
     {
         path: 'domains/:id/:domain?',
         name: 'domainDetails',
@@ -33,8 +25,6 @@ const DomainRoutes = [
             roles: ['*'],
         },
     },
-
-
 ]
 
 export default DomainRoutes

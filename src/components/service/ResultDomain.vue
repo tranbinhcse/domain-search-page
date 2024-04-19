@@ -1,6 +1,6 @@
 <template>
     <div v-for="domain in domains" :key="domain.id" >
-          <div v-if="!domain.error && domain.isFeatured" class=" px-6 bg-white divider-y flex flex-col" :class="[domain.isFeatured ? 'featured py-10 bg-primary/10  py-6  shadow' : '',  domain.status == 'inCheck' ? 'check-domain' : domain.status == 'ok' ? 'found-domain' : 'not-found-domain']" >
+          <div v-if="!domain.error && domain.isFeatured" class=" px-6 bg-white divider-y flex flex-col" :class="[domain.isFeatured ? 'featured py-10 bg-primary/30  py-6  shadow' : '',  domain.status == 'inCheck' ? 'check-domain' : domain.status == 'ok' ? 'found-domain' : 'not-found-domain']" >
             <div  class="flex items-center flex-wrap py-2" >
               <div class="name flex-1 flex items-center">
                 <span class="icon text-gray-300 bg-white rounded p-2 mr-2">
@@ -20,7 +20,7 @@
                   <div class="description w-full flex-1 text-sm text-gray-300" v-else-if="domain.inCart">Tên miền đã thêm vào giỏ hàng.</div>            
                 </div>
               </div> 
-              <div class="pricing  flex items-center">
+              <div class="pricing flex items-center">
                   <div class="sales sr-only">
                     <!-- TODO: check save -->
                     <Badge class="badge" variant="Active">SAVE 97%</Badge>
@@ -49,11 +49,11 @@
                     </div>
                   </div>
                 </div>
-                <div class="actions min-w-[300px] flex justify-end">
+                <div class="actions pl-5 flex justify-end text-right">
             <div v-if="domain.status == 'inCheck'"><a-button type="primary" icon="heroicons-outline:search" loading textLoading="Đang kiểm tra..." ></a-button></div>
             <div v-else-if="domain.avaliable === false"><a-button type="secondary" icon="heroicons-outline:user" @click.stop="getWhoisInfo(domain)" text="Xem whois">Xem whois</a-button>  </div>
             <div v-else-if="domain.inCart">
-              <a-button type="outline" status="danger" @click="handlePayCart()">
+              <a-button type="outline" status="danger" @click="handlePayCart()"  size="mini">
                 Thanh toán
                 <template #icon>
                   <Icon icon="heroicons-outline:credit-card" />
@@ -61,7 +61,7 @@
               </a-button>
             </div>
             <div v-else>
-              <a-button @click="HandleAddToCart(domain)" type="primary">
+              <a-button @click="HandleAddToCart(domain)" type="primary"  size="mini">
                 Đăng ký
                 <template #icon>
                     <Icon icon="heroicons-outline:shopping-cart" />
@@ -69,7 +69,7 @@
               </a-button>
             </div>
             <div v-if="domain.inCart" class="text-right">
-              <a-button @click="removeInCart(domain)" type="text" >
+              <a-button @click="removeInCart(domain)" type="text"  size="mini">
                   <template #icon>
                       <Icon icon="mdi:times" />
                   </template>
@@ -129,11 +129,11 @@
                     </div>
                   </div>
                 </div>
-                <div class="actions min-w-[300px] flex justify-end">
+                <div class="actions pl-5 flex justify-end text-right">
             <div v-if="domain.status == 'inCheck'"><a-button type="primary" icon="heroicons-outline:search" loading textLoading="Đang kiểm tra..." ></a-button></div>
             <div v-else-if="domain.avaliable === false"><a-button type="secondary" icon="heroicons-outline:user" @click.stop="getWhoisInfo(domain)" text="Xem whois">Xem whois</a-button>  </div>
             <div v-else-if="domain.inCart">
-              <a-button type="outline" status="danger" @click="handlePayCart()">
+              <a-button type="outline" status="danger" @click="handlePayCart()"  size="mini">
                 Thanh toán
                 <template #icon>
                   <Icon icon="heroicons-outline:credit-card" />
@@ -141,7 +141,7 @@
               </a-button>
             </div>
             <div v-else>
-              <a-button @click="HandleAddToCart(domain)" type="primary">
+              <a-button @click="HandleAddToCart(domain)" type="primary" size="mini">
                 Đăng ký
                 <template #icon>
                     <Icon icon="heroicons-outline:shopping-cart" />
@@ -149,7 +149,7 @@
               </a-button>
             </div>
             <div v-if="domain.inCart" class="text-right">
-              <a-button @click="removeInCart(domain)" type="text" >
+              <a-button @click="removeInCart(domain)" type="text"  size="mini">
                   <template #icon>
                       <Icon icon="mdi:times" />
                   </template>

@@ -45,7 +45,7 @@
                     </div>
 
                     <div class="mt-6">
-                    <a-button  @click="createOrder()" type="primary" class="w-full">Tiếp tục</a-button>
+                    <a-button  @click="createOrder()" type="primary" class="w-full">Hoàn tất đặt hàng</a-button>
                     </div>
                    
             

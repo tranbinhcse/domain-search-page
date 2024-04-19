@@ -2,7 +2,18 @@
   <a-spin class="w-full" :loading="loading" tip="This may take a while...">
     <div class="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
       <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Xác nhận thông tin đơn hàng</h1>
-      <form class="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
+
+      <div v-if="cartItems.length == 0">
+        <a-result status="404" subtitle="Giỏ hàng của bạn đang trống">
+          <template #extra>
+            <a-space>
+              <a-button type="primary" @click="router.push({name:'DomainSearch'})">Tìm kiếm tên miền</a-button>
+            </a-space>
+          </template>
+        </a-result>
+      </div>
+
+      <form v-else class="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
         <section aria-labelledby="cart-heading" class="lg:col-span-7">
           <h2 id="cart-heading" class="sr-only">Items in your shopping cart</h2>
 
@@ -104,13 +115,12 @@
 
             </li>
             <li v-if="freeVN.data?.promotionCode">
-              <p>Tên miền <b>{{ freeVN.data?.domainName }}</b> sẽ tự động giảm giá khi bạn hoàn tất đơn hàng.</p>
+              <p>Tên miền <b>{{ freeVN.data?.domainName }}</b> sẽ tự động đặt giá 0đ khi bạn hoàn tất đơn hàng.</p>
             </li>
           </ul>
           <div>
 
             <Box v-if="!isPromocode && isFree">
-
               <a-form ref="formRef" layout="horizontal"
                 @submit="getFreePromoVN({ domain: domainRequestPromo, idnumber: contacts.registrant.nationalid })">
                 <a-row :gutter="8">
@@ -119,22 +129,21 @@
                     <a-form-item no-style>
                       <a-select v-model="domainRequestPromo" default-active-first-option
                         placeholder="Chọn tên miền bạn muốn miễn phí">
-                        <a-option v-for="domain in domainFree" :key="domain.name" :value="domain.name">{{ domain.name
-                          }}</a-option>
+                        <a-option v-for="domain in domainFree" :key="domain.name" :value="domain.name">{{ domain.name }}</a-option>
                       </a-select>
                     </a-form-item>
                   </a-col>
                   <a-col :span="8">
                     <a-form-item>
-                      <a-button type="primary" htmlType="submit">Lấy mã miễn phí</a-button>
+                      <a-button :loading="loadingGetPromoVN" type="primary" htmlType="submit">Lấy mã miễn phí</a-button>
                     </a-form-item>
                   </a-col>
                 </a-row>
               </a-form>
-              <a-alert type="error">
+              <a-alert type="error" v-if="errorPromo ">
                 {{ errorPromo }}
               </a-alert>
-              <a-col :span="24">
+              <a-col :span="24" v-if="!errorPromo">
                     <a-alert class="mt-2">Tên miền trong giỏ hàng của bạn áp dụng chính sách miễn phí trong 2 năm. Bạn vui lòng chọn tên miền và thực hiện lấy mã để áp dụng  chính sách.</a-alert>
                   </a-col>
             </Box>
@@ -216,7 +225,7 @@ const { updateItem, getQuote, order, removeInCart, getFreePromocode, getPaymentM
 
 const { cartQuote, cartItems, quoteLoading, error, hasDomain, requestEkyc, loading, paymentMethods, paymentMethod } = storeToRefs(cartStore)
 const { listDomainFree, getFreePromoVN } = domainRegisterStore
-const { contacts, domainFree, isPromocode, freeVN, confirmContact, errorPromo } = storeToRefs(domainRegisterStore)
+const { contacts, domainFree, isPromocode, freeVN, confirmContact, errorPromo, loadingGetPromoVN } = storeToRefs(domainRegisterStore)
 const { isFree } = storeToRefs(ekycStore)
 
 const router = useRouter()
@@ -226,13 +235,12 @@ const handleRemoveInCart = async (item) => {
   await removeInCart(item)
   await getQuote();
 }
-
-const getPromocodeVN = () => {
-  getFreePromocode()
-};
-
+ 
 
 onMounted(async () => {
+  if(cartItems.value.length == 0) {
+    return
+  }
   await listDomainFree();
   await getQuote();
   if (!confirmContact.value && hasDomain.value) {

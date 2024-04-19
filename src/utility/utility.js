@@ -50,3 +50,12 @@ console.log(date23YearsAgo);
     // Kiểm tra xem ngày hiện tại có nằm trong khoảng từ 18 đến 23 tuổi không
     return currentDate >= date18YearsAgo && currentDate < date23YearsAgo;
 }
+
+export const isValidDomain = (domain) => {
+  console.log(domain)
+  // Biểu thức chính quy để kiểm tra tên miền
+  var domainRegex = /^(?:[-A-Za-z0-9]+\.)+[A-Za-z]{2,6}$/;
+  
+  // Kiểm tra xem chuỗi khớp với biểu thức chính quy hay không
+  return domainRegex.test(domain);
+}

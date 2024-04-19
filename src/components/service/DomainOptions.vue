@@ -11,9 +11,9 @@
             <div class="search-form-wrapper w-full bg-gradient-to-r from-primary from-10% via-green-600 to-green-300 rounded-t-md p-6">
                   
                   <div class="search-form-wrapper relative" >
-                      <a-input type="text" allow-clear required v-model="searchKey" name="domain" placeholder="Nhập tên thương hiệu" class="w-full text-3xl h-[65px]" />
-                      <a-button type="primary" :loading="searching" @click="handleSearchSubmit" class="absolute top-1/2 -translate-y-1/2 right-[10px] h-[45px]"  >
-                        Tìm kiếm
+                      <a-input type="text" allow-clear required v-model="searchKey" name="domain" placeholder="Nhập từ khoá muốn tìm" class="w-full text-3xl h-[45px]" />
+                      <a-button type="primary" :loading="searching" @click="handleSearchSubmit" class="absolute top-1/2 -translate-y-1/2 right-0 h-[45px]"  >
+                        <span class="sr-only md:invisible">Tìm kiếm</span>
                         <template #icon>
                           <IconSearch />
                         </template>
@@ -21,24 +21,26 @@
                     </div>
 
                 </div>
-                <ResultDomain  @update:modelValue="HandleAddToCart"/>
-
-                <Button v-if="searching" btnClass="bg-white text-gray w-full h-20 flex  items-center justify-center" isLoading textLoading="Chúng tôi đang tìm kiếm tên miền phù hợp với bạn..." />
-          <div class="mt-10 m-auto text-center" v-if="!searching & domains.length > 0" >
-            <Button @click="searchDomains(true)" iconPosition="right" btnClass="bg-gray-50 text-gray" icon="heroicons-outline:arrow-down" text="Xem thêm"></Button>
-          </div>
+                <ResultDomain @update:modelValue="HandleAddToCart"></ResultDomain>
+                <a-button v-if="searching" class="w-full" @click="searchDomains(true)" >
+                    Chúng tôi đang tìm kiếm tên miền phù hợp với bạn... 
+                    <template #icon>
+                      <IconLoading />
+                    </template>
+                  </a-button>
+                <div class="mt-10 m-auto text-center" v-if="!searching & domains.length > 0" >
+                  <a-button type="primary" @click="searchDomains(true)" >
+                    Xem thêm
+                    <template #icon>
+                      <IconArrowDown />
+                    </template>
+                  </a-button>
+                </div>
 
           
           </div>
         </a-tab-pane>
-        <a-tab-pane key="transfer" v-if="options.register == '1'">
-          <template #title>
-            Chuyển tên miền
-          </template>
-          <div>
-            fjdksu1
-          </div>
-        </a-tab-pane>
+       
         <a-tab-pane key="owndomain" v-if="options.owndomain">
           <template #title>
             Đã có tên miền
@@ -46,8 +48,8 @@
           <div>
             <div class="search-form-wrapper w-full bg-gradient-to-r from-primary from-10% via-green-600 to-green-300 rounded-t-md p-6">
               <div class="search-form-wrapper relative" >
-                  <a-input type="text" allow-clear required v-model="searchKey" name="domain" placeholder="Nhập tên thương hiệu" class="w-full text-3xl h-[65px]" />
-                  <a-button type="primary" :loading="searching" @click="handleSearchSubmit" class="absolute top-1/2 -translate-y-1/2 right-[10px] h-[45px]"  >
+                  <a-input type="text" allow-clear required v-model="searchKey" name="domain" placeholder="Nhập tên miền của bạn" class="w-full text-3xl h-[45px]" />
+                  <a-button type="primary" :loading="searching" @click="handleCheckDomain" class="absolute top-1/2 -translate-y-1/2 right-0 h-[45px]"  >
                     Kiểm tra
                     <template #icon>
                       <IconCheck />
@@ -55,7 +57,7 @@
                     {{options.subdomain}}
                   </a-button>
                 </div>
-
+                <a-alert type="error" v-if=errorDomain>{{ errorDomain }}</a-alert>
               </div>
           </div>
         </a-tab-pane>
@@ -88,7 +90,7 @@
 
         <div v-if="options.hostname" class="search-form-wrapper w-full bg-gradient-to-r from-primary from-10% via-green-600 to-green-300 rounded-t-md p-6">
           <form @submit.prevent="handleSearchSubmit" action="/" method="get" class=" relative  focus-visible:outline-none focus:outline-none focus:outline-none" >
-            <Input type="text" append="heroicons-outline:search" v-model="searchKey" name="domain" placeholder="Nhập tên miền của bạn" size="leading-[32px]" class="bg-white rounded-md text-black w-full forcus-visible:outline-none focus:outline-none" />
+            <a-input type="text" append="heroicons-outline:search" v-model="searchKey" name="domain" placeholder="Nhập tên miền của bạn" size="leading-[32px]" class="bg-white rounded-md text-black w-full forcus-visible:outline-none focus:outline-none" />
             <Button :isLoading="searching" type="submit" text="Xác nhận" icon="heroicons-outline:check" class="flex-auto absolute right-0 top-[50%] h-[50px] -translate-y-[50%] rounded-tr-md rounded-br-md focus:outline-none" />
           </form>
         </div>
@@ -101,12 +103,9 @@
   
   <script setup>
   import { storeToRefs } from 'pinia'
-  import { onMounted, ref, watch } from 'vue';
-  import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
-  import Button from '@/components/base/Button.vue'
-  import Tooltip from '@/components/base/Tooltip.vue'
-  import Badge from '@/components/base/Badge.vue'
-  import Icon from '@/components/base/Icon.vue'
+  import { onMounted, ref, watch } from 'vue'; 
+  import { isValidDomain } from '@/utility/utility'
+  import Button from '@/components/base/Button.vue' 
   import Input from '@/components/base/Input.vue'
   import ResultDomain from './ResultDomain.vue'
   import { useDomainSearchStore } from "@/stores/domain/domainSearchStore";
@@ -114,10 +113,9 @@
   const domainSearchStore = useDomainSearchStore()
   const cartStore = useCartStore()
   const { searchDomains, getDomainTlds } = domainSearchStore
-  const { domains, searchKey, tldsLoaded, searching, tlds } = storeToRefs(domainSearchStore)
-  const { addToCart, removeInCart } = cartStore
-  const searchResultsRef = ref(null);
-
+  const { domains, searchKey, searching, tlds } = storeToRefs(domainSearchStore)
+  const { addToCart } = cartStore
+  const errorDomain = ref();
   const props = defineProps({
     options: Object
   })
@@ -139,6 +137,15 @@
   const handleSearchSubmit = () => {
     searchDomains(false, 1);
   }
+  const handleCheckDomain = () => {
+    domains.value = []
+    if(isValidDomain(searchKey.value)){
+      emits('update:modelValue', {domain: searchKey.value})
+    } else {
+      errorDomain.value = 'Tên miền bạn nhập vào không hợp lệ.'
+    }
+  }
+
   watch(tlds, (newTlds) => {
     tldsSpotlight.value = newTlds.slice(0,5);
   })

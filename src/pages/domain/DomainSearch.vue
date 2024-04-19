@@ -122,30 +122,19 @@
 <script setup>
 import { storeToRefs } from 'pinia'
 import { useDomainSearchStore } from "@/stores/domain/domainSearchStore";
-import { useDomainRegisterStore } from "@/stores/domain/domainRegisterStore";
  
 import Button from '@/components/base/Button.vue';
-import Input from '@/components/base/Input.vue';
-import Icon from '@/components/base/Icon.vue';
 import DomainSearchResult from '@/components/general/DomainSearchResult.vue' 
 import DomainPricing from '@/components/general/DomainPricing.vue' 
-import { EnvelopeIcon, PhoneIcon } from '@heroicons/vue/20/solid'
 import { InboxIcon, TrashIcon, UsersIcon } from '@heroicons/vue/24/outline'
-import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
-import { MinusSmallIcon, PlusSmallIcon } from '@heroicons/vue/24/outline'
 import { IconSearch } from '@arco-design/web-vue/es/icon';
 
 import { onMounted, ref } from 'vue';
 const domainSearchStore = useDomainSearchStore()
 const { searchDomains, getDomainTlds } = domainSearchStore
-const { domains,topDomains,  searchKey, tldsLoaded, searching } = storeToRefs(domainSearchStore)
+const { domains,topDomains,  searchKey, searching } = storeToRefs(domainSearchStore)
 const searchResultsRef = ref(null);
-
-const domainRegisterStore = useDomainRegisterStore()
-const { addToCart } = domainRegisterStore
-const { cartItems } = storeToRefs(domainRegisterStore)
-  
-
+ 
 
 const scrollTosearchResults = () => {
   if (searchResultsRef.value) {

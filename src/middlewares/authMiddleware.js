@@ -5,7 +5,7 @@ import axios from "axios"
 export const useAuthMiddleware = (router) => {
   const authStore = useAuthStore()
   const { user } = storeToRefs(authStore)
-  router.beforeEach((to, from) => {
+  router.beforeEach((to ) => {
     if (to.meta.requireAuth && !user.value) {
       return { name: 'login' }
     }
@@ -38,7 +38,7 @@ export const useAuthMiddleware = (router) => {
 
     },
     async error => {
-      if (error.response.status == 401){
+      if (error.response?.status == 401){
         authStore.user = null
         authStore.token = null
         authStore.verify = null

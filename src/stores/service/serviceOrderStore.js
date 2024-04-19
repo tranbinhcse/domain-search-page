@@ -1,6 +1,5 @@
 import { defineStore, storeToRefs } from 'pinia'
-import {  post } from '@/core/apiClient'
-import { ref, stop, watch, watchEffect } from 'vue'
+import { ref,  watch } from 'vue'
 import debounce from 'lodash/debounce';
 
 
@@ -11,6 +10,7 @@ import { useDomainSearchStore } from "@/stores/domain/domainSearchStore";
 
 export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
   const loading = ref(false)
+  const loadingProducts = ref(false)
   const loadingProduct = ref(false)
   const loadingProductConfig = ref(false)
   const errorCoupon = ref()
@@ -26,6 +26,7 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
   async function getProducts() {
    
     if (!category.value) return
+    loadingProducts.value = true
     loading.value = true
     products.value = []
     selectedProduct.value = null
@@ -33,6 +34,7 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
     product.value = null
     products.value = await ProductRepository.getProducts(category.value)
     loading.value = false
+    loadingProducts.value = false
   }
 
   async function getProductConfiguration() {
@@ -102,7 +104,7 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
   
 
   return { 
-    loading, loadingProduct,loadingProductConfig, error, errorCoupon, category, products, selectedProduct, cycle,  product, quote, domainSelected, 
+    loading, loadingProducts, loadingProduct,loadingProductConfig, error, errorCoupon, category, products, selectedProduct, cycle,  product, quote, domainSelected, 
     getProducts, order, removeDomainSelected, getQuoteProduct, getProductConfiguration 
   }
 })

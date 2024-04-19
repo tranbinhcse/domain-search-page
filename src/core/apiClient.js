@@ -1,11 +1,9 @@
-import { API_ENDPOINT } from '@/config'
+
 import { useAuthStore } from "@/stores/auth/authStore"
 import { storeToRefs } from "pinia"
 import axios from 'axios'
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
-
-// axios.defaults.baseURL = "https://api.tino.vn";
-
+ 
 const getRequestHeaders = () => {
   const authStore = useAuthStore()
   const { token } = storeToRefs(authStore)
@@ -32,9 +30,9 @@ export const send = async (url, method = 'GET', data, params = {}) => {
       params,
       headers,
       data,
-      timeout: 25000 // 5 seconds timeout
+      timeout: 30000 // 5 seconds timeout
     });
-    return response.data;
+    return response?.data;
   } catch (error) {
     // Handle timeout or other errors
     if (axios.isCancel(error)) {
