@@ -21,6 +21,7 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
   const selectedProduct = ref()
   const cycle = ref('a')
   const product = ref()
+  const summary = ref()
   const domainSelected = ref()
 
   async function getProducts() {
@@ -44,7 +45,16 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
     const { domains } = storeToRefs(domainSearchStore)
     domains.value = []
     loadingProductConfig.value = true
-    product.value = await ProductRepository.getConfiguration(selectedProduct.value, cycle.value)
+    const options = {
+      cycle: cycle.value
+    }
+
+    // if(product.value?.promocode) options.promocode = product.value.promocode
+
+    const res = await ProductRepository.getConfiguration(selectedProduct.value, options)
+    console.log(res);
+    product.value = res.product
+    summary.value = res.summary
     loadingProductConfig.value = false
     
   }
@@ -53,9 +63,9 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
     if (!product.value) return
     loading.value = true
     errorCoupon.value = false
-    quote.value = await CartRepository.getQuote([product.value])
-
-    const filteredErrors = quote.value.items[0].error.filter(error => error.code === "coupon_not_exist" || error.code === 'coupon_not_applicable_1');
+    const res = await CartRepository.getQuote([product.value])
+    summary.value = res.summary
+    const filteredErrors = res.items[0].error.filter(error => error.code === "coupon_not_exist" || error.code === 'coupon_not_applicable_1');
     if(filteredErrors){
       errorCoupon.value = filteredErrors[0]?.message
 
@@ -104,7 +114,7 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
   
 
   return { 
-    loading, loadingProducts, loadingProduct,loadingProductConfig, error, errorCoupon, category, products, selectedProduct, cycle,  product, quote, domainSelected, 
+    loading, loadingProducts, loadingProduct,loadingProductConfig, error, errorCoupon, category, products, selectedProduct, cycle,  product, summary, quote, domainSelected, 
     getProducts, order, removeDomainSelected, getQuoteProduct, getProductConfiguration 
   }
 })

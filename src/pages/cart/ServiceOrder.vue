@@ -174,7 +174,7 @@
         </div>
       </Box>
 
-      <Box v-if="!quote?.summary?.discount">
+      <Box v-if="!summary?.discount">
         <a-input
           :style="{ width: '320px' }"
           v-model="promocode"
@@ -193,16 +193,16 @@
           <p>Tổng thanh toán:</p>
           <p>
             <span class="font-bold text-2xl text-primary">{{
-              $currency(quote?.summary?.total)
+              $currency(summary?.total)
             }}</span
             ><span></span>
           </p>
         </div>
-        <div class="flex-1" v-if="quote?.summary?.discount">
+        <div class="flex-1" v-if="summary?.discount">
           <p>Giảm giá:</p>
           <p>
             <span class="font-bold text-2xl text-primary">{{
-              $currency(quote?.summary?.discount)
+              $currency(summary?.discount)
             }}</span
             ><span></span>
             <a-button size="mini" type="text" @click="product.promocode = ''">Xoá</a-button>
@@ -251,6 +251,7 @@ const {
   selectedProduct,
   cycle,
   product,
+  summary,
   domainSelected,
   quote,
   errorCoupon,

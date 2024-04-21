@@ -243,6 +243,7 @@
 
    
  const handleSubmit = ({ values, errors }) => {
+    console.log(errors);
    errorContact.value = false;
      if (errors){
        errorContact.value = true

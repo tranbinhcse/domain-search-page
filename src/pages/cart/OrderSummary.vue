@@ -39,7 +39,7 @@
                         <ul>
                             <li class="flex justify-between gap-4" v-for="recurring in cartQuote.summary.recurring">
                                 <p>{{ recurring.title }}</p>
-                                <p>{{ recurring.price }}</p>
+                                <p>{{ $currency( recurring.price ) }}</p>
                             </li>
                         </ul>
                     </div>

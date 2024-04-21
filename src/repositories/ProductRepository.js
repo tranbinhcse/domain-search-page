@@ -4,13 +4,25 @@ const ProductRepository = {
     const { products } = await get(`/category/${categoryId}/product`)
     return products
   },
-  getConfiguration: async (productId, period = 'a') => {
+  getConfiguration: async (productId, options) => {
     
-    const { product: { config: { 
+
+    let url = `/order/${productId}`;
+
+    if(options) {
+      const queryParams = new URLSearchParams();
+      Object.keys(options).forEach(key => {
+        queryParams.append(key, options[key]);
+      });
+      url += `?${queryParams.toString()}`;
+    }
+
+
+    const { summary, product: { config: { 
       // addons: addonFields, 
       forms: formFields, 
       product: productFields, 
-    }, domain_options: domainOptionsFields, recurring_price, setup, cycle, promocode} } = await get(`/order/${productId}?period=${period}`)
+    }, domain_options: domainOptionsFields, recurring_price, setup, cycle, promocode} } = await get(url)
 
     const product = {
       product_id: productId,
@@ -22,7 +34,7 @@ const ProductRepository = {
       recurring_price, setup, cycle, promocode
       // subProductFields
     }
-
+ 
     const custom = {}
 
     formFields.forEach(({ id, type, firstItemId, config: { initialval } }) => {
@@ -68,7 +80,10 @@ const ProductRepository = {
     })
     product.domainOptions = domainOptionsFields;
     product.promocode = promocode;
-    return product
+    return {
+      summary,
+      product
+    }
   }
 }
 
