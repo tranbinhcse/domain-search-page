@@ -9,7 +9,7 @@ import { faceLiveNessCheck, getBoundingBox } from "@/utility/ekyc/face-liveness"
 import delay from "@/utility/ekyc/delay";
 
 // const { FaceLandmarker, FilesetResolver, DrawingUtils } = vision;
-import * as FaceMesh from '@mediapipe/face_mesh';
+import { FaceMesh } from '@mediapipe/face_mesh';
 
 const currentCamera = ref();
 const video = ref();
@@ -41,9 +41,9 @@ const faceActions = [
     { action: "forward", message: "Nhìn thẳng về phía máy ảnh" },
     // { action: "up", message: "Quay lên trên" },
     // { action: "down", message: "Quay xuống dưới" },
-    // { action: "left", message: "Quay sang trái" },
-    // { action: "right", message: "Quay sang phải" },
-    // { action: "eye-closed", message: "Nhắm mắt" },
+    { action: "left", message: "Quay sang trái" },
+    { action: "right", message: "Quay sang phải" },
+    { action: "eye-closed", message: "Nhắm mắt" },
 ];
 
 const getActionsSequence = () => {
@@ -61,15 +61,15 @@ let faceImageRef = ref(null);
 const randomActionSequenceRef = ref(getActionsSequence());
 const VALID_FRAME = 5;
 const isPhotoTaken = ref(false); 
-let faceMesh = null;
+  
 const handleGetUserMedia = async () => {
     randomActionSequenceRef.value = getActionsSequence();
     
-    faceMesh = new FaceMesh.FaceMesh({
+    const faceMesh = new FaceMesh({
         locateFile: (file) => {
             return "/component/face_mesh/" + file;
         },
-    })
+    });
 
     faceMesh.setOptions({
         selfieMode: true,
