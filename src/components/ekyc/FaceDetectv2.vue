@@ -65,7 +65,7 @@ const isPhotoTaken = ref(false);
 const handleGetUserMedia = async () => {
     randomActionSequenceRef.value = getActionsSequence();
     
-    const faceMesh = new FaceMesh({
+    const faceMesh = FaceMesh({
         locateFile: (file) => {
             return "/component/face_mesh/" + file;
         },
