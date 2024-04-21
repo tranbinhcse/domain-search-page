@@ -9,7 +9,7 @@ import { faceLiveNessCheck, getBoundingBox } from "@/utility/ekyc/face-liveness"
 import delay from "@/utility/ekyc/delay";
 
 // const { FaceLandmarker, FilesetResolver, DrawingUtils } = vision;
-import { FaceMesh } from '@mediapipe/face_mesh';
+import * as FaceMesh from '@mediapipe/face_mesh';
 
 const currentCamera = ref();
 const video = ref();
@@ -61,15 +61,15 @@ let faceImageRef = ref(null);
 const randomActionSequenceRef = ref(getActionsSequence());
 const VALID_FRAME = 5;
 const isPhotoTaken = ref(false); 
-  
+let faceMesh = null;
 const handleGetUserMedia = async () => {
     randomActionSequenceRef.value = getActionsSequence();
     
-    const faceMesh = FaceMesh({
+    faceMesh = new FaceMesh.FaceMesh({
         locateFile: (file) => {
             return "/component/face_mesh/" + file;
         },
-    });
+    })
 
     faceMesh.setOptions({
         selfieMode: true,
