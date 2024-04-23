@@ -9,11 +9,9 @@
     <a-row>
         <a-col :span="24">
             <a-modal v-model:visible="visibleFaceCheck" @ok="handleOk" @cancel="handleCancel" >
-                <template #title>
-                Title
-                </template>
+                <template #title>Xác thực sinh trắc học</template>
                 <a-row :gutter="8">
-                    <a-col :span="24">
+                    <a-col :span="24" v-if="errorFaceCheck">
                         <a-alert>{{ errorFaceCheck }}</a-alert>
                     </a-col>
                     <a-col :span="24">

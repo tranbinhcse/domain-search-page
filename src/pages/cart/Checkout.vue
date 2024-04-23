@@ -1,5 +1,5 @@
 <template>
-  <a-spin class="w-full" :loading="loading" tip="This may take a while...">
+  <a-spin class="w-full" :loading="loading" tip="Đang lấy thông tin giỏ hàng...">
     <div class="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
       <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Xác nhận thông tin đơn hàng</h1>
 
@@ -140,9 +140,11 @@
                   </a-col>
                 </a-row>
               </a-form>
-              <a-alert type="error" v-if="errorPromo ">
-                {{ errorPromo }}
-              </a-alert>
+              <div v-if="errorPromo" >
+                <a-alert type="error" v-for="error in errorPromo" :key="error">
+                  {{ error }}
+                </a-alert>
+              </div>
               <a-col :span="24" v-if="!errorPromo">
                     <a-alert class="mt-2">Tên miền trong giỏ hàng của bạn áp dụng chính sách miễn phí trong 2 năm. Bạn vui lòng chọn tên miền và thực hiện lấy mã để áp dụng  chính sách.</a-alert>
                   </a-col>

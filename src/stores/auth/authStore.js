@@ -20,7 +20,7 @@ export const useAuthStore = defineStore('authStore', {
       this.loading = true
       const data = await post('login', credential)
       if (data.error) {
-        this.error = true
+        this.error = data.error
         this.loading = false
         return
       }

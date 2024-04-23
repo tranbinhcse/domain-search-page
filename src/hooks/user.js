@@ -12,7 +12,7 @@ export default function useUser() {
   const logout = async (logoutTo) => {
     await authStore.logout();
     const currentRoute = router.currentRoute.value;
-    Message.success('登出成功');
+    Message.success('Thoát tài khoản thành công.');
     router.push({
       name: logoutTo && typeof logoutTo === 'string' ? logoutTo : 'login',
       query: {

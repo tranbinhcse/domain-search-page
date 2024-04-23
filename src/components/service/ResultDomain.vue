@@ -23,8 +23,7 @@
               <div class="pricing flex items-center justify-between">
                   <div class="sales sr-only">
                     <!-- TODO: check save -->
-                    <Badge class="badge" variant="Active">SAVE 97%</Badge>
-                    <div class="text-sm text-gray font-light italic">Khi đăng ký 2 năm</div>
+                     
                   </div>
                   <div class="price ml-5  text-right" v-if="domain.avaliable">
                     <div class="h-found-domain-cards-item__old-price text-sm text-gray line-through" v-if="domain.before > 1">{{ $currency(domain.before) }}</div>
@@ -103,8 +102,7 @@
               <div class="pricing  flex items-center ">
                   <div class="sales sr-only">
                     <!-- TODO: check save -->
-                    <Badge class="badge" variant="Active">SAVE 97%</Badge>
-                    <div class="text-sm text-gray font-light italic">Khi đăng ký 2 năm</div>
+                    
                   </div>
                   <div class="price ml-5  text-right" v-if="domain.avaliable">
                     <div class="h-found-domain-cards-item__old-price text-sm text-gray line-through" v-if="domain.before > 1">{{ $currency(domain.before) }}</div>

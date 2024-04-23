@@ -15,8 +15,7 @@
          dsd
         <div class="pricing  flex items-center">
             <div class="sales">
-              <Badge class="badge" variant="Active">SAVE 97%</Badge>
-              <div class="text-sm text-gray font-light italic">Khi đăng ký 2 năm</div>
+            
             </div>
             <div class="price ml-5">
               <div class="h-found-domain-cards-item__old-price text-sm text-gray line-through">310.000đ</div>

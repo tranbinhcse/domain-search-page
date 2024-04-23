@@ -104,7 +104,7 @@ export const useCartStore = defineStore('cartStore', () => {
        }
 
        if( cartItems.value[index].type == 'product' && quoteItems[index].valid){
-        cartItems.value[index].name = quoteItems[index].product.name
+        cartItems.value[index].name = quoteItems[index].product?.name
         cartItems.value[index].category_name = quoteItems[index].product.category_name
         // if(quoteItems[index].product.domain){
         //   cartItems.value[index].domain = quoteItems[index].product.domain

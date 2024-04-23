@@ -1,6 +1,8 @@
 <template>
-  <div>
- 
+  <div class="text-center flex justify-between" v-if="faceChecking">
+    <a-spin :loading="true" tip="Đang kiểm tra thông tin..."></a-spin>
+  </div>
+    <div v-else>
       <a-alert   type="success" >{{ randomActionSequenceRef[stepRef]?.message }}</a-alert>
       <div>
           <div v-if="loadingVideo" class="pre-loading-video">
@@ -32,16 +34,18 @@ const isMobile = ref(false)
 const props = defineProps(['open', 'faceOK']);
 const emits = defineEmits(['DataImage']);
 
+const faceChecking = ref(false);
+ 
 import { Howl } from "howler";
 let confirmAudio = new Howl({ src: ["/component/confirm.wav"] });
 let alertAudio = new Howl({ src: ["/component/alert.mp3"] });
 
 const faceActions = [
     { action: "forward", message: "Nhìn thẳng về phía máy ảnh" },
-    // { action: "up", message: "Quay lên trên" },
-    // { action: "down", message: "Quay xuống dưới" },
-    // { action: "left", message: "Quay sang trái" },
-    // { action: "right", message: "Quay sang phải" },
+    { action: "up", message: "Quay lên trên" },
+    { action: "down", message: "Quay xuống dưới" },
+    { action: "left", message: "Quay sang trái" },
+    { action: "right", message: "Quay sang phải" },
     // { action: "eye-closed", message: "Nhắm mắt" },
 ];
 
@@ -204,6 +208,7 @@ const createCameraElement = async () => {
 };
 
 const stopCameraStream = () => {
+    faceChecking.value = true;
   emits('DataImage', faceImageRef.value);
     isCameraOpen.value = false;
     let tracks = camera.value.srcObject.getTracks();

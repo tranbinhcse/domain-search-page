@@ -1,6 +1,9 @@
 import localeSettings from './vi-VN/settings';
 import localeStatus from './vi-VN/status';
 export default {
+    'messageBox.logout': 'Đăng xuất',
+    'messageBox.userSettings': 'Cấu hình tài khoản',
+    'messageBox.userCenter': 'Trung tâm tài khoản',
     'menu.dashboard': 'Dashboard',
     'menu.server.dashboard': 'Dashboard-Server',
     'menu.server.workplace': 'Workplace-Server',
@@ -32,7 +35,8 @@ export default {
     'p5': '60 tháng', 
     'years': 'năm', 
     'Domain register': 'đăng ký mới',
+    'wronglogin': 'Đăng nhập không thành công',
     ...localeSettings,
-    ...localeStatus
+    ...localeStatus,
   };
   

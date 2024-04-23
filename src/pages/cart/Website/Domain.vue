@@ -1,6 +1,6 @@
 <template>
 
-<a-spin class="w-full" :loading="loading" tip="This may take a while...">
+<a-spin class="w-full" :loading="loading" tip="Đang tải dữ liệu...">
     <div class="h-full">
       
         <div class="bg-primary text-white     py-10">
