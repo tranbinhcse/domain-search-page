@@ -1,35 +1,51 @@
+<template>
+  <div class="text-center flex justify-between" v-if="faceChecking">
+    <a-spin :loading="true" tip="Đang kiểm tra thông tin..."></a-spin>
+  </div>
+  <div v-else>
+    <a-alert type="success">{{ randomActionSequenceRef[stepRef]?.message }}</a-alert>
+    <div>
+      <div v-if="loadingVideo" class="pre-loading-video">
+        <a-spin size="large" tip="Đang mở camera..." spinning />
+      </div>
+      <div class="video-box">
+        <video
+          style="max-width: 100%"
+          v-show="!isPhotoTaken"
+          ref="camera"
+          webkit-playsinline
+          playsinline
+          autoplay
+          :onPlay="handleGetUserMedia"
+        ></video>
+        <canvas
+          id="photoTaken"
+          ref="canvas"
+          style="max-width: 100%; display: none"
+          :width="450"
+          :height="337.5"
+        ></canvas>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script setup>
-import { ref, watchEffect, onMounted } from 'vue'
-import { useDevicesList, useUserMedia } from '@vueuse/core'
+import { defineProps, ref, onMounted, watch } from 'vue'
 
 import { shuffleFromPositionOne } from '@/utility/ekyc/shuffle-array'
 import { setIntervalAsync } from 'set-interval-async/dynamic'
 import { clearIntervalAsync } from 'set-interval-async'
 import { faceLiveNessCheck, getBoundingBox } from '@/utility/ekyc/face-liveness'
-import delay from '@/utility/ekyc/delay'
 
-// const { FaceLandmarker, FilesetResolver, DrawingUtils } = vision;
 import { FaceMesh } from '@mediapipe/face_mesh'
 
-const currentCamera = ref()
-const video = ref()
-const canvas = document.createElement('canvas')
+import delay from '@/utility/ekyc/delay'
+const isMobile = ref(false)
+const props = defineProps(['open', 'faceOK'])
+const emits = defineEmits(['DataImage'])
 
-const { videoInputs: cameras } = useDevicesList({
-  requestPermissions: true,
-  onUpdated() {
-    if (!cameras.value.find((i) => i.deviceId === currentCamera.value))
-      currentCamera.value = cameras.value[0]?.deviceId
-  }
-})
-
-const { stream, enabled } = useUserMedia({
-  constraints: { video: { deviceId: currentCamera } }
-})
-
-watchEffect(() => {
-  if (video.value) video.value.srcObject = stream.value
-})
+const faceChecking = ref(false)
 
 import { Howl } from 'howler'
 let confirmAudio = new Howl({ src: ['/component/confirm.wav'] })
@@ -37,11 +53,11 @@ let alertAudio = new Howl({ src: ['/component/alert.mp3'] })
 
 const faceActions = [
   { action: 'forward', message: 'Nhìn thẳng về phía máy ảnh' },
-  // { action: "up", message: "Quay lên trên" },
-  // { action: "down", message: "Quay xuống dưới" },
+  { action: 'up', message: 'Quay lên trên' },
+  { action: 'down', message: 'Quay xuống dưới' },
   { action: 'left', message: 'Quay sang trái' },
-  { action: 'right', message: 'Quay sang phải' },
-  { action: 'eye-closed', message: 'Nhắm mắt' }
+  { action: 'right', message: 'Quay sang phải' }
+  // { action: "eye-closed", message: "Nhắm mắt" },
 ]
 
 const getActionsSequence = () => {
@@ -57,16 +73,21 @@ let validFrameCountRef = ref(0)
 let faceImageRef = ref(null)
 
 const randomActionSequenceRef = ref(getActionsSequence())
-const VALID_FRAME = 5
+const VALID_FRAME = 2
 const isPhotoTaken = ref(false)
+const isCameraOpen = ref(false)
+const loadingVideo = ref(true)
+const isLoading = ref(false)
+// const cameraType = ref('user');
+const camera = ref(null)
+
+let faceMesh = null
 
 const handleGetUserMedia = async () => {
   randomActionSequenceRef.value = getActionsSequence()
 
-  const faceMesh = new FaceMesh({
-    locateFile: (file) => {
-      return '/component/face_mesh/' + file
-    }
+  faceMesh = new FaceMesh({
+    locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`
   })
 
   faceMesh.setOptions({
@@ -74,19 +95,15 @@ const handleGetUserMedia = async () => {
     maxNumFaces: 1,
     refineLandmarks: true
   })
-
   await faceMesh.initialize()
 
   const timer = setIntervalAsync(async () => {
-    // Thực hiện xử lý khung hình ở đây
-    // Ví dụ:
-    // await faceMesh.send({ image: currentCamera.value });
-
+    // Setting up callback for face detection for the first time
     if (!setUpFaceDetectionCallBack.value) {
       console.log('Start liveness check')
       setUpFaceDetectionCallBack.value = true
+
       faceMesh.onResults(async (results) => {
-        console.log('results', results)
         // Just to check if the countdown reset the step in-between the face liveness check
         let currentStep = stepRef.value
 
@@ -101,8 +118,9 @@ const handleGetUserMedia = async () => {
           validFrameCountRef.value = 0
           randomActionSequenceRef.value = getActionsSequence()
           stepRef.value = 0
-          console.log('ok')
-        } else if (
+        }
+        // Check if the user does the required action for VALID_FRAME number of frames.
+        else if (
           faceLiveNessCheck(results, randomActionSequenceRef.value[currentStep].action) &&
           currentStep === stepRef.value
         ) {
@@ -113,7 +131,6 @@ const handleGetUserMedia = async () => {
             // If first step, take the picture
             if (stepRef.value === 0) {
               const canvas = results.image
-
               const { x1, x2, y1, y2 } = getBoundingBox(results)
               // Check if the face is fully presented
               if (x1 >= 0 && y1 >= 0 && x2 <= canvas.width && y2 <= canvas.height) {
@@ -144,54 +161,72 @@ const handleGetUserMedia = async () => {
       })
     }
 
-    if (video.value !== null) {
+    await faceMesh.send({ image: camera.value })
+    // Start to process frame by frame
+    if (camera.value !== null) {
       if (stepRef.value === 0 && firstStepDelayRef.value) {
         await delay(1000)
         firstStepDelayRef.value = false
       }
-      await faceMesh.send({ image: video.value })
+      await faceMesh.send({ image: camera.value })
     } else {
       clearIntervalAsync(timer)
     }
-  }, 100)
+  }, 10)
+}
+
+const handleOpenCamera = () => {
+  isPhotoTaken.value = false
+  isCameraOpen.value = true
+  createCameraElement()
+}
+
+const createCameraElement = async () => {
+  isLoading.value = true
+  const constraints = {
+    audio: false,
+    video: {
+      facingMode: 'user',
+      width: { min: 1280, max: 1920, ideal: 1440 },
+      height: { ideal: isMobile.value ? 1440 : 1080 },
+      aspectRatio: { ideal: isMobile.value ? 1.333333333 : 1.777777778 }
+    }
+  }
+  await navigator.mediaDevices
+    .getUserMedia(constraints)
+    .then((stream) => {
+      isLoading.value = false
+      camera.value.srcObject = stream
+      loadingVideo.value = false
+    })
+    .catch((error) => {
+      isLoading.value = false
+      alert("May the browser didn't support or there is some errors.")
+      console.log(error)
+    })
 }
 
 const stopCameraStream = () => {
-  enabled.value = !enabled.value
+  faceChecking.value = true
+  emits('DataImage', faceImageRef.value)
+  isCameraOpen.value = false
+  let tracks = camera.value.srcObject.getTracks()
+  tracks.forEach(async (track) => {
+    await delay(1000)
+    track.stop()
+  })
 }
-// onMounted(handleGetUserMedia);
+
+onMounted(() => {
+  handleOpenCamera()
+})
+
+watch(
+  () => props.open,
+  () => {
+    if (!props.open) {
+      stopCameraStream()
+    }
+  }
+)
 </script>
-
-<template>
-  <div class="flex flex-col gap-4 text-center">
-    <a-alert type="success">{{ randomActionSequenceRef[stepRef]?.message }}</a-alert>
-    <div>
-      <button @click="stopCameraStream">
-        {{ enabled ? 'Stop' : 'Start' }}
-      </button>
-    </div>
-
-    <div>
-      <div
-        v-for="camera of cameras"
-        :key="camera.deviceId"
-        class="px-2 py-1 cursor-pointer"
-        :class="{ 'text-primary': currentCamera === camera.deviceId }"
-        @click="currentCamera = camera.deviceId"
-      >
-        {{ camera.label }}
-      </div>
-    </div>
-    <div>
-      <video
-        style="max-width: 100%"
-        v-show="!isPhotoTaken"
-        ref="video"
-        webkit-playsinline
-        playsinline
-        autoplay
-        :onPlay="handleGetUserMedia"
-      ></video>
-    </div>
-  </div>
-</template>
