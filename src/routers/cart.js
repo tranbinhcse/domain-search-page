@@ -1,4 +1,3 @@
-
 import DomainSearch from '@/pages/domain/DomainSearch.vue'
 import DomainConfig from '@/pages/cart/DomainConfig.vue'
 import Checkout from '@/pages/cart/Checkout.vue'
@@ -6,101 +5,96 @@ import ServiceOrder from '@/pages/cart/ServiceOrder.vue'
 import Website from '@/pages/cart/Website/Index.vue'
 import WebsiteDomain from '@/pages/cart/Website/Domain.vue'
 
-export const DEFAULT_LAYOUT = () => import('@/layouts/DefaultLayout.vue');
+export const DEFAULT_LAYOUT = () => import('@/layouts/DefaultLayout.vue')
 
 const CartRoutes = [
-
-
-    {
-        path: '/cart',
-        name: 'cart', 
+  {
+    path: '/cart',
+    name: 'cart',
+    meta: {
+      locale: 'menu.cart',
+      requiresAuth: true,
+      icon: 'icon-dashboard',
+      order: 0
+    },
+    children: [
+      {
+        path: 'website',
+        name: 'CreateWebsite',
+        component: Website,
         meta: {
-          locale: 'menu.cart',
-          requiresAuth: true,
-          icon: 'icon-dashboard',
-          order: 0,
-        },
-        children: [
-
-            {
-                path: 'website',
-                name: 'CreateWebsite',
-                component: Website,
-                meta: {
-                    locale: 'menu.cart.website',
-                    requiresAuth: false,
-                    roles: ['*'],
-                },
-            },
-
-            {
-                path: 'website/domain',
-                name: 'DomainWebsite',
-                component: WebsiteDomain,
-                meta: {
-                    locale: 'menu.cart.website',
-                    requiresAuth: false,
-                    roles: ['*'],
-                },
-            },
-
-
-            {
-                path: 'domain-search',
-                name: 'DomainSearch',
-                component: DomainSearch,
-                meta: {
-                    locale: 'menu.dashboard.workplace',
-                    requiresAuth: false,
-                    roles: ['*'],
-                },
-            },
-           
-            {
-                path: 'config-domain',
-                name: 'DomainConfig',
-                component: DomainConfig,
-                meta: {
-                    locale: 'menu.domains',
-                    requiresAuth: true,
-                    roles: ['*'],
-                },
-            },  
-            {
-                path: 'shopping-cart',
-                name: 'shopping-cart',
-                component: DomainConfig,
-                meta: {
-                    locale: 'menu.domains',
-                    requiresAuth: true,
-                    roles: ['*'],
-                },
-            }, 
-
-            {
-                path: ':slug',
-                name: 'serviceOrder',
-                component: ServiceOrder,
-                meta: {
-                    locale: 'menu.domains',
-                    requiresAuth: false,
-                    roles: ['*'],
-                },
-            },
-
-            {
-                path: 'checkout',
-                name: 'checkout',
-                component: Checkout,
-                meta: {
-                    locale: 'menu.domains',
-                    requiresAuth: true,
-                    roles: ['*'],
-                },
-            },
-        ],
+          locale: 'menu.cart.website',
+          requiresAuth: false,
+          roles: ['*']
+        }
       },
 
+      {
+        path: 'website/domain',
+        name: 'DomainWebsite',
+        component: WebsiteDomain,
+        meta: {
+          locale: 'menu.cart.website',
+          requiresAuth: false,
+          roles: ['*']
+        }
+      },
+
+      {
+        path: 'domain-search',
+        name: 'DomainSearch',
+        component: DomainSearch,
+        meta: {
+          locale: 'menu.dashboard.workplace',
+          requiresAuth: false,
+          roles: ['*']
+        }
+      },
+
+      {
+        path: 'config-domain',
+        name: 'DomainConfig',
+        component: DomainConfig,
+        meta: {
+          locale: 'menu.domains',
+          requiresAuth: true,
+          roles: ['*']
+        }
+      },
+      {
+        path: 'shopping-cart',
+        name: 'shopping-cart',
+        component: DomainConfig,
+        meta: {
+          locale: 'menu.domains',
+          requiresAuth: true,
+          roles: ['*']
+        }
+      },
+
+      {
+        path: ':slug',
+        name: 'serviceOrder',
+        component: ServiceOrder,
+        meta: {
+          locale: 'menu.domains',
+          requiresAuth: false,
+          roles: ['*']
+        }
+      },
+
+      {
+        path: 'checkout',
+        name: 'checkout',
+        component: Checkout,
+        meta: {
+          locale: 'menu.domains',
+          requiresAuth: true,
+          roles: ['*']
+        }
+      }
+    ]
+  }
 ]
 
 export default CartRoutes

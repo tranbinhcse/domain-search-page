@@ -1,173 +1,189 @@
 <template>
-    <div class="h-full">
-       
-      <HeaderWebPage />
-   
-      <div class="max-w-7xl m-auto mt-5" id="searchResults" ref="searchResultsRef">
- 
-        <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            <li v-for="theme in themes" :key="theme.id" class="col-span-1 flex flex-col rounded-lg bg-white text-center shadow">
-            <div class="theme-view" :style="`background-image: url(${theme.image})`"></div>
-            <div class="p-2 ">
-                <h3 class="mb-6 font-bold text-gray-900">{{ theme.name }}</h3>
-                <div class="-mt-px flex justify-between ">
-                <div class="">
-                   <a class="text-sm font-medium text-gray-900 p-2" :href="theme.url_demo" target="_blank">Xem thực tế</a>
-                </div>
-                <div class="flex-auto">
-                  <a-button type="outline" size="small" class="w-full" @click="handleChoiesDomain(theme)">
-                    <template #icon><icon-plus /></template>
-                    Tạo Web
-                  </a-button>
-                </div>
-                </div>
-            </div>
-            </li>
-        </ul>
+  <div class="h-full">
+    <HeaderWebPage />
 
-        <div class="flex justify-end p-4 my-4 rounded-md">
-         
-          <a-pagination :total="records" v-model="page" @change="changePage" @page-size-change="changePerPage" show-page-size show-total/>
-        </div>
-        
-      </div>
-  
-      <div> 
-      </div>
-
-      <a-modal v-model:visible="visible" @ok="handleCreateWebsite" @cancel="handleCancel" @before-ok="handleBeforeOk" hide-cancel ok-text="Kiểm tra">
-        <template #title>
-          Tạo website với mẫu theme {{themeSelected.title}}
-        </template>
-        <div class="w-full">
-          <a-tabs @tab-click="handleTabClick" :active-key="themeSelected.type">
-            
-            <a-tab-pane key="register">
-              <template #title>
-                <icon-clock-circle/> Đăng ký tên miền mới
-              </template>
-              <a-input v-model="domain" word-length="50" placeholder="Nhập tên miền của bạn" allow-clear></a-input>
-            </a-tab-pane>
-            <a-tab-pane key="subdomain">
-              <template #title>
-                <icon-calendar/> Tên miền tạm
-              </template>
-              <div>
-                  <a-input v-model="themeSelected.id" name="theme" readonly type="hidden" class="sr-only" /> 
-                  <a-input v-model="domain" word-length="50" placeholder="Nhập tên miền của bạn" allow-clear>
-                    <template #append>
-                      .cloudwp.vn
-                    </template>
-                  </a-input>
-                  
+    <div class="max-w-7xl m-auto mt-5" id="searchResults" ref="searchResultsRef">
+      <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <li
+          v-for="theme in themes"
+          :key="theme.id"
+          class="col-span-1 flex flex-col rounded-lg bg-white text-center shadow"
+        >
+          <div class="theme-view" :style="`background-image: url(${theme.image})`"></div>
+          <div class="p-2">
+            <h3 class="mb-6 font-bold text-gray-900">{{ theme.name }}</h3>
+            <div class="-mt-px flex justify-between">
+              <div class="">
+                <a
+                  class="text-sm font-medium text-gray-900 p-2"
+                  :href="theme.url_demo"
+                  target="_blank"
+                  >Xem thực tế</a
+                >
               </div>
-            </a-tab-pane>
-          </a-tabs>
-        </div>
-      </a-modal>
+              <div class="flex-auto">
+                <a-button
+                  type="outline"
+                  size="small"
+                  class="w-full"
+                  @click="handleChoiesDomain(theme)"
+                >
+                  <template #icon><icon-plus /></template>
+                  Tạo Web
+                </a-button>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
 
-      
+      <div class="flex justify-end p-4 my-4 rounded-md">
+        <a-pagination
+          :total="records"
+          v-model="page"
+          @change="changePage"
+          @page-size-change="changePerPage"
+          show-page-size
+          show-total
+        />
+      </div>
     </div>
-  
-  
-      <!-- Domain Page Info -->
-    
-  </template>
-  <script setup>
-  
-  import { onMounted, ref, watch } from 'vue';
-  import { useRouter } from 'vue-router';
-  import { useWebStore } from "@/stores/website/webStore";
-  import { useDomainSearchStore } from "@/stores/domain/domainSearchStore";
-  import { storeToRefs } from 'pinia'
 
-  import HeaderWebPage from './components/header.vue'; 
-  const domainSearchStore = useDomainSearchStore()
-  const { getDomainTlds } = domainSearchStore
+    <div></div>
 
+    <a-modal
+      v-model:visible="visible"
+      @ok="handleCreateWebsite"
+      @cancel="handleCancel"
+      @before-ok="handleBeforeOk"
+      hide-cancel
+      ok-text="Kiểm tra"
+    >
+      <template #title> Tạo website với mẫu theme {{ themeSelected.title }} </template>
+      <div class="w-full">
+        <a-tabs @tab-click="handleTabClick" :active-key="themeSelected.type">
+          <a-tab-pane key="register">
+            <template #title> <icon-clock-circle /> Đăng ký tên miền mới </template>
+            <a-input
+              v-model="domain"
+              word-length="50"
+              placeholder="Nhập tên miền của bạn"
+              allow-clear
+            ></a-input>
+          </a-tab-pane>
+          <a-tab-pane key="subdomain">
+            <template #title> <icon-calendar /> Tên miền tạm </template>
+            <div>
+              <a-input
+                v-model="themeSelected.id"
+                name="theme"
+                readonly
+                type="hidden"
+                class="sr-only"
+              />
+              <a-input
+                v-model="domain"
+                word-length="50"
+                placeholder="Nhập tên miền của bạn"
+                allow-clear
+              >
+                <template #append> .cloudwp.vn </template>
+              </a-input>
+            </div>
+          </a-tab-pane>
+        </a-tabs>
+      </div>
+    </a-modal>
+  </div>
 
-  const webStore = useWebStore()
-  const { createWebsite, getThemes, addCart } = webStore 
-  const {   themeSelected, domain, themes, page, perpage, records } = storeToRefs(webStore)
-  
-  const router = useRouter()
-  const searchResultsRef = ref(null);
+  <!-- Domain Page Info -->
+</template>
+<script setup>
+import { onMounted, ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
+import { useWebStore } from '@/stores/website/webStore'
+import { useDomainSearchStore } from '@/stores/domain/domainSearchStore'
+import { storeToRefs } from 'pinia'
 
-  
-  const visible = ref(false);
-  
+import HeaderWebPage from './components/header.vue'
+const domainSearchStore = useDomainSearchStore()
+const { getDomainTlds } = domainSearchStore
 
-  const changePerPage = (value) => {
-    perpage.value = value
-  }
-  
-  const changePage = (currentpage) => {
-    page.value = currentpage - 1
-  }
+const webStore = useWebStore()
+const { createWebsite, getThemes, addCart } = webStore
+const { themeSelected, domain, themes, page, perpage, records } = storeToRefs(webStore)
 
+const router = useRouter()
+const searchResultsRef = ref(null)
 
+const visible = ref(false)
 
-  const handleBeforeOk = async(done) => {
-    
-    if (themeSelected.value.type == 'subdomain') {
-      createWebsite(router);
-    } else if(themeSelected.value.type == 'register') {
-      await getDomainTlds();
-      router.push({ name: 'DomainWebsite' });
-    } else if(themeSelected.value.type == 'own') {
-      alert('ok')
-    }
-
-    done();
-
-    
-  } 
-  // Gọi hàm scrollTosearchResults khi form được submit
-  const handleCreateWebsite = () => {
-    // createWebsite();
-  }
-
-  const handleChoiesDomain = (theme) => {
-    theme.type = themeSelected.value.type
-    themeSelected.value = theme;
-    visible.value = true;
-  }
-  onMounted(() => {
-    getThemes()
-  })
-
-  const handleTabClick = (key) => {
-    themeSelected.value.type = key;
-  }
-  
-
-  watch(() => page.value, () => {
-   getThemes()
-  })
-  watch(() => perpage.value, () => {
-   getThemes()
-  })
-
- 
-   
-  </script>
-   <style lang="less">
-    .theme-view{
-      padding-top: 20px;
-      display: block;
-      height: 300px;
-      transition: background-position 2s ease-in-out;
-      width: 100%;
-      background-position: top center;
-      background-size: 100% auto !important;
-      background-repeat: no-repeat;
-      width: 100%;
-    }
-
-    .theme-view:hover {
-    background-position: bottom center !important;
-    transition: background-position 10s linear 0s;
+const changePerPage = (value) => {
+  perpage.value = value
 }
 
+const changePage = (currentpage) => {
+  page.value = currentpage - 1
+}
 
-   </style>
+const handleBeforeOk = async (done) => {
+  if (themeSelected.value.type == 'subdomain') {
+    createWebsite(router)
+  } else if (themeSelected.value.type == 'register') {
+    await getDomainTlds()
+    router.push({ name: 'DomainWebsite' })
+  } else if (themeSelected.value.type == 'own') {
+    alert('ok')
+  }
+
+  done()
+}
+// Gọi hàm scrollTosearchResults khi form được submit
+const handleCreateWebsite = () => {
+  // createWebsite();
+}
+
+const handleChoiesDomain = (theme) => {
+  theme.type = themeSelected.value.type
+  themeSelected.value = theme
+  visible.value = true
+}
+onMounted(() => {
+  getThemes()
+})
+
+const handleTabClick = (key) => {
+  themeSelected.value.type = key
+}
+
+watch(
+  () => page.value,
+  () => {
+    getThemes()
+  }
+)
+watch(
+  () => perpage.value,
+  () => {
+    getThemes()
+  }
+)
+</script>
+<style lang="less">
+.theme-view {
+  padding-top: 20px;
+  display: block;
+  height: 300px;
+  transition: background-position 2s ease-in-out;
+  width: 100%;
+  background-position: top center;
+  background-size: 100% auto !important;
+  background-repeat: no-repeat;
+  width: 100%;
+}
+
+.theme-view:hover {
+  background-position: bottom center !important;
+  transition: background-position 10s linear 0s;
+}
+</style>

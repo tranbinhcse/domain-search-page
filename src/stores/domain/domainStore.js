@@ -15,7 +15,11 @@ export const useDomainStore = defineStore('domainStore', () => {
 
   async function getDomains() {
     loading.value = true
-    const res = await DomainRepository.get({ page: page.value, perpage: perpage.value, filter: filter.value })
+    const res = await DomainRepository.get({
+      page: page.value,
+      perpage: perpage.value,
+      filter: filter.value
+    })
     domains.value = res.domains
     page.value = res.page
     records.value = res.records
@@ -24,7 +28,7 @@ export const useDomainStore = defineStore('domainStore', () => {
     loading.value = false
   }
 
-  watch([page, perpage, filter], getDomains, {deep: true})
-  
+  watch([page, perpage, filter], getDomains, { deep: true })
+
   return { loading, page, perpage, records, totalPages, domains, filter, getDomains }
 })

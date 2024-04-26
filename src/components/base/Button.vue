@@ -1,8 +1,7 @@
 <template>
- 
   <button
     :disabled="isDisabled"
-    class="btn inline-flex justify-center  px-5 py-2 rounded"
+    class="btn inline-flex justify-center px-5 py-2 rounded"
     :class="`
     ${isLoading ? ' pointer-events-none' : ''}
     ${isDisabled ? ' opacity-40 cursor-not-allowed' : ''}
@@ -49,7 +48,7 @@
           d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
         ></path>
       </svg>
-     <span class="pl-2"> {{ textLoading }}</span>
+      <span class="pl-2"> {{ textLoading }}</span>
     </template>
     <div v-if="$slots.default && !isLoading">
       <slot></slot>
@@ -58,7 +57,7 @@
 
   <router-link
     :to="link"
-    class="btn inline-flex justify-center  px-5 py-2 rounded"
+    class="btn inline-flex justify-center px-5 py-2 rounded"
     :class="`
     ${isLoading ? ' pointer-events-none' : ''}
     ${isDisabled ? ' opacity-40 cursor-not-allowed' : ''}
@@ -79,7 +78,7 @@
           v-if="icon"
           ><Icon :icon="icon"
         /></span>
-        <span class="pl-2"  v-if="text">{{ text }}</span>
+        <span class="pl-2" v-if="text">{{ text }}</span>
       </span>
     </template>
     <template v-if="isLoading">
@@ -165,58 +164,57 @@
   </div>
 </template>
 <script>
-import Icon from "@/components/base/Icon.vue";
+import Icon from '@/components/base/Icon.vue'
 export default {
   components: {
-    Icon,
+    Icon
   },
-  name: "Button",
+  name: 'Button',
   props: {
     text: {
       type: String,
-      default: "",
+      default: ''
     },
     isDisabled: {
       type: Boolean,
-      default: false,
+      default: false
     },
     isLoading: {
       type: Boolean,
-      default: false,
+      default: false
     },
     textLoading: {
       type: String,
-      default: 'Loading...',
+      default: 'Loading...'
     },
     loadingClass: {
       type: String,
-      default: "",
+      default: ''
     },
     btnClass: {
       type: String,
-      default: "bg-primary text-white",
+      default: 'bg-primary text-white'
     },
     icon: {
       type: String,
-      default: "",
+      default: ''
     },
     iconPosition: {
       type: String,
-      default: "left",
+      default: 'left'
     },
     iconClass: {
       type: String,
-      default: "text-[20px]",
+      default: 'text-[20px]'
     },
     link: {
       type: String,
-      default: "",
+      default: ''
     },
     div: {
       type: Boolean,
-      default: false,
-    },
-  },
-};
+      default: false
+    }
+  }
+}
 </script>
-

@@ -1,4 +1,3 @@
-
 // import DomainSearch from '@/pages/domain/DomainSearch.vue'
 // import DomainConfig from '@/pages/cart/DomainConfig.vue'
 import Dashboard from '@/pages/Dashboard.vue'
@@ -11,43 +10,39 @@ import SecurityRoutes from './security'
 import LogsRoutes from './logs'
 import UserRoutes from './user'
 
-
-export const DEFAULT_LAYOUT = () => import('@/layouts/DefaultLayout.vue');
+export const DEFAULT_LAYOUT = () => import('@/layouts/DefaultLayout.vue')
 
 const ClientAreaRoutes = [
-
-    {
+  {
+    path: '/clientarea',
+    name: 'clientarea',
+    meta: {
+      locale: 'menu.clientarea',
+      requiresAuth: true,
+      icon: 'icon-dashboard',
+      order: 0
+    },
+    children: [
+      {
         path: '/clientarea',
-        name: 'clientarea',
+        name: 'dashboard',
+        component: Dashboard,
         meta: {
-          locale: 'menu.clientarea',
+          locale: 'menu.clientarea.dashboard',
           requiresAuth: true,
           icon: 'icon-dashboard',
-          order: 0,
-        },
-        children: [
-            {
-                path: '/clientarea',
-                name: 'dashboard',
-                component: Dashboard,
-                meta: {
-                  locale: 'menu.clientarea.dashboard',
-                  requiresAuth: true,
-                  icon: 'icon-dashboard',
-                  order: 1,
-                },
-              },
-            ...BillingRoutes,
-            ...ServiceRoutes,
-            ...WebsiteRoutes,
-            ...DomainRoutes,
-            ...SecurityRoutes,
-            ...LogsRoutes,
-            ...UserRoutes,
-        ],
+          order: 1
+        }
       },
-
-
+      ...BillingRoutes,
+      ...ServiceRoutes,
+      ...WebsiteRoutes,
+      ...DomainRoutes,
+      ...SecurityRoutes,
+      ...LogsRoutes,
+      ...UserRoutes
+    ]
+  }
 ]
 
 export default ClientAreaRoutes

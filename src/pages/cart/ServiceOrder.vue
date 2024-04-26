@@ -27,7 +27,12 @@
         </a-spin>
       </div>
       <div ref="productOption"></div>
-      <Box v-if="product.domainOptions && product.domainOptions.register == '1' | product.domainOptions.hostname == '1'">
+      <Box
+        v-if="
+          product.domainOptions &&
+          (product.domainOptions.register == '1') | (product.domainOptions.hostname == '1')
+        "
+      >
         <div v-if="product.domainOptions && product.domainOptions.register == '1'">
           <Heading
             text="Cấu hình tên miền"
@@ -67,9 +72,14 @@
         />
 
         <div
-          v-for="(
-            { id, firstItemId, type, title, items, config: { minvalue, maxvalue, step } }, 
-          ) in product.formFields"
+          v-for="{
+            id,
+            firstItemId,
+            type,
+            title,
+            items,
+            config: { minvalue, maxvalue, step }
+          } in product.formFields"
           :key="id"
         >
           <p class="font-bold mt-5">{{ title }}</p>
@@ -162,10 +172,7 @@
             allow-clear
             allow-search
           >
-            <a-option
-              v-for="item in items"
-              :key="item.id"
-              :value="item.id"
+            <a-option v-for="item in items" :key="item.id" :value="item.id"
               >{{ item.title }}
               -
               {{ $currency(item.price) }}</a-option
@@ -192,18 +199,14 @@
         <div class="pr-10">
           <p>Tổng thanh toán:</p>
           <p>
-            <span class="font-bold text-2xl text-primary">{{
-              $currency(summary?.total)
-            }}</span
+            <span class="font-bold text-2xl text-primary">{{ $currency(summary?.total) }}</span
             ><span></span>
           </p>
         </div>
         <div class="flex-1" v-if="summary?.discount">
           <p>Giảm giá:</p>
           <p>
-            <span class="font-bold text-2xl text-primary">{{
-              $currency(summary?.discount)
-            }}</span
+            <span class="font-bold text-2xl text-primary">{{ $currency(summary?.discount) }}</span
             ><span></span>
             <a-button size="mini" type="text" @click="product.promocode = ''">Xoá</a-button>
           </p>
@@ -238,11 +241,9 @@ import Box from '@/components/base/Box.vue'
 import Button from '@/components/base/Button.vue'
 import Heading from '@/components/base/Heading.vue'
 import { useServiceOrderStore } from '@/stores/service/serviceOrderStore'
- 
 
 const serviceOrderStore = useServiceOrderStore()
-const { getProducts, order, removeDomainSelected,   getProductConfiguration } =
-  serviceOrderStore
+const { getProducts, order, removeDomainSelected, getProductConfiguration } = serviceOrderStore
 const {
   error,
   loading,

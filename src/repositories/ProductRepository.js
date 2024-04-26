@@ -1,28 +1,35 @@
-import { get } from "@/core/apiClient"
+import { get } from '@/core/apiClient'
 const ProductRepository = {
-  getProducts: async categoryId => {
+  getProducts: async (categoryId) => {
     const { products } = await get(`/category/${categoryId}/product`)
     return products
   },
   getConfiguration: async (productId, options) => {
-    
+    let url = `/order/${productId}`
 
-    let url = `/order/${productId}`;
-
-    if(options) {
-      const queryParams = new URLSearchParams();
-      Object.keys(options).forEach(key => {
-        queryParams.append(key, options[key]);
-      });
-      url += `?${queryParams.toString()}`;
+    if (options) {
+      const queryParams = new URLSearchParams()
+      Object.keys(options).forEach((key) => {
+        queryParams.append(key, options[key])
+      })
+      url += `?${queryParams.toString()}`
     }
 
-
-    const { summary, product: { config: { 
-      // addons: addonFields, 
-      forms: formFields, 
-      product: productFields, 
-    }, domain_options: domainOptionsFields, recurring_price, setup, cycle, promocode} } = await get(url)
+    const {
+      summary,
+      product: {
+        config: {
+          // addons: addonFields,
+          forms: formFields,
+          product: productFields
+        },
+        domain_options: domainOptionsFields,
+        recurring_price,
+        setup,
+        cycle,
+        promocode
+      }
+    } = await get(url)
 
     const product = {
       product_id: productId,
@@ -31,21 +38,24 @@ const ProductRepository = {
       // addonFields,
       formFields,
       productFields,
-      recurring_price, setup, cycle, promocode
+      recurring_price,
+      setup,
+      cycle,
+      promocode
       // subProductFields
     }
- 
+
     const custom = {}
 
     formFields.forEach(({ id, type, firstItemId, config: { initialval } }) => {
       switch (type) {
         case 'radio':
           custom[id] = firstItemId
-          break;
+          break
         case 'slider':
           custom[id] = {}
           custom[id][firstItemId] = initialval
-          break;
+          break
       }
     })
 
@@ -74,12 +84,12 @@ const ProductRepository = {
     product.subproducts = subproducts
     product.subproducts_cycles = subproducts_cycles
 
-    productFields.forEach(({ id, value}) => {
+    productFields.forEach(({ id, value }) => {
       product[id] = value
       // if(id === 'cycle') product.cycle = value
     })
-    product.domainOptions = domainOptionsFields;
-    product.promocode = promocode;
+    product.domainOptions = domainOptionsFields
+    product.promocode = promocode
     return {
       summary,
       product

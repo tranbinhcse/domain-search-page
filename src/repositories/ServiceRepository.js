@@ -1,7 +1,7 @@
-import { get } from "@/core/apiClient"
+import { get } from '@/core/apiClient'
 const ServiceRepository = {
-  find: async id => {
-    const reps = await get('/service/'+id)
+  find: async (id) => {
+    const reps = await get('/service/' + id)
     return reps
   },
   get: async (slug, options) => {
@@ -11,14 +11,13 @@ const ServiceRepository = {
       page: res.page.current,
       totalPages: res.page.total,
       records: res.page.records,
-      perpage: res.page.perpage,
+      perpage: res.page.perpage
     }
   },
   getSubCategories: async (slug) => {
     const res = await get('categories/')
-    return res;
+    return res
   }
- 
 }
 
 export default ServiceRepository

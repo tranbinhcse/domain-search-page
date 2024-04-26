@@ -1,6 +1,7 @@
 <template>
   <!-- Modal backdrop -->
-  <transition  name="fade"
+  <transition
+    name="fade"
     enter-active-class="transition ease-out duration-200"
     enter-from-class="opacity-0"
     enter-to-class="opacity-100"
@@ -8,7 +9,11 @@
     leave-from-class="opacity-100"
     leave-to-class="opacity-0"
   >
-    <div v-show="modalOpen" class="fixed inset-0  bg-opacity-50 z-50  bg-modal-backdrop" aria-hidden="true"></div>
+    <div
+      v-show="modalOpen"
+      class="fixed inset-0 bg-opacity-50 z-50 bg-modal-backdrop"
+      aria-hidden="true"
+    ></div>
   </transition>
   <!-- Modal dialog -->
   <transition
@@ -19,17 +24,31 @@
     leave-from-class="opacity-100 translate-y-0"
     leave-to-class="opacity-0 translate-y-4"
   >
-    <div v-show="modalOpen" :id="id" class="fixed inset-0 z-50 overflow-hidden flex items-center my-4 justify-center px-4 sm:px-6 " role="dialog" aria-modal="true">
-      <div ref="modalContent" class="bg-white dark:bg-slate-800 rounded drop-shadow-2xl overflow-auto max-w-xl w-full max-h-full rounded-xl  border-t-8 border-slate-300">
-        <div class="px-5 py-3 ">
+    <div
+      v-show="modalOpen"
+      :id="id"
+      class="fixed inset-0 z-50 overflow-hidden flex items-center my-4 justify-center px-4 sm:px-6"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div
+        ref="modalContent"
+        class="bg-white dark:bg-slate-800 rounded drop-shadow-2xl overflow-auto max-w-xl w-full max-h-full rounded-xl border-t-8 border-slate-300"
+      >
+        <div class="px-5 py-3">
           <div class="flex justify-between items-center">
             <div class="font-semibold text-slate-800 dark:text-slate-100">
-              <slot name="title" /> 
+              <slot name="title" />
             </div>
-            <button class="text-slate-400 dark:text-slate-500 hover:text-slate-500 dark:hover:text-slate-400" @click.stop="$emit('close-modal')">
+            <button
+              class="text-slate-400 dark:text-slate-500 hover:text-slate-500 dark:hover:text-slate-400"
+              @click.stop="$emit('close-modal')"
+            >
               <div class="sr-only">Close</div>
               <svg class="w-4 h-4 fill-current">
-                <path d="M7.95 6.536l4.242-4.243a1 1 0 111.415 1.414L9.364 7.95l4.243 4.242a1 1 0 11-1.415 1.415L7.95 9.364l-4.243 4.243a1 1 0 01-1.414-1.415L6.536 7.95 2.293 3.707a1 1 0 011.414-1.414L7.95 6.536z" />
+                <path
+                  d="M7.95 6.536l4.242-4.243a1 1 0 111.415 1.414L9.364 7.95l4.243 4.242a1 1 0 11-1.415 1.415L7.95 9.364l-4.243 4.243a1 1 0 01-1.414-1.415L6.536 7.95 2.293 3.707a1 1 0 011.414-1.414L7.95 6.536z"
+                />
               </svg>
             </button>
           </div>
@@ -48,7 +67,6 @@ export default {
   props: ['id', 'modalOpen'],
   emits: ['close-modal'],
   setup(props, { emit }) {
-
     const modalContent = ref(null)
 
     // close on click outside
@@ -74,16 +92,15 @@ export default {
     })
 
     return {
-      modalContent,
-    }    
-  }  
+      modalContent
+    }
+  }
 }
 </script>
 
 <style>
 .bg-modal-backdrop {
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(30px);
-     
-  }
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(30px);
+}
 </style>

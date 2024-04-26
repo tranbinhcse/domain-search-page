@@ -1,27 +1,27 @@
 import Login from '@/pages/auth/Login.vue'
 import Register from '@/pages/auth/Register.vue'
-export const DEFAULT_LAYOUT = () => import('@/layouts/DefaultLayout.vue');
+export const DEFAULT_LAYOUT = () => import('@/layouts/DefaultLayout.vue')
 
 const AuthRoutes = [
   {
     path: '/login',
     name: 'login',
-    component: Login,
+    component: Login
   },
   {
     path: '/register',
     name: 'register',
-    component: Register,
+    component: Register
   },
   {
     path: '/signup',
     name: 'signup',
-    component: Register,
+    component: Register
   },
   {
     path: '/forgot-password',
     name: 'forgot-password',
-    component: Login,
+    component: Login
   }
 ]
 

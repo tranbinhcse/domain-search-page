@@ -1,24 +1,22 @@
-
-import { useAuthStore } from "@/stores/auth/authStore"
-import { storeToRefs } from "pinia"
+import { useAuthStore } from '@/stores/auth/authStore'
+import { storeToRefs } from 'pinia'
 import axios from 'axios'
-axios.defaults.baseURL = import.meta.env.VITE_API_URL;
- 
+axios.defaults.baseURL = import.meta.env.VITE_API_URL
+
 const getRequestHeaders = () => {
   const authStore = useAuthStore()
   const { token } = storeToRefs(authStore)
 
-  if ( ! token.value ){
+  if (!token.value) {
     return {}
   }
 
   return {
-    'Authorization': `Bearer ${token.value}`
+    Authorization: `Bearer ${token.value}`
   }
 }
 
 export const send = async (url, method = 'GET', data, params = {}) => {
-
   const headers = getRequestHeaders()
   // const response = await axios({ url, method, params, headers, data })
 
@@ -31,18 +29,17 @@ export const send = async (url, method = 'GET', data, params = {}) => {
       headers,
       data,
       timeout: 30000 // 5 seconds timeout
-    });
-    return response?.data;
+    })
+    return response?.data
   } catch (error) {
     // Handle timeout or other errors
     if (axios.isCancel(error)) {
-      console.error('Request canceled:', error.message);
+      console.error('Request canceled:', error.message)
     } else {
-      console.error('Request error:', error.message);
+      console.error('Request error:', error.message)
     }
-    throw error; // re-throw the error for the caller to handle
+    throw error // re-throw the error for the caller to handle
   }
-  
 }
 
 export const get = async (url, params = {}) => {

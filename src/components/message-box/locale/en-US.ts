@@ -9,5 +9,5 @@ export default {
   'messageBox.switchRoles': 'Switch Roles',
   'messageBox.userCenter': 'User Center',
   'messageBox.userSettings': 'User Settings',
-  'messageBox.logout': 'Logout',
-};
+  'messageBox.logout': 'Logout'
+}

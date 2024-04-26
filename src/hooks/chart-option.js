@@ -1,5 +1,5 @@
-import { computed } from 'vue';
-import { useAppStore } from '@/stores';
+import { computed } from 'vue'
+import { useAppStore } from '@/stores'
 
 // for code hints
 // import { SeriesOption } from 'echarts';
@@ -10,17 +10,17 @@ import { useAppStore } from '@/stores';
 // }
 
 export default function useChartOption(sourceOption) {
-  const appStore = useAppStore();
+  const appStore = useAppStore()
   const isDark = computed(() => {
-    return appStore.theme === 'dark';
-  });
+    return appStore.theme === 'dark'
+  })
   // echarts support https://echarts.apache.org/zh/theme-builder.html
   // It's not used here
   // TODO echarts themes
   const chartOption = computed(() => {
-    return sourceOption(isDark.value);
-  });
+    return sourceOption(isDark.value)
+  })
   return {
-    chartOption,
-  };
+    chartOption
+  }
 }

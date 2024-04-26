@@ -8,13 +8,11 @@ export const useDashboardStore = defineStore('dashboardStore', () => {
   const domains = ref([])
   const totalDomains = ref()
 
-
   async function getDashboard() {
     const res = await DomainRepository.get({ page: 1, perpage: 10 })
     domains.value = res.domains
     totalDomains.value = res.total
   }
 
-  
   return { loading, domains, totalDomains, getDashboard }
 })

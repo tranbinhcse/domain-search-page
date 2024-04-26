@@ -1,3 +1,3 @@
 <template>
-    <h1>Thông tin tài khoản</h1>
+  <h1>Thông tin tài khoản</h1>
 </template>

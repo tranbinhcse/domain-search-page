@@ -15,7 +15,11 @@ export const useInvoiceStore = defineStore('invoiceStore', () => {
 
   async function getInvoices() {
     loading.value = true
-    const res = await InvoiceRepository.get({ page: page.value, perpage: perpage.value, filter: filter.value })
+    const res = await InvoiceRepository.get({
+      page: page.value,
+      perpage: perpage.value,
+      filter: filter.value
+    })
     invoices.value = res.invoices
     page.value = res.page
     records.value = res.records
@@ -24,7 +28,7 @@ export const useInvoiceStore = defineStore('invoiceStore', () => {
     loading.value = false
   }
 
-  watch([page, perpage, filter], getInvoices, {deep: true})
-  
+  watch([page, perpage, filter], getInvoices, { deep: true })
+
   return { loading, page, perpage, records, totalPages, invoices, filter, getInvoices }
 })

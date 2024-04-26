@@ -1,12 +1,11 @@
 import { defineStore, storeToRefs } from 'pinia'
-import { ref,  watch } from 'vue'
-import debounce from 'lodash/debounce';
+import { ref, watch } from 'vue'
+import debounce from 'lodash/debounce'
 
-
-import ProductRepository from '@/repositories/ProductRepository' 
-import CartRepository from '@/repositories/CartRepository' 
-import { useCartStore } from "@/stores/cartStore";
-import { useDomainSearchStore } from "@/stores/domain/domainSearchStore";
+import ProductRepository from '@/repositories/ProductRepository'
+import CartRepository from '@/repositories/CartRepository'
+import { useCartStore } from '@/stores/cartStore'
+import { useDomainSearchStore } from '@/stores/domain/domainSearchStore'
 
 export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
   const loading = ref(false)
@@ -25,7 +24,6 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
   const domainSelected = ref()
 
   async function getProducts() {
-   
     if (!category.value) return
     loadingProducts.value = true
     loading.value = true
@@ -39,7 +37,6 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
   }
 
   async function getProductConfiguration() {
-  
     if (!selectedProduct.value) return
     const domainSearchStore = useDomainSearchStore()
     const { domains } = storeToRefs(domainSearchStore)
@@ -52,11 +49,10 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
     // if(product.value?.promocode) options.promocode = product.value.promocode
 
     const res = await ProductRepository.getConfiguration(selectedProduct.value, options)
-    console.log(res);
+    console.log(res)
     product.value = res.product
     summary.value = res.summary
     loadingProductConfig.value = false
-    
   }
 
   async function getQuoteProduct() {
@@ -65,17 +61,16 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
     errorCoupon.value = false
     const res = await CartRepository.getQuote([product.value])
     summary.value = res.summary
-    const filteredErrors = res.items[0].error.filter(error => error.code === "coupon_not_exist" || error.code === 'coupon_not_applicable_1');
-    if(filteredErrors){
+    const filteredErrors = res.items[0].error.filter(
+      (error) => error.code === 'coupon_not_exist' || error.code === 'coupon_not_applicable_1'
+    )
+    if (filteredErrors) {
       errorCoupon.value = filteredErrors[0]?.message
-
-    }  
+    }
     loading.value = false
-
   }
- 
-  
-  async function order(router){
+
+  async function order(router) {
     loading.value = true
     const cartStore = useCartStore()
     product.value.itemType = 'product'
@@ -91,30 +86,44 @@ export const useServiceOrderStore = defineStore('serviceOrderStore', () => {
     cartStore.removeInCart(domain)
   }
 
-
- 
-
   watch(category, getProducts)
   watch(selectedProduct, async () => {
     loadingProduct.value = true
     product.value = null
-    
-   await getProductConfiguration()
-   loadingProduct.value = false
+
+    await getProductConfiguration()
+    loadingProduct.value = false
   })
 
+  const debouncedGetQuoteProduct = debounce(getQuoteProduct, 1000)
 
-  const debouncedGetQuoteProduct = debounce(getQuoteProduct, 1000);
+  watch(
+    product,
+    () => {
+      debouncedGetQuoteProduct()
+    },
+    { deep: true }
+  )
 
-
-
-  watch(product, () => {
-   debouncedGetQuoteProduct()
-  }, { deep: true });
-  
-
-  return { 
-    loading, loadingProducts, loadingProduct,loadingProductConfig, error, errorCoupon, category, products, selectedProduct, cycle,  product, summary, quote, domainSelected, 
-    getProducts, order, removeDomainSelected, getQuoteProduct, getProductConfiguration 
+  return {
+    loading,
+    loadingProducts,
+    loadingProduct,
+    loadingProductConfig,
+    error,
+    errorCoupon,
+    category,
+    products,
+    selectedProduct,
+    cycle,
+    product,
+    summary,
+    quote,
+    domainSelected,
+    getProducts,
+    order,
+    removeDomainSelected,
+    getQuoteProduct,
+    getProductConfiguration
   }
 })

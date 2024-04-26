@@ -8,41 +8,41 @@
 </template>
 
 <script>
-import { ref, nextTick } from 'vue';
-import VCharts from 'vue-echarts';
+import { ref, nextTick } from 'vue'
+import VCharts from 'vue-echarts'
 
 export default {
   props: {
     options: {
       type: Object,
       default() {
-        return {};
-      },
+        return {}
+      }
     },
     autoResize: {
       type: Boolean,
-      default: true,
+      default: true
     },
     width: {
       type: String,
-      default: '100%',
+      default: '100%'
     },
     height: {
       type: String,
-      default: '100%',
-    },
+      default: '100%'
+    }
   },
   setup() {
-    const renderChart = ref(false);
+    const renderChart = ref(false)
     nextTick(() => {
-      renderChart.value = true;
-    });
-    return { renderChart };
+      renderChart.value = true
+    })
+    return { renderChart }
   },
   components: {
-    VCharts,
-  },
-};
+    VCharts
+  }
+}
 </script>
 
 <style scoped></style>

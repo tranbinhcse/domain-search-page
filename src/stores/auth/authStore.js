@@ -6,7 +6,7 @@ export const useAuthStore = defineStore('authStore', {
   state: () => {
     return {
       loading: false,
-      error: false, 
+      error: false,
       user: null,
       token: null,
       refresh: null,
@@ -16,7 +16,7 @@ export const useAuthStore = defineStore('authStore', {
     }
   },
   actions: {
-    async login (credential) {
+    async login(credential) {
       this.loading = true
       const data = await post('login', credential)
       if (data.error) {
@@ -24,61 +24,59 @@ export const useAuthStore = defineStore('authStore', {
         this.loading = false
         return
       }
-      if(data.client.company){
+      if (data.client.company) {
         data.client.type = 'org'
       } else {
         data.client.type = 'ind'
       }
 
-      this.user = data.client 
-      this.token = data.token 
-      this.refresh = data.refresh 
-      this.currency = data.currency 
-      this.verify = data.verify 
+      this.user = data.client
+      this.token = data.token
+      this.refresh = data.refresh
+      this.currency = data.currency
+      this.verify = data.verify
       this.loading = false
       this.isLogin = true
     },
-    async logout(){
+    async logout() {
       await post('logout')
       this.user = null
       this.isLogin = false
-      this.token = null 
-      this.refresh = null 
-      this.currency = null 
-      this.verify = null 
+      this.token = null
+      this.refresh = null
+      this.currency = null
+      this.verify = null
     },
-    async checkemail(email){
-      const check = await post('checkemail', {email})
-      if (check.error){
-       this.error = {'email': check.error} 
+    async checkemail(email) {
+      const check = await post('checkemail', { email })
+      if (check.error) {
+        this.error = { email: check.error }
       } else {
         this.error.email = []
       }
-     
     },
-    async signup(data){
+    async signup(data) {
       this.loading = true
       // data.gender = data.gender == 'Nữ' ? 'Famale' : 'Male'
-      if(data.type == 'ind'){
+      if (data.type == 'ind') {
         data.company = false
-        data.companyname = '';
+        data.companyname = ''
       } else {
         data.company = true
       }
       const res = await post('signup', data)
       if (res.error) {
-
         this.error = formatError(res.error)
         this.loading = false
         return
       }
       this.user = res.client
-      this.token = res.token 
-      this.refresh = res.refresh 
-      this.currency = res.currency 
-      this.verify = res.verify 
+      this.token = res.token
+      this.refresh = res.refresh
+      this.currency = res.currency
+      this.verify = res.verify
       this.isLogin = true
-      return res;
+      return res
     }
   },
   persist: {

@@ -1,6 +1,8 @@
 <template>
-  <Table :headings="['', 'Dịch vụ', 'Trạng thái', 'Chu kỳ thanh toán', 'Thao tác']"
-    :headerClasses="['w-16', null, null, null, 'w-20']">
+  <Table
+    :headings="['', 'Dịch vụ', 'Trạng thái', 'Chu kỳ thanh toán', 'Thao tác']"
+    :headerClasses="['w-16', null, null, null, 'w-20']"
+  >
     <table-row>
       <table-col>
         <product-icon :variant="'inactive'" icon="cloud-hosting" />
@@ -10,7 +12,10 @@
         <p class="text-sm text-gray">14/12/2023</p>
       </table-col>
       <table-col>
-        <badge :variant="'inactive'" :labels="{ active: 'Hoạt động', inactive: 'Đã huỷ', processing: 'Đang xử lý' }" />
+        <badge
+          :variant="'inactive'"
+          :labels="{ active: 'Hoạt động', inactive: 'Đã huỷ', processing: 'Đang xử lý' }"
+        />
       </table-col>
       <table-col>
         <percent-bar :variant="'inactive'" :percent="40" />
@@ -28,7 +33,10 @@
         <p class="text-sm text-gray">14/12/2023</p>
       </table-col>
       <table-col>
-        <badge :variant="'active'" :labels="{ active: 'Hoạt động', inactive: 'Đã huỷ', processing: 'Đang xử lý' }" />
+        <badge
+          :variant="'active'"
+          :labels="{ active: 'Hoạt động', inactive: 'Đã huỷ', processing: 'Đang xử lý' }"
+        />
       </table-col>
       <table-col>
         <percent-bar :variant="'active'" :percent="60" />
@@ -46,7 +54,10 @@
         <p class="text-sm text-gray">14/12/2023</p>
       </table-col>
       <table-col>
-        <badge :variant="'processing'" :labels="{ active: 'Hoạt động', inactive: 'Đã huỷ', processing: 'Đang xử lý' }" />
+        <badge
+          :variant="'processing'"
+          :labels="{ active: 'Hoạt động', inactive: 'Đã huỷ', processing: 'Đang xử lý' }"
+        />
       </table-col>
       <table-col>
         <percent-bar :variant="'processing'" :percent="60" />
@@ -64,7 +75,10 @@
         <p class="text-sm text-gray">14/12/2023</p>
       </table-col>
       <table-col>
-        <badge :variant="'inactive'" :labels="{ active: 'Hoạt động', inactive: 'Đã huỷ', processing: 'Đang xử lý' }" />
+        <badge
+          :variant="'inactive'"
+          :labels="{ active: 'Hoạt động', inactive: 'Đã huỷ', processing: 'Đang xử lý' }"
+        />
       </table-col>
       <table-col>
         <percent-bar :variant="'inactive'" :percent="60" />
@@ -82,7 +96,10 @@
         <p class="text-sm text-gray">14/12/2023</p>
       </table-col>
       <table-col>
-        <badge :variant="'active'" :labels="{ active: 'Hoạt động', inactive: 'Đã huỷ', processing: 'Đang xử lý' }" />
+        <badge
+          :variant="'active'"
+          :labels="{ active: 'Hoạt động', inactive: 'Đã huỷ', processing: 'Đang xử lý' }"
+        />
       </table-col>
       <table-col>
         <percent-bar :variant="'active'" :percent="60" />
@@ -102,7 +119,6 @@ import Badge from '@/components/base/Badge.vue'
 import PercentBar from '@/components/base/PercentBar.vue'
 import ProductIcon from '@/components/general/ProductIcon.vue'
 import ActionButton from './ActionButton.vue'
-
 </script>
 
 <style></style>

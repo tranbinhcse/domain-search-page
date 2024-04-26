@@ -7,5 +7,11 @@
   "license": "Apache-2.0",
   "types": "vision.d.ts",
   "homepage": "http://mediapipe.dev",
-  "keywords": [ "AR", "ML", "Augmented", "MediaPipe", "MediaPipe Tasks" ]
+  "keywords": [
+    "AR",
+    "ML",
+    "Augmented",
+    "MediaPipe",
+    "MediaPipe Tasks"
+  ]
 }

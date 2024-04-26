@@ -4,9 +4,8 @@
     @mouseenter="tooltipOpen = true"
     @mouseleave="tooltipOpen = false"
     @focusin="tooltipOpen = true"
-    @focusout="tooltipOpen = false"    
+    @focusout="tooltipOpen = false"
   >
-  
     <slot name="button" />
     <div class="z-10 absolute" :class="positionOuterClasses(position)">
       <transition
@@ -18,14 +17,11 @@
         leave-to-class="opacity-0"
       >
         <div
-          v-show="tooltipOpen" class="rounded border overflow-hidden shadow-lg"
-          :class="[
-            colorClasses(bg),
-            sizeClasses(size),
-            positionInnerClasses(position)
-          ]"          
+          v-show="tooltipOpen"
+          class="rounded border overflow-hidden shadow-lg"
+          :class="[colorClasses(bg), sizeClasses(size), positionInnerClasses(position)]"
         >
-          <slot  name="content" />
+          <slot name="content" />
         </div>
       </transition>
     </div>
@@ -39,32 +35,31 @@ export default {
   name: 'Tooltip',
   props: ['bg', 'size', 'position'],
   setup() {
-
     const tooltipOpen = ref(false)
 
     const positionOuterClasses = (position) => {
       switch (position) {
         case 'right':
-          return 'left-full top-1/2 -translate-y-1/2';
+          return 'left-full top-1/2 -translate-y-1/2'
         case 'left':
-          return 'right-full top-1/2 -translate-y-1/2';
+          return 'right-full top-1/2 -translate-y-1/2'
         case 'bottom':
-          return 'top-full left-1/2 -translate-x-1/2';
+          return 'top-full left-1/2 -translate-x-1/2'
         default:
-          return 'bottom-full left-1/2 -translate-x-1/2';
+          return 'bottom-full left-1/2 -translate-x-1/2'
       }
     }
-    
+
     const sizeClasses = (size) => {
       switch (size) {
         case 'lg':
-          return 'min-w-72  p-3';
+          return 'min-w-72  p-3'
         case 'md':
-          return 'min-w-56 p-3';
+          return 'min-w-56 p-3'
         case 'sm':
-          return 'min-w-44 p-2';
+          return 'min-w-44 p-2'
         default:
-          return 'p-2';
+          return 'p-2'
       }
     }
 
@@ -77,27 +72,27 @@ export default {
         default:
           return 'text-slate-600 bg-white dark:bg-slate-700 dark:text-slate-100 border-slate-200 dark:border-slate-600'
       }
-    }      
+    }
 
     const positionInnerClasses = (position) => {
       switch (position) {
         case 'right':
-          return 'ml-2';
+          return 'ml-2'
         case 'left':
-          return 'mr-2';
+          return 'mr-2'
         case 'bottom':
-          return 'mt-2';
+          return 'mt-2'
         default:
-          return 'mb-2';
+          return 'mb-2'
       }
-    }    
+    }
 
     return {
       tooltipOpen,
       positionOuterClasses,
       sizeClasses,
       colorClasses,
-      positionInnerClasses,
+      positionInnerClasses
     }
   }
 }

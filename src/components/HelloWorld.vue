@@ -14,8 +14,14 @@
           <table-row>
             <table-col>fsdafas</table-col>
             <table-col>
-              <badge :variant="'inactive'" :labels="{inactive: 'Huy', processing: 'dang xu ly'}" />
-              <badge :variant="'processing'" :labels="{inactive: 'Huy', processing: 'dang xu ly'}" />
+              <badge
+                :variant="'inactive'"
+                :labels="{ inactive: 'Huy', processing: 'dang xu ly' }"
+              />
+              <badge
+                :variant="'processing'"
+                :labels="{ inactive: 'Huy', processing: 'dang xu ly' }"
+              />
             </table-col>
             <table-col>fsdafas</table-col>
           </table-row>

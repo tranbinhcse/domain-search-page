@@ -8,21 +8,15 @@
       </div>
     </div>
   </div>
-
-
-      
 </template>
 <script setup>
 import Breadcrumb from './Breadcrumb.vue'
 import { useAppStore } from '@/stores/appStore'
 const { toggleSidebar } = useAppStore()
 import DropdownMenu from './DropdownMenu.vue'
-import Button from './Button.vue';
-import ProfileMenu from '../general/user/ProfileMenu.vue';
-import ServiceMenu from '../general/ServiceMenu.vue';
-
-
-
+import Button from './Button.vue'
+import ProfileMenu from '../general/user/ProfileMenu.vue'
+import ServiceMenu from '../general/ServiceMenu.vue'
 </script>
 
 <style></style>

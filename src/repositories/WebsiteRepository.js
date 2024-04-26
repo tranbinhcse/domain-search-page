@@ -1,4 +1,4 @@
-import { get, post } from "@/core/apiClient"
+import { get, post } from '@/core/apiClient'
 
 const WebsiteRepository = {
   themes: async (options) => {
@@ -19,14 +19,11 @@ const WebsiteRepository = {
     const res = await get(`/tinosite/${id}/themes`)
     return res.list
   },
-  
+
   getUrlLogin: async (id, options) => {
     const res = await post(`/tinosite/${id}/autologin`, options)
     return res.login_url
   }
-
-  
-
 }
 
 export default WebsiteRepository

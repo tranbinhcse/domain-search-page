@@ -1,11 +1,15 @@
 <template>
-  <a-radio-group v-model="internalValue"
-    class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-x-4">
+  <a-radio-group
+    v-model="internalValue"
+    class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-x-4"
+  >
     <template v-for="cycle in periods" :key="cycle.value">
-      <a-radio :value="cycle.value" class="w-full p-0 m-0 ">
+      <a-radio :value="cycle.value" class="w-full p-0 m-0">
         <template #radio="{ checked }">
-          <a-space class="custom-radio-card w-full " :class="{ 'custom-radio-card-checked ': checked }">
-
+          <a-space
+            class="custom-radio-card w-full"
+            :class="{ 'custom-radio-card-checked ': checked }"
+          >
             <div>
               <div className="custom-radio-card-title">
                 {{ cycle.title }}
@@ -24,7 +28,6 @@
 </template>
 <script setup>
 import { ref, watch } from 'vue'
- 
 
 const props = defineProps({
   periods: Array,
@@ -33,21 +36,24 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue'])
 
-
 const internalValue = ref(props.modelValue)
-watch(internalValue, (newValue) => {
-  emit('update:modelValue', newValue)
-}, { deep: true })
+watch(
+  internalValue,
+  (newValue) => {
+    emit('update:modelValue', newValue)
+  },
+  { deep: true }
+)
 
-watch(() => props.modelValue, (newValue) => {
-  if (newValue !== internalValue.value) {
-    internalValue.value = newValue
-  }
-}, { deep: true })
-
-
+watch(
+  () => props.modelValue,
+  (newValue) => {
+    if (newValue !== internalValue.value) {
+      internalValue.value = newValue
+    }
+  },
+  { deep: true }
+)
 </script>
 
-
-<style scoped>
-</style>
+<style scoped></style>

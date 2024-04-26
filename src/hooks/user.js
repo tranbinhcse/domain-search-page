@@ -1,28 +1,28 @@
-import { useRouter } from 'vue-router';
-import { Message } from '@arco-design/web-vue';
+import { useRouter } from 'vue-router'
+import { Message } from '@arco-design/web-vue'
 
-import { useUserStore } from '@/stores';
-import { useAuthStore } from '@/stores';
+import { useUserStore } from '@/stores'
+import { useAuthStore } from '@/stores'
 
 export default function useUser() {
-  const router = useRouter();
-  const userStore = useUserStore();
-  const authStore = useAuthStore();
+  const router = useRouter()
+  const userStore = useUserStore()
+  const authStore = useAuthStore()
 
   const logout = async (logoutTo) => {
-    await authStore.logout();
-    const currentRoute = router.currentRoute.value;
-    Message.success('Thoát tài khoản thành công.');
+    await authStore.logout()
+    const currentRoute = router.currentRoute.value
+    Message.success('Thoát tài khoản thành công.')
     router.push({
       name: logoutTo && typeof logoutTo === 'string' ? logoutTo : 'login',
       query: {
         ...router.currentRoute.value.query,
-        redirect: currentRoute.name,
-      },
-    });
-  };
+        redirect: currentRoute.name
+      }
+    })
+  }
 
   return {
-    logout,
-  };
+    logout
+  }
 }

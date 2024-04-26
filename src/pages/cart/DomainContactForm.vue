@@ -1,297 +1,389 @@
 <template>
-  
-   
-   <a-form ref="formRef" :model="contacts" layout="vertical" class="mt-5" @submit="handleSubmit" :scrollToFirstError="true">
+  <a-form
+    ref="formRef"
+    :model="contacts"
+    layout="vertical"
+    class="mt-5"
+    @submit="handleSubmit"
+    :scrollToFirstError="true"
+  >
+    <a-form-item
+      field="registrant.type"
+      label="Loại chủ thể"
+      :rules="[{ required: true, message: 'type is required' }]"
+    >
+      <a-radio-group v-model="contacts.registrant.type" type="button">
+        <a-radio value="ind">Cá nhân</a-radio>
+        <a-radio value="org">Tổ chức</a-radio>
+      </a-radio-group>
+    </a-form-item>
 
-    <a-form-item field="registrant.type" label="Loại chủ thể"  :rules="[{required:true,message:'type is required'}]">
-        <a-radio-group v-model="contacts.registrant.type" type="button">
-          <a-radio value="ind">Cá nhân</a-radio>
-          <a-radio value="org">Tổ chức</a-radio>
-        </a-radio-group>
-      </a-form-item>
+    <h3 v-if="contacts.registrant.type === 'org'">Thông tin tổ chức</h3>
+    <a-form-item
+      v-if="contacts.registrant.type === 'org'"
+      field="registrant.companyname"
+      label="Tên tổ chức "
+      :rules="[
+        { required: true, message: 'name is required' },
+        { minLength: 5, message: 'must be greater than 5 characters' }
+      ]"
+      :validate-trigger="['change', 'input']"
+    >
+      <a-input
+        v-model="contacts.registrant.companyname"
+        placeholder="please enter your username..."
+      />
+    </a-form-item>
+    <a-form-item
+      v-if="contacts.registrant.type === 'org'"
+      field="registrant.taxid"
+      label="Mã số thuế "
+      :rules="[
+        { required: true, message: 'taxid is required' },
+        { minLength: 5, message: 'must be greater than 5 characters' }
+      ]"
+      :validate-trigger="['change', 'input']"
+    >
+      <a-input v-model="contacts.registrant.taxid" placeholder="please enter your taxid..." />
+    </a-form-item>
 
-      <h3  v-if="contacts.registrant.type === 'org'">Thông tin tổ chức</h3>
-      <a-form-item v-if="contacts.registrant.type === 'org'" field="registrant.companyname" label="Tên tổ chức "
-                   :rules="[{required:true,message:'name is required'},{minLength:5,message:'must be greater than 5 characters'}]"
-                   :validate-trigger="['change','input']"
+    <h3 v-if="contacts.registrant.type === 'org'">Thông tin người đại diện</h3>
+
+    <a-form-item label="Họ và tên" :content-flex="false" :merge-props="false">
+      <a-row :gutter="8">
+        <a-col :span="12">
+          <a-form-item
+            field="registrant.lastname"
+            validate-trigger="input"
+            :rules="[{ required: true, message: 'firstname is required' }]"
+            no-style
+          >
+            <a-input
+              v-model="contacts.registrant.lastname"
+              placeholder="Vui lòng nhập họ và tên lót..."
+            />
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item
+            field="registrant.firstname"
+            validate-trigger="input"
+            :rules="[{ required: true, message: 'lastname is required' }]"
+            no-style
+          >
+            <a-input v-model="contacts.registrant.firstname" placeholder="Vui lòng nhập tên..." />
+          </a-form-item>
+        </a-col>
+      </a-row>
+    </a-form-item>
+
+    <a-row :gutter="8">
+      <a-col :span="9">
+        <a-form-item
+          field="registrant.nationalid"
+          label="Số căn cước "
+          :rules="[
+            { required: true, message: 'nationalid is required' },
+            { minLength: 12, message: 'must be greater than 12 characters' },
+            { maxLength: 15, message: 'must be greater than 15 characters' },
+            { type: 'number', message: 'Please enter number' }
+          ]"
+          :validate-trigger="['change', 'input']"
+        >
+          <a-input
+            v-model="contacts.registrant.nationalid"
+            placeholder="Vui lòng nhập số cần cước..."
+          />
+        </a-form-item>
+      </a-col>
+
+      <a-col :span="9">
+        <a-form-item
+          field="registrant.birthday"
+          label="Ngày sinh"
+          :rules="[{ required: true, message: 'age is required' }]"
+        >
+          <a-date-picker
+            format="DD/MM/YYYY"
+            :model-value="$dayjs(contacts.registrant.birthday)"
+            value-format="DD/MM/YYYY"
+            locale="vi"
+            placeholder="Vui lòng chọn ngày sinh..."
+          />
+        </a-form-item>
+      </a-col>
+      <a-col :span="6">
+        <a-form-item
+          field="registrant.gender"
+          label="Giới tính"
+          :rules="[{ required: true, message: 'age is required' }]"
+        >
+          <a-radio-group v-model="contacts.registrant.gender">
+            <a-radio value="Male">{{ $t('Male') }}</a-radio>
+            <a-radio value="Female">{{ $t('Female') }}</a-radio>
+          </a-radio-group>
+        </a-form-item>
+      </a-col>
+    </a-row>
+
+    <a-row :gutter="8">
+      <a-col :span="12"> </a-col>
+    </a-row>
+
+    <a-row :gutter="8">
+      <a-col :span="12">
+        <a-form-item
+          field="registrant.phonenumber"
+          label="Số điện thoại"
+          :rules="[
+            { required: true, message: 'Số điện thoại is required' },
+            { minLength: 5, message: 'must be greater than 5 characters' }
+          ]"
+          :validate-trigger="['change', 'input']"
+        >
+          <a-input
+            v-model="contacts.registrant.phonenumber"
+            placeholder="Vui lòng nhập số điện thoại..."
+          />
+        </a-form-item>
+      </a-col>
+      <a-col :span="12">
+        <a-form-item
+          field="registrant.email"
+          label="Email"
+          :rules="[
+            {
+              required: true,
+              message: 'email is required'
+            },
+            {
+              minLength: 5,
+              message: 'must be greater than 5 characters'
+            },
+            {
+              type: 'email',
+              message: 'must be greater than 5 characters'
+            }
+          ]"
+          :validate-trigger="['change', 'input']"
+        >
+          <a-input
+            v-model="contacts.registrant.email"
+            placeholder="Vui lòng nhập địa chỉ email..."
+          />
+        </a-form-item>
+      </a-col>
+    </a-row>
+
+    <a-row :gutter="8">
+      <a-col :span="12">
+        <a-form-item
+          field="registrant.country"
+          label="Quốc gia"
+          :rules="[{ required: true, message: 'age is required' }]"
+        >
+          <a-select v-model="contacts.registrant.country" placeholder="Vui lòng chọn Quốc gia...">
+            <a-option value="VN">Việt Nam</a-option>
+          </a-select>
+        </a-form-item>
+      </a-col>
+      <a-col :span="12">
+        <a-form-item
+          field="registrant.state"
+          label="Tỉnh/Thành phố"
+          :rules="[{ required: true, message: 'Vui lòng chọn Tình/Thành phố...' }]"
+        >
+          <a-select
+            allow-search
+            v-model="contacts.registrant.state"
+            placeholder="Vui lòng chọn Tình/Thành phố..."
+            @change="handleSelectState(contacts.registrant.state)"
+          >
+            <a-option v-for="state in states" :key="state.id" :value="state.name">{{
+              state.name
+            }}</a-option>
+          </a-select>
+        </a-form-item>
+      </a-col>
+    </a-row>
+
+    <a-row :gutter="8">
+      <a-col :span="12">
+        <a-form-item
+          field="registrant.city"
+          label="Quận/Huyện"
+          :rules="[{ required: true, message: 'Vui lòng chọn Quận/Huyện' }]"
+        >
+          <a-select
+            allow-search
+            v-model="contacts.registrant.city"
+            placeholder="Vui lòng chọn Quận/Huyện..."
+            @change="getWards(contacts.registrant.city)"
+          >
+            <a-option v-for="city in cities" :key="city.id" :value="city.name">{{
+              city.name
+            }}</a-option>
+          </a-select>
+        </a-form-item>
+      </a-col>
+      <a-col :span="12">
+        <a-form-item
+          field="registrant.ward"
+          label="Phường/Xã"
+          :rules="[{ required: true, message: 'age is required' }]"
+        >
+          <a-select
+            allow-search
+            allow-create
+            v-model="contacts.registrant.ward"
+            placeholder="Vui lòng chọn Xã/Phường..."
+          >
+            <a-option v-for="ward in wards" :key="ward.id" :value="ward.name">{{
+              ward.name
+            }}</a-option>
+          </a-select>
+        </a-form-item>
+      </a-col>
+    </a-row>
+
+    <a-form-item
+      field="registrant.address1"
+      label="Address"
+      :rules="[
+        { required: true, message: 'address is required' },
+        { minLength: 5, message: 'must be greater than 5 characters' }
+      ]"
+      :validate-trigger="['change', 'input']"
+    >
+      <a-input
+        v-model="contacts.registrant.address1"
+        placeholder="Vui lòng nhập địa chỉ bao gồm số nhà, tên đường, thôn xóm..."
+      />
+    </a-form-item>
+
+    <a-form-item>
+      <a-button type="primary" html-type="submit" class="w-full"
+        >Xác nhận thông tin & tiếp tục</a-button
       >
-        <a-input v-model="contacts.registrant.companyname" placeholder="please enter your username..." />
-      </a-form-item>
-      <a-form-item  v-if="contacts.registrant.type === 'org'" field="registrant.taxid" label="Mã số thuế "
-                   :rules="[{required:true,message:'taxid is required'},{minLength:5,message:'must be greater than 5 characters'}]"
-                   :validate-trigger="['change','input']"
-      >
-        <a-input v-model="contacts.registrant.taxid" placeholder="please enter your taxid..." />
-      </a-form-item>
+    </a-form-item>
+    <a-form-item>
+      <p>Vui lòng kiểm tra thông tin và xác nhận để tiếp tục.</p>
+    </a-form-item>
+  </a-form>
+</template>
 
-      <h3  v-if="contacts.registrant.type === 'org'">Thông tin người đại diện</h3>
+<script setup>
+import { reactive, watch, onMounted, ref } from 'vue'
+import { useCartStore } from '@/stores/cartStore'
+import { useDomainRegisterStore } from '@/stores/domain/domainRegisterStore'
+import { useLocationStore } from '@/stores/locationStore'
+import { storeToRefs } from 'pinia'
+import { useRouter } from 'vue-router'
+import { useEkycStore } from '@/stores/ekycStore.js'
+import OcrUpload from '@/components/ekyc/OcrUpload.vue'
+import FaceDetect from '@/components/ekyc/FaceDetect.vue'
 
+const router = useRouter()
 
-     <a-form-item label="Họ và tên" :content-flex="false" :merge-props="false">
-       <a-row :gutter="8">
-           <a-col :span="12">
-           <a-form-item field="registrant.lastname" validate-trigger="input"
-                       :rules="[{required:true,message:'firstname is required'}]" no-style>
-               <a-input  v-model="contacts.registrant.lastname" placeholder="Vui lòng nhập họ và tên lót..." />
-           </a-form-item>
-           </a-col>
-           <a-col :span="12">
-           <a-form-item field="registrant.firstname" validate-trigger="input"
-                       :rules="[{required:true,message:'lastname is required'}]" no-style>
-               <a-input  v-model="contacts.registrant.firstname" placeholder="Vui lòng nhập tên..." />
-           </a-form-item>
-           </a-col>
-       </a-row>
-       </a-form-item>
+let faceDetectKey = 0
+const step = ref(1)
+const visibleFaceCheck = ref(false)
+const cardFrontImage = ref(null)
+const cardBackImage = ref(null)
 
-       <a-row :gutter="8">
-           <a-col :span="9">
-               <a-form-item field="registrant.nationalid" label="Số căn cước "
-                  :rules="[
-                   {required:true,message:'nationalid is required'},
-                   {minLength:12,message:'must be greater than 12 characters'},
-                   {maxLength:15,message:'must be greater than 15 characters'},
-                   {type:'number',message:'Please enter number'}
-                   ]"
-                  :validate-trigger="['change','input']"
-               >
-                   <a-input  v-model="contacts.registrant.nationalid" placeholder="Vui lòng nhập số cần cước..." />
-               </a-form-item>
-           </a-col>
-           
-           <a-col :span="9">
-                   <a-form-item field="registrant.birthday" label="Ngày sinh"
-                               :rules="[{required:true,message:'age is required'}]"
-                   >   
-                       <a-date-picker format="DD/MM/YYYY"  :model-value="$dayjs(contacts.registrant.birthday)" value-format="DD/MM/YYYY" locale="vi" placeholder="Vui lòng chọn ngày sinh..." />
-                   </a-form-item>
-           </a-col>
-           <a-col :span="6">
-               <a-form-item field="registrant.gender" label="Giới tính" :rules="[{required:true,message:'age is required'}]">
-                   <a-radio-group v-model="contacts.registrant.gender">
-                   <a-radio value="Male">{{ $t('Male') }}</a-radio>
-                   <a-radio value="Female">{{ $t('Female') }}</a-radio>
-                   </a-radio-group>
-               </a-form-item>
-           </a-col>
-       </a-row>
+const ekycStore = useEkycStore()
+const domainRegisterStore = useDomainRegisterStore()
+const locationStore = useLocationStore()
+const formRef = ref(null)
+const {
+  FaceDetection,
+  handleDataFront,
+  handleDataBack,
+  resetState,
+  errorFaceCheck,
+  handleCheckNationalId
+} = ekycStore
+const { ocrOK, isFree, ekyc } = storeToRefs(ekycStore)
 
+const { updateRegistrantFromUser, listDomainFree, resetDomainRegisterState } = domainRegisterStore
+const { contacts, errorContact, domainFree, confirmContact } = storeToRefs(domainRegisterStore)
 
-       <a-row :gutter="8">
-           
-           <a-col :span="12">
-                 
-           </a-col>
-       </a-row>
-       
-       
-       <a-row :gutter="8">
-           <a-col :span="12">
-                   <a-form-item field="registrant.phonenumber" label="Số điện thoại"
-                               :rules="[{required:true,message:'Số điện thoại is required'},{minLength:5,message:'must be greater than 5 characters'}]"
-                               :validate-trigger="['change','input']"
-                   >
-                       <a-input v-model="contacts.registrant.phonenumber" placeholder="Vui lòng nhập số điện thoại..." />
-                   </a-form-item>
-           </a-col>
-           <a-col :span="12">
-               <a-form-item field="registrant.email" label="Email"
-                  :rules="[
-                       {
-                           required:true,
-                           message:'email is required'
-                       },
-                       {
-                           minLength:5,
-                           message:'must be greater than 5 characters'
-                       },
-                       {
-                           type:'email',
-                           message:'must be greater than 5 characters'
-                       }
-                   ]"
-                  :validate-trigger="['change','input']"
-     >
-       <a-input v-model="contacts.registrant.email" placeholder="Vui lòng nhập địa chỉ email..." />
-     </a-form-item>
-           </a-col>
-       </a-row>
-      
-      
+const { states, cities, wards } = storeToRefs(locationStore)
+const { getStates, getCities, getWards } = locationStore
 
-       <a-row :gutter="8">
-           <a-col :span="12">
-               <a-form-item field="registrant.country" label="Quốc gia" :rules="[{required:true,message:'age is required'}]">
-                   <a-select v-model="contacts.registrant.country" placeholder="Vui lòng chọn Quốc gia...">
-                       <a-option value="VN">Việt Nam</a-option>
-                   </a-select>
-               </a-form-item>
-           </a-col>
-           <a-col :span="12">
-                  
-               <a-form-item field="registrant.state" label="Tỉnh/Thành phố" :rules="[{required:true,message:'Vui lòng chọn Tình/Thành phố...'}]">
-                   <a-select allow-search v-model="contacts.registrant.state" placeholder="Vui lòng chọn Tình/Thành phố..." @change="handleSelectState(contacts.registrant.state)">
-                       <a-option v-for="state in states" :key="state.id" :value="state.name">{{ state.name }}</a-option>
-                   </a-select>
-               </a-form-item>
-           </a-col>
-       </a-row>
+const domainRequestPromo = ref('')
 
-       <a-row :gutter="8">
-           <a-col :span="12">
-               <a-form-item field="registrant.city" label="Quận/Huyện" :rules="[{required:true,message:'Vui lòng chọn Quận/Huyện'}]">
-                   <a-select allow-search v-model="contacts.registrant.city" placeholder="Vui lòng chọn Quận/Huyện..."  @change="getWards(contacts.registrant.city)" >
-                       <a-option v-for="city in cities" :key="city.id" :value="city.name">{{ city.name }}</a-option>
-                   </a-select>
-               </a-form-item>
-           </a-col>
-           <a-col :span="12">
-               <a-form-item field="registrant.ward" label="Phường/Xã" :rules="[{required:true,message:'age is required'}]">
-                   <a-select allow-search allow-create v-model="contacts.registrant.ward" placeholder="Vui lòng chọn Xã/Phường...">
-                       <a-option v-for="ward in wards" :key="ward.id" :value="ward.name">{{ ward.name }}</a-option>
-                   </a-select>
-               </a-form-item>
-           </a-col>
-       </a-row>
+defineProps(['requestEkyc'])
 
+const CheckNationalId = async (idnumber) => {
+  await handleCheckNationalId(idnumber)
 
-       
-     <a-form-item field="registrant.address1" label="Address"
-                  :rules="[{required:true,message:'address is required'},{minLength:5,message:'must be greater than 5 characters'}]"
-                  :validate-trigger="['change','input']"
-     >
-       <a-input v-model="contacts.registrant.address1" placeholder="Vui lòng nhập địa chỉ bao gồm số nhà, tên đường, thôn xóm..." />
-     </a-form-item>
-     
-     <a-form-item>
-         <a-button type="primary" html-type="submit"  class="w-full">Xác nhận thông tin & tiếp tục</a-button>
-     </a-form-item>
-     <a-form-item>
-        <p>Vui lòng kiểm tra thông tin và xác nhận để tiếp tục.</p>
-     </a-form-item>
-   </a-form>
-   
- </template>
- 
- <script setup>
-   import { reactive, watch, onMounted, ref } from 'vue';
-   import { useCartStore } from '@/stores/cartStore';
-   import { useDomainRegisterStore } from '@/stores/domain/domainRegisterStore';
-   import { useLocationStore } from "@/stores/locationStore";
-   import { storeToRefs } from 'pinia'
-   import { useRouter } from 'vue-router'; 
-   import { useEkycStore } from "@/stores/ekycStore.js";
-   import OcrUpload from '@/components/ekyc/OcrUpload.vue';
-   import FaceDetect from '@/components/ekyc/FaceDetect.vue';
- 
-   const router = useRouter()
-
-   let faceDetectKey = 0;
-   const step = ref(1)
-   const visibleFaceCheck = ref(false)
-   const cardFrontImage = ref(null);
-   const cardBackImage = ref(null);
-
-   const ekycStore = useEkycStore()
-   const domainRegisterStore = useDomainRegisterStore()
-   const locationStore = useLocationStore()
-   const formRef = ref(null)
-   const { FaceDetection, handleDataFront, handleDataBack, resetState, errorFaceCheck, handleCheckNationalId} = ekycStore
-   const { ocrOK, isFree, ekyc }   = storeToRefs(ekycStore)
-
-   const { updateRegistrantFromUser,  listDomainFree,resetDomainRegisterState } = domainRegisterStore
-   const { contacts, errorContact, domainFree, confirmContact } = storeToRefs(domainRegisterStore)
-
-   const { states, cities, wards } = storeToRefs(locationStore)
-   const { getStates, getCities, getWards } = locationStore
-
-   const domainRequestPromo = ref('')
-
-   defineProps([
-       'requestEkyc'
-   ]);
-
-   const CheckNationalId = async(idnumber) => {
-       await handleCheckNationalId(idnumber);
-       
-       if (formRef.value) {
-           formRef.value.$el.scrollIntoView({
-               top: formRef.value.$el.offsetTop - 100,
-               behavior: 'smooth' // Optional: for smooth scrolling
-           });
-       }
-         
-   }
+  if (formRef.value) {
+    formRef.value.$el.scrollIntoView({
+      top: formRef.value.$el.offsetTop - 100,
+      behavior: 'smooth' // Optional: for smooth scrolling
+    })
+  }
+}
 
 //    const formattedBirthday = () => {
 //        return this.$dayjs(contacts.value.registrant.birthday)
 //    }
 
-   const handleDataImage = async(image) => {
-       const resp = await FaceDetection(image)
-       if ( !resp.success) { 
-           step.value = 1
-           contacts.value.registrant.ekyc = true;
-           confirmContact.value = false
-       
-       } else {
-           step.value = 4
-           
-           router.push({ path: '/cart/checkout' })
-       }
-   }
+const handleDataImage = async (image) => {
+  const resp = await FaceDetection(image)
+  if (!resp.success) {
+    step.value = 1
+    contacts.value.registrant.ekyc = true
+    confirmContact.value = false
+  } else {
+    step.value = 4
 
-   
- const handleSubmit = ({ values, errors }) => {
-    console.log(errors);
-   errorContact.value = false;
-     if (errors){
-       errorContact.value = true
-       confirmContact.value = false
-     } else {
-      if(!ekyc.value){
-           visibleFaceCheck.value = true
-           step.value = 3
-           confirmContact.value = true
-      } else {
-           confirmContact.value = true
+    router.push({ path: '/cart/checkout' })
+  }
+}
 
-           if(contacts.value.registrant.type === 'ind'){
-            contacts.value.registrant.companyname = null
-            contacts.value.registrant.company = false
-           }
+const handleSubmit = ({ values, errors }) => {
+  console.log(errors)
+  errorContact.value = false
+  if (errors) {
+    errorContact.value = true
+    confirmContact.value = false
+  } else {
+    if (!ekyc.value) {
+      visibleFaceCheck.value = true
+      step.value = 3
+      confirmContact.value = true
+    } else {
+      confirmContact.value = true
 
-
-          router.push({ path: '/cart/checkout' })
+      if (contacts.value.registrant.type === 'ind') {
+        contacts.value.registrant.companyname = null
+        contacts.value.registrant.company = false
       }
-     }
-   };
 
-   const handleSelectState = (value) => {
-       cities.value = [];
-       wards.value = [];
-       contacts.value.registrant.city = '';
-       contacts.value.registrant.ward = '';
-       getCities(value);
-   }
-   onMounted(async() => {
-       // syncFormWithContacts()
-       await resetState();
-       resetDomainRegisterState();
-       listDomainFree();
+      router.push({ path: '/cart/checkout' })
+    }
+  }
+}
 
-       await updateRegistrantFromUser();
+const handleSelectState = (value) => {
+  cities.value = []
+  wards.value = []
+  contacts.value.registrant.city = ''
+  contacts.value.registrant.ward = ''
+  getCities(value)
+}
+onMounted(async () => {
+  // syncFormWithContacts()
+  await resetState()
+  resetDomainRegisterState()
+  listDomainFree()
 
-       await getStates();
-       await getCities(contacts.value.registrant.state);
-       await getWards(contacts.value.registrant.city);
-      
-       
+  await updateRegistrantFromUser()
 
-   });  
-
- 
-
-  
- </script>
- 
+  await getStates()
+  await getCities(contacts.value.registrant.state)
+  await getWards(contacts.value.registrant.city)
+})
+</script>

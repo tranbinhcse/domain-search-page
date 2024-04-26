@@ -1,18 +1,17 @@
 {
-    "theme": "light",
-    "colorWeak": false,
-    "navbar": true,
-    "menu": true,
-    "topMenu": false,
-    "hideMenu": true,
-    "menuCollapse": false,
-    "footer": false,
-    "themeColor": "#f00",
-    "menuWidth": 269,
-    "globalSettings": false,
-    "device": "desktop",
-    "tabBar": false,
-    "menuFromServer": false,
-    "serverMenu": []
-  }
-  
+  "theme": "light",
+  "colorWeak": false,
+  "navbar": true,
+  "menu": true,
+  "topMenu": false,
+  "hideMenu": true,
+  "menuCollapse": false,
+  "footer": false,
+  "themeColor": "#f00",
+  "menuWidth": 269,
+  "globalSettings": false,
+  "device": "desktop",
+  "tabBar": false,
+  "menuFromServer": false,
+  "serverMenu": []
+}

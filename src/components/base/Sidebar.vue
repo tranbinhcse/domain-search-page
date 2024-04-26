@@ -1,11 +1,12 @@
 <template>
   <div
     class="left-0 top-0 h-full transition-all"
-    :class="{'left-[-280px]': !appState.showSidebar}"
+    :class="{ 'left-[-280px]': !appState.showSidebar }"
   >
     <ul>
       <li v-for="menu in menus" :key="menu.text">
-        <router-link :to="{ name: menu.routeName }"
+        <router-link
+          :to="{ name: menu.routeName }"
           class="menu flex px-3 py-3 my-1 rounded-md"
           active-class="active"
         >
@@ -18,7 +19,6 @@
 </template>
 
 <script setup>
-
 import { useAppStore } from '@/stores/appStore'
 const appState = useAppStore()
 
@@ -53,19 +53,19 @@ const menus = [
   { text: 'Download', routeName: 'hello', icon: downloadIcon },
   { text: 'FAQs', routeName: 'hello', icon: faqIcon }
 ]
-
-
-
 </script>
 
 <style scoped>
-.active, .menu:hover {
+.active,
+.menu:hover {
   @apply bg-green-200;
 }
-.active img, .menu:hover img {
+.active img,
+.menu:hover img {
   @apply grayscale-0;
 }
-.active span, .menu:hover span {
+.active span,
+.menu:hover span {
   @apply text-primary;
 }
 </style>

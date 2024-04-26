@@ -8,11 +8,7 @@
         <a-result v-if="!renderList.length" status="404">
           <template #subtitle> {{ $t('messageBox.noContent') }} </template>
         </a-result>
-        <List
-          :render-list="renderList"
-          :unread-count="unreadCount"
-          @item-click="handleItemClick"
-        />
+        <List :render-list="renderList" :unread-count="unreadCount" @item-click="handleItemClick" />
       </a-tab-pane>
       <template #extra>
         <a-button type="text" @click="emptyList">
@@ -24,85 +20,84 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed } from 'vue';
-import { useI18n } from 'vue-i18n';
+import { ref, reactive, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 // import {
 //   queryMessageList,
 //   setMessageStatus,
 //   MessageRecord,
 //   MessageListType,
 // } from '@/api/message';
-import useLoading from '@/hooks/loading';
-import List from './list.vue';
+import useLoading from '@/hooks/loading'
+import List from './list.vue'
 
-const loading = ref(true);
-const messageType = ref('message');
-const { t } = useI18n();
+const loading = ref(true)
+const messageType = ref('message')
+const { t } = useI18n()
 const messageData = reactive({
   renderList: [],
-  messageList: [],
-});
+  messageList: []
+})
 
 const tabList = [
   {
     key: 'message',
-    title: t('messageBox.tab.title.message'),
+    title: t('messageBox.tab.title.message')
   },
   {
     key: 'notice',
-    title: t('messageBox.tab.title.notice'),
+    title: t('messageBox.tab.title.notice')
   },
   {
     key: 'todo',
-    title: t('messageBox.tab.title.todo'),
-  },
-];
+    title: t('messageBox.tab.title.todo')
+  }
+]
 
 async function fetchSourceData() {
-  loading.value = true;
+  loading.value = true
   try {
-    const { data } = await queryMessageList();
-    messageData.messageList = data;
+    const { data } = await queryMessageList()
+    messageData.messageList = data
   } catch (err) {
     // Handle error
   } finally {
-    loading.value = false;
+    loading.value = false
   }
 }
 
 async function readMessage(data) {
-  const ids = data.map((item) => item.id);
-  await setMessageStatus({ ids });
-  fetchSourceData();
+  const ids = data.map((item) => item.id)
+  await setMessageStatus({ ids })
+  fetchSourceData()
 }
 
 const renderList = computed(() => {
-  return messageData.messageList.filter((item) => messageType.value === item.type);
-});
+  return messageData.messageList.filter((item) => messageType.value === item.type)
+})
 
 const unreadCount = computed(() => {
-  return renderList.value.filter((item) => !item.status).length;
-});
+  return renderList.value.filter((item) => !item.status).length
+})
 
 function getUnreadList(type) {
-  return messageData.messageList.filter((item) => item.type === type && !item.status);
+  return messageData.messageList.filter((item) => item.type === type && !item.status)
 }
 
 function formatUnreadLength(type) {
-  const list = getUnreadList(type);
-  return list.length ? `(${list.length})` : ``;
+  const list = getUnreadList(type)
+  return list.length ? `(${list.length})` : ``
 }
 
 function handleItemClick(items) {
-  if (renderList.value.length) readMessage([...items]);
+  if (renderList.value.length) readMessage([...items])
 }
 
 function emptyList() {
-  messageData.messageList = [];
+  messageData.messageList = []
 }
 
-fetchSourceData();
- 
+fetchSourceData()
 </script>
 
 <style scoped lang="less">

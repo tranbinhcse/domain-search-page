@@ -9,7 +9,7 @@ export const useInvoiceDetailStore = defineStore('invoiceDetailStore', () => {
   const transactions = ref([])
   const cancancelinvoice = ref(false)
   const paymentMethod = ref('')
- 
+
   async function getInvoice(invoiceId) {
     loading.value = true
     const res = await InvoiceRepository.find(invoiceId)
@@ -18,8 +18,16 @@ export const useInvoiceDetailStore = defineStore('invoiceDetailStore', () => {
     transactions.value = res.transactions
     cancancelinvoice.value = res.cancancelinvoice
     paymentMethod.value = res.invoice.payment_module
-    loading.value = false;
+    loading.value = false
   }
 
-  return { loading, invoice, invoiceBody, paymentMethod, transactions, cancancelinvoice, getInvoice }
+  return {
+    loading,
+    invoice,
+    invoiceBody,
+    paymentMethod,
+    transactions,
+    cancancelinvoice,
+    getInvoice
+  }
 })

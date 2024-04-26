@@ -17,7 +17,11 @@ export const useServiceStore = defineStore('serviceStore', () => {
 
   async function getServices() {
     loading.value = true
-    const res = await ServiceRepository.get(slug.value, { page: page.value, perpage: perpage.value, filter: filter.value })
+    const res = await ServiceRepository.get(slug.value, {
+      page: page.value,
+      perpage: perpage.value,
+      filter: filter.value
+    })
     services.value = res.services
     page.value = res.page
     records.value = res.records
@@ -30,12 +34,12 @@ export const useServiceStore = defineStore('serviceStore', () => {
   //   console.log(parentSlug);
   //   const res = await ServiceRepository.getSubCategories();
   //   const parentCategory = res.categories.find(category => category.slug === parentSlug);
-  
+
   //   if (!parentCategory) {
   //     console.error(`Parent category with slug ${parentSlug} not found`);
   //     return;
   //   }
-  
+
   //   let subCategories = [];
   //   if (parentCategory.subcategories) {
   //     // Nếu danh mục cha có subcategories, lấy subcategories đó
@@ -45,12 +49,22 @@ export const useServiceStore = defineStore('serviceStore', () => {
   //     const parentCategoryType = parentCategory.type;
   //     subCategories = res.categories.filter(category => category.type === parentCategoryType);
   //   }
-  
+
   //   subCategories.value = subCategories;
   // }
-  
 
-  watch([page, perpage, filter, slug], getServices, {deep: true})
-  
-  return { loading, page, perpage, records, totalPages, services, filter, getServices , slug, subCategories}
+  watch([page, perpage, filter, slug], getServices, { deep: true })
+
+  return {
+    loading,
+    page,
+    perpage,
+    records,
+    totalPages,
+    services,
+    filter,
+    getServices,
+    slug,
+    subCategories
+  }
 })
