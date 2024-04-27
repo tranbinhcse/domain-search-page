@@ -17,7 +17,7 @@
         <a-input v-model="credential.username" placeholder="Vui lòng nhập tài khoản..." />
       </a-form-item>
       <a-form-item field="password" label="Mật khẩu" :validate-trigger="['change', 'input']">
-        <a-input v-model="credential.password" placeholder="Vui lòng nhập mật khẩu..." />
+        <a-input-password v-model="credential.password" placeholder="Vui lòng nhập mật khẩu..." />
       </a-form-item>
       <a-form-item class="flex justify-between">
         <router-link class="text-sm underline hover:no-underline pr-5" to="/reset-password"
