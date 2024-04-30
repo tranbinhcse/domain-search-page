@@ -1,4 +1,5 @@
 import { fileURLToPath, URL } from 'node:url'
+import { mediapipe } from 'vite-plugin-mediapipe';
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
@@ -22,7 +23,7 @@ export default defineConfig({
   define: {
     'import.meta.env': import.meta.env,
   },
-  plugins: [vue()],
+  plugins: [vue(), mediapipe()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
