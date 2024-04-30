@@ -97,6 +97,7 @@ app.use(i18n)
 app.use(pinia)
 
 useAuthMiddleware(router)
+
 app.use(router)
 
 app.mount('#app')

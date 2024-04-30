@@ -87,23 +87,15 @@ const handleGetUserMedia = async () => {
   randomActionSequenceRef.value = getActionsSequence()
 
   faceMesh = new FaceMesh({
-    locateFile: (file) => {
-      return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`;
-    },
-  });
-
-
-  // await faceMesh.initialize()
+    locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`
+  })
 
   faceMesh.setOptions({
     selfieMode: true,
     maxNumFaces: 1,
     refineLandmarks: true
   })
-
-  await faceMesh.initialize().then(() => {
-     return faceMesh;
-   });
+  await faceMesh.initialize()
 
   const timer = setIntervalAsync(async () => {
     // Setting up callback for face detection for the first time
