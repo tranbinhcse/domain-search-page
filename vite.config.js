@@ -5,7 +5,7 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  // base: '/test-page2',
+  // base: '/test-page',
   optimizeDeps: {
     exclude: ['@mediapipe/face_detection'],
   },

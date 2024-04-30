@@ -36,6 +36,10 @@ const DomainRepository = {
   whois: async (domain) => {
     const res = await get(`whois/${domain}`)
     return res
+  },
+  getDNS: async (domainId) => {
+    const res = await get(`domain/${domainId}/dns`)
+    return res
   }
 }
 
