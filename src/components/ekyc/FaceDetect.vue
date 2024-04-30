@@ -90,10 +90,19 @@ const handleGetUserMedia = async () => {
     locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`
   })
 
+  // faceMesh = new FaceMesh({
+  //     locateFile: (path, base) => {
+  //       return `${base}/node_modules/@mediapipe/face_mesh/${path}`;
+  //     }
+  //   });
+
+
   faceMesh.setOptions({
     selfieMode: true,
     maxNumFaces: 1,
-    refineLandmarks: true
+    refineLandmarks: true,
+    runtime: 'mediapipe',
+    solutionPath: 'https://unpkg.com/@mediapipe/face_mesh',
   })
   await faceMesh.initialize()
 
