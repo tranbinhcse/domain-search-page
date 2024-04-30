@@ -86,25 +86,39 @@ let faceMesh = null
 const handleGetUserMedia = async () => {
   randomActionSequenceRef.value = getActionsSequence()
 
-  faceMesh = new FaceMesh({
-    locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`
-  })
+
+
+  if (faceMesh == null || faceMesh == undefined) {
+      faceMesh = new FaceMesh({
+        locateFile: (file) => {
+          return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`;
+        },
+      });
+
+      faceMesh.setOptions({
+        maxNumFaces: 1,
+        refineLandmarks: true,
+        minDetectionConfidence: 0.5,
+        minTrackingConfidence: 0.5,
+      });
+    }
+
 
   // faceMesh = new FaceMesh({
-  //     locateFile: (path, base) => {
-  //       return `${base}/node_modules/@mediapipe/face_mesh/${path}`;
-  //     }
-  //   });
+  //   locateFile: (file) => {
+  //     return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`;
+  //   },
+  // });
 
+  // await faceMesh.initialize();
 
-  faceMesh.setOptions({
-    selfieMode: true,
-    maxNumFaces: 1,
-    refineLandmarks: true,
-    runtime: 'mediapipe',
-    solutionPath: 'https://unpkg.com/@mediapipe/face_mesh',
-  })
-  await faceMesh.initialize()
+  // faceMesh.setOptions({
+  //   selfieMode: true,
+  //   maxNumFaces: 1,
+  //   refineLandmarks: true,
+  //   runtime: 'mediapipe',
+  //   solutionPath: 'https://unpkg.com/@mediapipe/face_mesh',
+  // }) 
 
   const timer = setIntervalAsync(async () => {
     // Setting up callback for face detection for the first time
