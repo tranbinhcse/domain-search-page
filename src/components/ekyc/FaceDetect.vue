@@ -93,13 +93,17 @@ const handleGetUserMedia = async () => {
   });
 
 
-  await faceMesh.initialize()
+  // await faceMesh.initialize()
 
   faceMesh.setOptions({
     selfieMode: true,
     maxNumFaces: 1,
     refineLandmarks: true
   })
+
+  await faceMesh.initialize().then(() => {
+     return faceMesh;
+   });
 
   const timer = setIntervalAsync(async () => {
     // Setting up callback for face detection for the first time
