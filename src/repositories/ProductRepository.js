@@ -21,13 +21,14 @@ const ProductRepository = {
         config: {
           // addons: addonFields,
           forms: formFields,
-          product: productFields
+          product: productFields,
         },
         domain_options: domainOptionsFields,
         recurring_price,
         setup,
         cycle,
-        promocode
+        promocode,
+        os_templates
       }
     } = await get(url)
 
@@ -41,11 +42,47 @@ const ProductRepository = {
       recurring_price,
       setup,
       cycle,
-      promocode
+      promocode,
+      os_templates
       // subProductFields
     }
 
     const custom = {}
+
+    
+    const os = {};
+
+  formFields.forEach(field => {
+      // Nếu đây là một mục liên quan đến hệ điều hành và có mô tả
+      if (field.metadata && field.metadata.variable == 'os') {
+          const { description, items } = field;
+          const groupedItems = {};
+console.log(description);
+          // Duyệt qua các mục và nhóm chúng dựa trên mô tả
+          items.forEach(item => {
+              const { title, description } = item;
+              if (description !== "") {
+                  if (!groupedItems[description]) {
+                      groupedItems[description] = [];
+                  }
+                  groupedItems[description].push(item);
+              } else {
+                  groupedItems[title] = [item];
+              }
+          });
+
+          // Thêm các nhóm vào os
+          Object.keys(groupedItems).forEach(description => {
+              if (!os[description]) {
+                os[description] = [];
+              }
+              os[description] = [...os[description], ...groupedItems[description]];
+          });
+      }
+  });
+
+  product.os_templates = os
+
 
     formFields.forEach(({ id, type, firstItemId, config: { initialval } }) => {
       switch (type) {
@@ -61,6 +98,7 @@ const ProductRepository = {
 
     product.cycle = 'a'
     product.custom = custom
+  
 
     const addon = {}
     const addon_cycles = {}

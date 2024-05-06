@@ -1,4 +1,10 @@
 <template>
+
+
+ 
+
+
+
   <div class="max-w-7xl mx-auto mb-[150px] px-5">
     <div class="mb-5 py-5">
       <Heading text="Chọn dịch vụ" class="text-primary uppercase text-3xl font-bold pb-2 mb-2" />
@@ -65,12 +71,11 @@
         </div>
       </Box>
 
-      <Box v-if="product.formFields.length > 0" :loading="loadingProductConfig">
+      <Box>
         <Heading
-          text="Cấu hình sản phẩm"
+          text="Hệ điều hành"
           class="text-primary uppercase text-3xl font-bold pb-2 mb-2"
         />
-
         <div
           v-for="{
             id,
@@ -78,13 +83,40 @@
             type,
             title,
             items,
+            metadata,
             config: { minvalue, maxvalue, step }
           } in product.formFields"
           :key="id"
         >
-          <p class="font-bold mt-5">{{ title }}</p>
+      
+          <div v-if="metadata.variable == 'os'">
+            <OsSelect v-model="product.custom[id]" :items="product.os_templates"/>
+          </div>
+        </div>
+      </Box>
 
-          <div v-if="type == 'radio'">
+      <Box v-if="product.formFields.length > 0" :loading="loadingProductConfig">
+        <Heading
+          text="Cấu hình sản phẩm"
+          class="text-primary uppercase text-3xl font-bold pb-2 mb-2"
+        />
+
+       
+        <div
+          v-for="{
+            id,
+            firstItemId,
+            type,
+            title,
+            items,
+            metadata,
+            config: { minvalue, maxvalue, step }
+          } in product.formFields"
+          :key="id"
+        >
+          <p v-if="metadata.variable != 'os'" class="font-bold mt-5">{{ title }}</p>
+
+          <div v-if="type == 'radio' && metadata.variable != 'os'">
             <a-radio-group
               v-model="product.custom[id]"
               size="mini"
@@ -166,7 +198,7 @@
 
           <a-select
             v-if="type == 'select' || type == 'servergroupselector' || type == 'sshkeyselect'"
-            :style="{ width: '320px' }"
+           
             v-model="product.custom[id]"
             placeholder="Please select ..."
             allow-clear
@@ -231,6 +263,7 @@ import { Message } from '@arco-design/web-vue'
 import { SERVICES } from '@/config'
 import SelectServiceCategory from '@/components/service/SelectServiceCategory.vue'
 import ProductSelect from '@/components/service/ProductSelect.vue'
+import OsSelect from '@/components/service/OsSelect.vue'
 import PeriodSelect from '@/components/service/PeriodSelect.vue'
 import DomainOptions from '@/components/service/DomainOptions.vue'
 import Slider from '@/components/base/Slider.vue'
@@ -327,4 +360,7 @@ const scrollTosearchOption = () => {
     window.scrollTo({ top: topPosition, behavior: 'smooth' })
   }
 }
+
+ 
+
 </script>
