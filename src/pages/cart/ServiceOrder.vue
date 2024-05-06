@@ -84,7 +84,7 @@
             title,
             items,
             metadata,
-            config: { minvalue, maxvalue, step }
+            config: { minvalue, maxvalue, step, initialval }
           } in product.formFields"
           :key="id"
         >
@@ -110,7 +110,7 @@
             title,
             items,
             metadata,
-            config: { minvalue, maxvalue, step }
+            config: { minvalue, maxvalue, step, initialval, showsteps }
           } in product.formFields"
           :key="id"
         >
@@ -192,8 +192,9 @@
             :min="minvalue"
             :max="maxvalue"
             :step="step"
+            :default-value="initialval"
+            :unit="title"
           />
-
           <!-- <a-slider v-if="type == 'slider'" show-tooltip show-input show-ticks v-model.number="product.custom[id][firstItemId]"  :min="minvalue" :max="maxvalue" :step="step" /> -->
 
           <a-select
