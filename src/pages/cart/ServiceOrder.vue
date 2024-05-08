@@ -71,11 +71,8 @@
         </div>
       </Box>
 
-      <Box>
-        <Heading
-          text="Hệ điều hành"
-          class="text-primary uppercase text-3xl font-bold pb-2 mb-2"
-        />
+    
+        
         <div
           v-for="{
             id,
@@ -88,12 +85,19 @@
           } in product.formFields"
           :key="id"
         >
-      
-          <div v-if="metadata.variable == 'os'">
+        <div v-if="metadata.variable == 'os'"> 
+          <Box>
+          <Heading
+            text="Hệ điều hành"
+            class="text-primary uppercase text-3xl font-bold pb-2 mb-2"
+          />
+          
             <OsSelect v-model="product.custom[id]" :items="product.os_templates"/>
+          </Box>
           </div>
+      
         </div>
-      </Box>
+     
 
       <Box v-if="product.formFields.length > 0" :loading="loadingProductConfig">
         <Heading
@@ -186,17 +190,21 @@
             />
           </div>
 
-          <Slider
+       
+
+          <a-slider
             v-if="type == 'slider'"
             v-model.number="product.custom[id][firstItemId]"
             :min="minvalue"
             :max="maxvalue"
-            :step="step"
-            :default-value="initialval"
-            :unit="title"
-          />
-          <!-- <a-slider v-if="type == 'slider'" show-tooltip show-input show-ticks v-model.number="product.custom[id][firstItemId]"  :min="minvalue" :max="maxvalue" :step="step" /> -->
+            :step="step" 
+            show-ticks show-tooltip  /> 
 
+            
+         <template v-if="type == 'slider'">
+          {{ product.custom[id][firstItemId] }}
+         </template>
+         
           <a-select
             v-if="type == 'select' || type == 'servergroupselector' || type == 'sshkeyselect'"
            

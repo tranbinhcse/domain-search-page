@@ -5,24 +5,14 @@
       :min="min"
       :max="max"
       :step="step"
-      show-ticks show-tooltip />
-      {{ internalValue }}
-      <a-input-number 
-      size="mini"
-      :model-value="internalValue" 
-      :default-value="internalValue" 
-      :min="min":max="max"  :step="step" 
-      mode="button"
-      :style="{'max-width':'120px'}" 
-      @input="(value) => updateValue(value)">
-        
-        </a-input-number>
+      @change="(value) => updateValue(value)"
+      show-ticks show-tooltip show-input /> 
 
      
   </span>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 
 const props = defineProps({
   modelValue: { type: Number, default: 1 },
@@ -32,9 +22,14 @@ const props = defineProps({
   unit : { type: String, default: '' }
 })
 const emit = defineEmits(['update:modelValue'])
-const internalValue = ref(props.modelValue)
 const updateValue = (value) => {
+  console.log(value);
   emit('update:modelValue', value)
   internalValue.value = value
 }
+
+onMounted(() => {
+  internalValue.value = props.modelValue
+})  
+
 </script>

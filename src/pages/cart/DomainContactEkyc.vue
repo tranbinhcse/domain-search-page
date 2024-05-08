@@ -10,27 +10,7 @@
       >
     </a-form-item>
   </a-form>
-
-  <a-row>
-    <a-col :span="24">
-      <a-modal v-model:visible="visibleFaceCheck" @ok="handleOk" @cancel="handleCancel">
-        <template #title>Xác thực sinh trắc học</template>
-        <a-row :gutter="8">
-          <a-col :span="24" v-if="errorFaceCheck">
-            <a-alert>{{ errorFaceCheck }}</a-alert>
-          </a-col>
-          <a-col :span="24">
-            <FaceDetect
-              v-if="step === 3"
-              :key="faceDetectKey"
-              @DataImage="handleDataImage"
-              :faceOK="faceOK"
-            />
-          </a-col>
-        </a-row>
-      </a-modal>
-    </a-col>
-  </a-row>
+ 
 
   <a-form
     ref="formRef"
@@ -43,22 +23,29 @@
   >
     <a-row :gutter="8" v-if="!ocrOK && !ekyc" class="mb-5">
       <a-col :span="24">
-        <p class="p-2">
+        <a-alert type="error">
           Chủ thể chưa xác thực EKYC. Bạn cần xác thực EKYC để đăng ký tên miền trong giỏ hàng.
-        </p>
+        </a-alert>
       </a-col>
-      <a-col :span="12">
-        <div class="flex-1">
-          <OcrUpload type="cardFront" v-model="cardFrontImage" @dataImageCard="handleDataFront" />
-        </div>
-      </a-col>
-      <a-col :span="12">
-        <div class="flex-1">
-          <OcrUpload type="cardBack" v-model="cardBackImage" @dataImageCard="handleDataBack" />
-        </div>
+      <a-col :span="24">
+        <a-modal v-model:visible="visibleQrCodeModel" :footer="false" class="text-center" @cancel="handleCloseQrCode">
+          <template #title>
+            Quét mã QrCode bằng thiết bị di động có camera để thự hiện eKYC thông tin chủ thể tên miền nhanh chóng.
+          </template>
+          <div class="flex items-center justify-center" >
+            <QRCodeVue3 :dotsOptions="{color: '#16a984'}" :width="300":height="300" :value="`https://kyc.info.vn/ekyc.php?token=${ekycToken}&desktop=true`" />
+          </div>
+        </a-modal>
       </a-col>
     </a-row>
-
+    <a-row v-else>
+      <a-col :span="24">
+        <a-alert type="success" class="mb-4" title="Chúc mừng" >
+          
+          Chủ thể của bạn đã được xác thực eKYC hoàn tất, vui lòng kiểm tra địa chỉ và thông tin liên hệ bên dưới và tiếp tục quá trình đăng ký tên miền.
+        </a-alert>
+      </a-col>
+    </a-row>
     <a-input v-model="contacts.registrant.type" type="hidden" class="sr-only" />
     <a-form-item label="Họ và tên" :content-flex="false" :merge-props="false">
       <a-row :gutter="8">
@@ -305,6 +292,9 @@ import { useRouter } from 'vue-router'
 import { useEkycStore } from '@/stores/ekycStore.js'
 import OcrUpload from '@/components/ekyc/OcrUpload.vue'
 import FaceDetect from '@/components/ekyc/FaceDetect.vue'
+import { isMobile } from 'mobile-device-detect';
+
+import QRCodeVue3 from "qrcode-vue3";
 
 const router = useRouter()
 
@@ -326,7 +316,7 @@ const {
   errorFaceCheck,
   handleCheckNationalId
 } = ekycStore
-const { ocrOK, ekyc } = storeToRefs(ekycStore)
+const { ocrOK, ekyc,  ekycToken } = storeToRefs(ekycStore)
 
 const { updateRegistrantFromUser, listDomainFree, resetDomainRegisterState } = domainRegisterStore
 const { contacts, errorContact, confirmContact } = storeToRefs(domainRegisterStore)
@@ -334,19 +324,29 @@ const { contacts, errorContact, confirmContact } = storeToRefs(domainRegisterSto
 const { states, cities, wards } = storeToRefs(locationStore)
 const { getStates, getCities, getWards } = locationStore
 
-// const domainRequestPromo = ref('')
+const visibleQrCodeModel = ref(false)
 
 defineProps(['requestEkyc'])
 
 const CheckNationalId = async (idnumber) => {
   await handleCheckNationalId(idnumber)
-
   if (formRef.value) {
     formRef.value.$el.scrollIntoView({
       top: formRef.value.$el.offsetTop - 100,
       behavior: 'smooth' // Optional: for smooth scrolling
     })
   }
+
+  if(isMobile && ekycToken.value){
+    window.open('https://kyc.info.vn/ekyc.php?token='+ekycToken.value+'&mobile=true', '_blank');
+  }
+  visibleQrCodeModel.value = true;
+}
+
+const handleCloseQrCode = () => {
+  visibleQrCodeModel.value = false
+  ekycToken.value = null
+  ekyc.value = 'check'
 }
 
 const handleDataImage = async (image) => {
@@ -358,7 +358,6 @@ const handleDataImage = async (image) => {
     contacts.value.registrant.type = 'ind'
   } else {
     step.value = 4
-
     router.push({ path: '/cart/checkout' })
   }
 }
@@ -389,13 +388,21 @@ const handleSelectState = (value) => {
   contacts.value.registrant.ward = ''
   getCities(value)
 }
+
+async function scanForEkycToken() {
+  if (ekycToken.value) {
+    await CheckNationalId(contacts.value.registrant.nationalid)
+  } else {
+    visibleQrCodeModel.value = false
+  }
+  setTimeout(scanForEkycToken, 5000)
+}
+
 onMounted(() => {
-  // syncFormWithContacts()
+  scanForEkycToken()
   resetDomainRegisterState()
   listDomainFree()
   getStates()
-  // getCities(contacts.registrant.state);
-  // getWards(contacts.registrant.city);
   updateRegistrantFromUser()
   resetState()
 })

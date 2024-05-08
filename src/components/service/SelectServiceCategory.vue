@@ -8,9 +8,10 @@
         <template #radio="{ checked }">
           <a-space
             align="start"
-            class="custom-radio-card w-full"
+            class="flex flex-col border border-gray-300 p-4 rounded-lg cursor-pointer bg-white dark:bg-slate-700 text-center w-full items-center"
             :class="{ 'custom-radio-card-checked ': checked }"
           >
+          <Icon class="cate-icon" :icon="`${category.icon}`" :ssr="true" width="40" height="40" />
             <div>
               <div className="custom-radio-card-title">
                 {{ category.name }}
@@ -28,6 +29,7 @@
 </template>
 <script setup>
 import { onMounted, ref, watch, watchEffect } from 'vue'
+import { Icon } from '@iconify/vue'
 const props = defineProps({
   categories: Array,
   modelValue: Object
@@ -152,4 +154,11 @@ selectFirstItemIfNotMatched()
 .custom-radio-card-checked .custom-radio-card-mask-dot {
   background-color: rgb(var(--primary-6));
 }
+
+
+.cate-icon{
+  color: rgb(var(--primary-6));
+}
+
+
 </style>

@@ -17,7 +17,8 @@ export const useEkycStore = defineStore({
     faceOK: false,
     errorFaceCheck: false,
     isFree: false,
-    ekyc: 'check'
+    ekyc: 'check', 
+    ekycToken:  null
   }),
   actions: {
     resetState() {
@@ -98,8 +99,10 @@ export const useEkycStore = defineStore({
         if (checkAge('01-01-2004')) {
           this.isFree = true
         }
+        this.ekycToken = null
       } else {
         this.ocrOK = false
+        this.ekycToken = data.token
         contacts.value.registrant.ekyc = false
         this.ekyc = false
       }
