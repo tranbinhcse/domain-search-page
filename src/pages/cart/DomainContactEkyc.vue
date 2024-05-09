@@ -33,7 +33,8 @@
             Quét mã QrCode bằng thiết bị di động có camera để thự hiện eKYC thông tin chủ thể tên miền nhanh chóng.
           </template>
           <div class="flex items-center justify-center" >
-            <QRCodeVue3 :dotsOptions="{color: '#16a984'}" :width="300":height="300" :value="`https://kyc.info.vn/ekyc.php?token=${ekycToken}&desktop=true`" />
+           
+            <QRCodeVue3 :dotsOptions="{color: '#16a984'}" :width="300":height="300" :value="`https://kyc.info.vn/ekyc.php?token=${ekycToken}&desktop=true&request_id=${request_id}`" />
           </div>
         </a-modal>
       </a-col>
@@ -316,7 +317,7 @@ const {
   errorFaceCheck,
   handleCheckNationalId
 } = ekycStore
-const { ocrOK, ekyc,  ekycToken } = storeToRefs(ekycStore)
+const { ocrOK, ekyc,  ekycToken, request_id } = storeToRefs(ekycStore)
 
 const { updateRegistrantFromUser, listDomainFree, resetDomainRegisterState } = domainRegisterStore
 const { contacts, errorContact, confirmContact } = storeToRefs(domainRegisterStore)
@@ -328,8 +329,12 @@ const visibleQrCodeModel = ref(false)
 
 defineProps(['requestEkyc'])
 
+
+
+
 const CheckNationalId = async (idnumber) => {
-  await handleCheckNationalId(idnumber)
+ 
+  await handleCheckNationalId(idnumber, request_id.value)
   if (formRef.value) {
     formRef.value.$el.scrollIntoView({
       top: formRef.value.$el.offsetTop - 100,
@@ -347,6 +352,7 @@ const handleCloseQrCode = () => {
   visibleQrCodeModel.value = false
   ekycToken.value = null
   ekyc.value = 'check'
+  resetState()
 }
 
 const handleDataImage = async (image) => {
@@ -391,12 +397,18 @@ const handleSelectState = (value) => {
 
 async function scanForEkycToken() {
   if (ekycToken.value) {
-    await CheckNationalId(contacts.value.registrant.nationalid)
+    await CheckNationalId(contacts.value.registrant.nationalid, request_id.value)
+    
   } else {
     visibleQrCodeModel.value = false
   }
+
   setTimeout(scanForEkycToken, 5000)
+  
 }
+
+
+
 
 onMounted(() => {
   scanForEkycToken()

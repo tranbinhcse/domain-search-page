@@ -8,8 +8,8 @@ const EkycRepository = {
     const faceid = await post(`/ekyc/faceid/verification`, { request_id, image_live, token })
     return faceid
   },
-  checkNationalId: async (idnumber) => {
-    const data = await post(`/ekyc/checkid`, { idnumber })
+  checkNationalId: async (idnumber, session_id) => {
+    const data = await post(`/ekyc/checkid`, { idnumber, session_id })
     return data
   }
 }

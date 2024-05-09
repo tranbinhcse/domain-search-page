@@ -6,7 +6,7 @@ import { useDomainRegisterStore } from '@/stores/domain/domainRegisterStore'
 export const useEkycStore = defineStore({
   id: 'ekycStore',
   state: () => ({
-    request_id: `TNG-${Math.floor(new Date().getTime() / 1000)}`,
+    request_id: `TNGYOUTH${Math.floor(new Date().getTime() / 1000)}`,
     loading: false,
     ocrData: {
       cardFront: {},
@@ -18,11 +18,12 @@ export const useEkycStore = defineStore({
     errorFaceCheck: false,
     isFree: false,
     ekyc: 'check', 
-    ekycToken:  null
+    ekycToken:  null,
+   
   }),
   actions: {
     resetState() {
-      this.request_id = `TNG-${Math.floor(new Date().getTime() / 1000)}`
+      this.request_id = `TNGYOUTH${Math.floor(new Date().getTime() / 1000)}`
       this.loading = false
       this.ocrData = {
         cardFront: {},
@@ -34,6 +35,9 @@ export const useEkycStore = defineStore({
       this.errorFaceCheck = false
       this.isFree = false
     },
+  
+
+
     handleDataFront(data) {
       this.isFree = false
       const domainRegisterStore = useDomainRegisterStore()
@@ -77,8 +81,8 @@ export const useEkycStore = defineStore({
       this.loading = false
       return data
     },
-    async handleCheckNationalId(idnumber) {
-      const data = await EkycRepository.checkNationalId(idnumber)
+    async handleCheckNationalId(idnumber, request_id) {
+      const data = await EkycRepository.checkNationalId(idnumber, request_id)
       const domainRegisterStore = useDomainRegisterStore()
       const { contacts } = storeToRefs(domainRegisterStore)
       if (data.success) {
