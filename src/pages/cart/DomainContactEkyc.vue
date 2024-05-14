@@ -30,10 +30,9 @@
       <a-col :span="24">
         <a-modal v-model:visible="visibleQrCodeModel" :footer="false" class="text-center" @cancel="handleCloseQrCode">
           <template #title>
-            Quét mã QrCode bằng thiết bị di động có camera để thự hiện eKYC thông tin chủ thể tên miền nhanh chóng.
+            Quét mã QrCode bằng thiết bị di động có camera để thực hiện eKYC thông tin chủ thể tên miền nhanh chóng.
           </template>
           <div class="flex items-center justify-center" >
-           
             <QRCodeVue3 :dotsOptions="{color: '#16a984'}" :width="300":height="300" :value="`https://kyc.info.vn/ekyc.php?token=${ekycToken}&desktop=true&request_id=${request_id}`" />
           </div>
         </a-modal>
@@ -296,6 +295,7 @@ import FaceDetect from '@/components/ekyc/FaceDetect.vue'
 import { isMobile } from 'mobile-device-detect';
 
 import QRCodeVue3 from "qrcode-vue3";
+import { watch } from 'vue'
 
 const router = useRouter()
 
@@ -343,7 +343,7 @@ const CheckNationalId = async (idnumber) => {
   }
 
   if(isMobile && ekycToken.value){
-    window.open('https://kyc.info.vn/ekyc.php?token='+ekycToken.value+'&mobile=true', '_blank');
+    window.open('https://kyc.info.vn/ekyc.php?token='+ekycToken.value+'&mobile=true+`&request_id=${request_id}`', '_blank');
   }
   visibleQrCodeModel.value = true;
 }
@@ -406,9 +406,6 @@ async function scanForEkycToken() {
   setTimeout(scanForEkycToken, 5000)
   
 }
-
-
-
 
 onMounted(() => {
   scanForEkycToken()
