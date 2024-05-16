@@ -1,4 +1,4 @@
-import { get, post } from '@/core/apiClient'
+import { get, methodDelete, post, put } from '@/core/apiClient'
 const DomainRepository = {
   find: async (domainId) => {
     const { details } = await get('/domain/' + domainId)
@@ -39,6 +39,18 @@ const DomainRepository = {
   },
   getDNS: async (domainId) => {
     const res = await get(`domain/${domainId}/dns`)
+    return res
+  },
+  createDNS: async (serviceId, zoneId, body) => {
+    const res = await post(`/service/${serviceId}/dns/${zoneId}/records`, body)
+    return res
+  },
+  editDNS: async (recordId, serviceId, zoneId, body) => {
+    const res = await put(`/service/${serviceId}/dns/${zoneId}/records/${recordId}`, body)
+    return res
+  },
+  deleteDNS: async (recordId, serviceId, zoneId, body) => {
+    const res = await methodDelete(`/service/${serviceId}/dns/${zoneId}/records/${recordId}`)
     return res
   }
 }
