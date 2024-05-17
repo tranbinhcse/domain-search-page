@@ -69,7 +69,7 @@
         :model="domainDNSForm"
         layout="vertical"
         :rules="rules"
-        @submit="isEditRecord ? handleEditRecord() : handleCreateRecord()"
+        @submit="({values, errors}) => isEditRecord ? handleEditRecord(values, errors) : handleCreateRecord(values, errors)"
       >
         <a-form-item field="type" label="Loại" required>
           <!-- <a-input v-model="domainDNSForm.type" placeholder="Vui lòng nhập Loại" /> -->
@@ -223,7 +223,6 @@ const rules = {
 // }
 
 const handleOpenModal = (record) => {
-  console.log(record)
   isShowModal.value = true
   if (record?.name) {
     Object.assign(domainDNSForm, record)
@@ -244,7 +243,8 @@ const handleCloseModal = () => {
   handleResetForm()
 }
 
-const handleCreateRecord = async () => {
+const handleCreateRecord = async (values, errors) => {
+  if (errors) return
   const result = await createDNS(serviceId.value, zoneId.value, domainDNSForm)
   handleResetForm()
   if (result?.record.name) {
