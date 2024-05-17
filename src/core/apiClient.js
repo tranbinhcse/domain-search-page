@@ -8,11 +8,12 @@ const getRequestHeaders = () => {
   const { token } = storeToRefs(authStore)
 
   if (!token.value) {
-    return {}
+    return {  'X-Forwarded-Host': 'giadinh.tino.vn' }
   }
 
   return {
-    Authorization: `Bearer ${token.value}`
+    Authorization: `Bearer ${token.value}`,
+    'X-Forwarded-Host': 'giadinh.tino.vn'
   }
 }
 
