@@ -54,3 +54,8 @@ export const post = async (url, data = {}) => {
 export const put = async (url, data = {}) => {
   return await send(url, 'PUT', data)
 }
+
+// Can not use "delete" as a function name
+export const methodDelete = async (url) => {
+  return await send(url, 'DELETE')
+}
