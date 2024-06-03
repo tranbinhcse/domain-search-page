@@ -26,24 +26,17 @@
         <a-tab-pane key="Overview">
           <template #title> <icon-calendar /> Overview </template>
         </a-tab-pane>
+        <a-tab-pane key="UsageGraphs">
+          <template #title> <icon-calendar /> Usage Graphs </template>
+        </a-tab-pane>
+        <a-tab-pane key="Settings">
+          <template #title> <icon-calendar /> Settings </template>
+        </a-tab-pane>
       </a-tabs>
     </div>
 
     <a-tabs size="large" hide-tab="true" position="bottom" :active-key="tabActive">
       <a-tab-pane key="Overview">
-        <div class="bg-white p-4 rounded">
-          <a-descriptions title="Service Summary" :column="1">
-            <a-descriptions-item span="1" label="IP">
-              {{ service.ip }}
-            </a-descriptions-item>
-            <a-descriptions-item span="1" label="Username">
-              {{ service.username }}
-            </a-descriptions-item>
-            <a-descriptions-item span="1" label="Password">
-              {{ service.password }}
-            </a-descriptions-item>
-          </a-descriptions>
-        </div>
       </a-tab-pane>
 
       <a-tab-pane key="Settings">Settings</a-tab-pane>
@@ -59,6 +52,7 @@ import { onMounted, ref } from 'vue'
 import { useServiceDetailStore } from '@/stores/service/serviceDetailStore'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
+import OverView from '@/components/serviceDetail/OverView.vue';
 const serviceDetailStore = useServiceDetailStore()
 const { getService } = serviceDetailStore
 

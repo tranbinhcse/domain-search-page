@@ -22,7 +22,6 @@ const currentModule = ref(null)
 onMounted(async () => {
   await getService(route.params.id)
   const moduleName = service.value.acc_module
-  let module = null
   // Dynamic import based on moduleName
   try {
     const module = await import(`@/pages/service/modules/${moduleName}/index.vue`)

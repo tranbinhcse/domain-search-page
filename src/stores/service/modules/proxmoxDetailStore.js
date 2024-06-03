@@ -40,7 +40,7 @@ export const useProxmoxDetailStore = defineStore('proxmoxDetailStore', () => {
   async function getUsage(id, vmid) {
     loading.value = true
     const res = await ProxmoxRepository.usage(id, vmid)
-    usage.value = res
+    usage.value = !res.error ? res : 0
     loading.value = false
   }
   //   watch([page, perpage, filter], getService, {deep: true})

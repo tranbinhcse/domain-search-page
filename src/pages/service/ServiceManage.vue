@@ -72,7 +72,6 @@ const changePerPage = (value) => {
 const changePage = (currentpage) => {
   page.value = currentpage - 1
 }
-
 const columns = [
   {
     title: 'Tên miền',

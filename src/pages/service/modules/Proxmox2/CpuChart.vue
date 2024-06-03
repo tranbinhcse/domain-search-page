@@ -1,6 +1,5 @@
 <template>
-  {{ vmid }}
-  <!-- <Chart height="289px" :option="chartOption" /> -->
+  <Chart height="289px" :option="chartOption" />
 </template>
 
 <script setup>
