@@ -23,7 +23,7 @@
         <router-link class="text-sm underline hover:no-underline pr-5" to="/reset-password"
           >Quên mật khẩu?</router-link
         >
-        <a-button class="flex-auto" type="primary" html-type="submit">Đăng ký</a-button>
+        <a-button class="flex-auto" type="primary" html-type="submit">Đăng nhập</a-button>
       </a-form-item>
     </a-form>
 
@@ -58,8 +58,8 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 const formRef = ref(null)
 const credential = reactive({
-  username: 'binh@tino.org',
-  password: 'Tino@123'
+  username: '',
+  password: ''
 })
 
 const rules = reactive({
