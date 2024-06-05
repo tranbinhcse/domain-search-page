@@ -85,7 +85,7 @@
                         <div class="flex justify-between">
                           <h3 class="text-xl">
                             <a class="font-medium text-gray-700 hover:text-gray-800"
-                              >{{ product.category_name }} - {{ product.name }}</a
+                              >{{ product.name }}</a
                             >
                           </h3>
                         </div>
